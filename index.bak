@@ -1,0 +1,1756 @@
+<? include_once $_SERVER["DOCUMENT_ROOT"].'/shop_header.php'; ?>
+<link href="/css/index.css" rel="stylesheet">
+<link rel="stylesheet" href="css/pages/shop_main/shop_main.css">
+<style media="screen">
+.mainbanner_slide {
+    position: relative;
+    /* height: 100vh; */
+}
+
+.mainbanner_slide .slick-dots {
+ /*   position: absolute;
+    right: 0;
+    bottom: 50%;
+    transform: translate(0, -50%) rotate(90deg);
+    width: auto; */
+
+    position: absolute;
+    bottom: 0px;
+    padding : 0 0 15px 0;
+}
+
+.mainbanner_slide_m {
+    /* min-height: 350px; */
+    display: none;
+}
+
+.hashtag:hover {
+    background: black;
+    color: white;
+}
+
+.instacol {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    padding-bottom: 100%;
+}
+
+.sub_title {
+    margin: 0;
+    line-height: 1.2;
+    margin-top: 15px;
+}
+
+.sesection5ImgText2_1 span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4B4F52;
+}
+
+@media (max-width:768px) {
+    .mainbanner_slide .slick-dots {
+        display: none !important;
+    }
+
+    .sesection5ImgText {
+        margin: 0 !important;
+    }
+
+    .mainbanner_slide {
+        display: none;
+    }
+
+    .mainbanner_slide_m {
+        display: block;
+        /* margin-top: 80px; */
+    }
+
+    .hashtag {
+        width: 45%;
+    }
+}
+
+.main-slide-img {
+    height: 110vw;
+    max-height: 510px;
+}
+
+.bgsetting {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.productWrap-titleWrap {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.productWrap,
+.productWrap-btnWrap,
+.productWrap-titleWrap,
+.productWrap-img {
+    transition: 0.3s;
+}
+
+.productWrap-img {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+}
+
+.hashtag-img {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+    padding-bottom: 70%;
+    width: 100%;
+}
+
+.hashtag-img:after {
+    display: block;
+    clear: both;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100%;
+}
+
+.hashtag-col span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.hashtag-col span:hover {
+    text-decoration: underline;
+}
+
+.productWrap:hover .productWrap-btnWrap {
+    opacity: 1;
+}
+
+.productWrap:hover .productWrap-titleWrap {
+    border-bottom: 1px solid #555;
+}
+
+/* .productWrap:hover .productWrap-img{
+        background-size: 107% !important;
+    } */
+.hoverimage {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    opacity: 0;
+}
+
+.productWrap:hover .hoverimage {
+    transition: 0.3s;
+    opacity: 1;
+}
+
+
+.productWrap-btnWrap {
+    opacity: 0;
+}
+
+.disprice {
+    text-decoration: line-through;
+    color: #999 !important;
+}
+
+
+#slide-arw-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+}
+
+.main-slide-prev,
+.main-slide-next {
+    position: absolute;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.main-slide-prev {
+    left: 0;
+}
+
+.main-slide-next {
+    right: 0;
+}
+
+.main-slide-prev:hover,
+.main-slide-next:hover {
+    opacity: 1;
+}
+
+.comment {
+    overflow: hidden;
+    vertical-align: top;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    height: 27px;
+}
+
+.text_comment {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+
+}
+
+.onetext {
+    font-size: 12px;
+    color: #666;
+}
+
+@media (max-width:950px) {
+    .banner-wrap2-order {
+        order: 2;
+    }
+}
+
+.welcome_area .slick-dots {
+    bottom: 10px;
+}
+
+#main-top-slide3 .slick-list {
+    height: 450px !important;
+}
+
+.productWrap-titleWrap {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.productWrap,
+.productWrap-btnWrap,
+.productWrap-titleWrap,
+.productWrap-img {
+    transition: 0.3s;
+}
+
+.productWrap-img {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+}
+
+/* .productWrap-titleWrap{
+        min-height: 59px;
+    } */
+
+h5,
+.jingray {
+    color: #4B4F52 !important;00
+}
+
+.fa-heart {
+    margin-right: 0px;
+}
+
+
+.df-prl-viewtype-btn {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    font-size: 0;
+    line-height: 0;
+    letter-spacing: -4px;
+    padding-top : 30px;
+}
+
+.df-prl-viewtype-btn .selected {
+    cursor: default;
+}
+
+.df-prl-viewtype-btn .selected>span {
+    /* background: #606060; */
+    background: #747794;
+}
+
+.df-prl-viewtype-btn>div {
+    display: inline-block;
+    width: 29px;
+    height: 29px;
+    letter-spacing: 0px;
+    box-sizing: border-box;
+    background: #fff;
+    cursor: pointer;
+}
+
+
+.df-prl-viewtype-btn-grid_1 > span {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+.df-prl-viewtype-btn-grid_1 {
+    padding: 3px;
+}
+
+.df-prl-viewtype-btn-grid_3>span {
+    float: left;
+    width: 5px;
+    height: 5px;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+.df-prl-viewtype-btn>div>span {
+    display: block;
+/*  background: #c1c1c1; */
+    background: #EBECEF;
+
+}
+
+.df-prl-viewtype-btn-grid_3 {
+    padding: 3px;
+}
+
+.df-prl-viewtype-btn-grid_4>span {
+    float: left;
+    width: 4px;
+    height: 4px;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+
+.df-prl-viewtype-btn-grid_4 {
+    padding: 4px;
+}
+
+@media (max-width:768px) {
+    .df-prl-viewtype-btn {
+        display: none;
+    }
+
+    .mobile_mt {
+        margin-top: 100px !important;
+    }
+
+    .productWrap-titleWrap {
+        height: 47px !important;
+        font-size: 13px;
+        -webkit-line-clamp: 2;
+    }
+
+    .off_down {
+        background: #c4c4c4;
+        color: #fff;
+        font-size: 17px;
+        text-align: center;
+        padding: 9px 0px;
+        cursor: pointer;
+    }
+
+    .all_coubon_btn {
+        background: #333;
+        color: #fff;
+        text-align: center;
+        padding: 9px 0px;
+        cursor: pointer;
+    }
+}
+
+.section4ImgText{
+    z-index: 1111111;
+}
+
+.selectedGradient:hover::after{
+    content:'';
+    position: absolute;
+    height:250px;
+    left:0;
+    width:100%;
+    bottom:0;
+    right:0;
+    background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+    z-index: 111111;
+}
+
+.testColor{
+    z-index: 1111111;
+    color:white;
+    position:relative !important;
+}
+
+.h-300{
+    height: 300px !important;
+}
+/* background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%) */
+
+</style>
+
+
+
+<div class="mainbanner_slide">
+    <div class="bg-white w-100" style="height:100vh;"></div>
+    <!-- <img src="/img/landingpage/mbanner1.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner2.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner3.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner4.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner5.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner6.jpg" alt="" style="width: 100%;"> -->
+    <!-- <img src="/img/landingpage/banner.png" alt="" style="width: 100%;"> -->
+</div>
+
+<div class="mainbanner_slide_m mb-4">
+    <div class="bg-white w-100" style="height:100vh"></div>
+    <!-- <img src="/img/landingpage/mbanner1m.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner2m.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner3m.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner4m.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner5m.jpg" alt="" style="width: 100%;">
+    <img src="/img/landingpage/mbanner6m.jpg" alt="" style="width: 100%;"> -->
+</div>
+
+<section id="section6">
+    <div class="container">
+        <div class=" text-center">
+            <img class="w-100 h_250 last_banner" src="/img/landingpage/bottom_banner.jpg" alt="">
+        </div>
+
+        <div class=" text-center mt-3">
+            <img class="w-100 h_250 last_banner2" src="/img/landingpage/bottom_banner.jpg" alt="">
+        </div>
+    </div>
+</section>
+
+<section id="section4">
+    <div class="container text-center">
+        <div class="popular_section_heading text-center">
+            <h5>BRAND</h5>
+            <p class="sub_title"># 국내외 유명한 검증된 브랜드를 소개합니다.</p>
+        </div>
+        <div class="df-prl-viewtype-btn">
+
+            <div class="df-prl-viewtype-btn-grid_1 brand_btn_a" data-content="brand" data-target="1" data-ppp="1">
+                        <span></span>
+            </div>
+
+            <div style="width:2px;background:#ddd; height : 20px; position:absolute; bottom:5px;"></div>
+
+                <div class="df-prl-viewtype-btn-grid_3 brand_btn_b selected" data-content="brand" data-target="3" data-ppp="9">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                </div>
+
+                <div class="df-prl-viewtype-btn-grid_4 brand_btn_b" data-content="brand" data-target="4" data-ppp="16">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        <div class="position-relative pt-2">
+            <div class="shopslick text-left mt-5">
+            </div>
+
+        </div>
+
+        <div class="position-relative marginTop d-none">
+            <div class="shopslick2 text-left mt-5">
+                <!-- <div class="mx-3">
+                    <div class="section4ImgDiv" style="background: url('/img/landingpage/shop4.png');"></div>
+                    <div class="section4ImgText p-3"><p>엔티크한 중세 스타일</p><p class="mt-5">2021-10-09</p></div>
+                </div>
+                <div class="mx-3">
+                    <div class="section4ImgDiv" style="background: url('/img/landingpage/shop5.png');"></div>
+                    <div class="section4ImgText p-3"><p>오픈형 욕조 스타일</p><p class="mt-5">2021-10-09</p></div>
+                </div>
+                <div class="mx-3">
+                    <div class="section4ImgDiv" style="background: url('/img/landingpage/shop6.png');"></div>
+                    <div class="section4ImgText p-3"><p>화이트 깔끔한 세면대</p><p class="mt-5">2021-10-09</p></div>
+                </div>
+                <div class="mx-3">
+                    <div class="section4ImgDiv" style="background: url('/img/landingpage/shop2.png');"></div>
+                    <div class="section4ImgText p-3"><p>화이트 조감, 플라워</p><p class="mt-5">2021-10-09</p></div>
+                </div> -->
+            </div>
+
+            <span id="slick-prev2" class="slickarrow slickarrow2"><i class="fas fa-chevron-left"></i></span>
+            <span id="slick-next2" class="slickarrow slickarrow2"><i class="fas fa-chevron-right"></i></span>
+        </div>
+    </div>
+</section>
+
+<section class="welcome_area overflow-hidden position-relative container pt-0">
+    <div class="" id="main-top-slide">
+        <!-- Single Slide -->
+        <!-- <div class="single_slide bg-img bg-overlay" style="background-image: url(img/bg-img/1.jpg);">
+            <div class="h-100 banner_bg">
+                <div class="d-flex h-100 align-items-center">
+                    <div class="col-12 main_b_img" style="background-image: url(img/page/test_img/testbanner_img1.jpg);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single_slide bg-img bg-overlay" style="background-image: url(img/bg-img/1.jpg);">
+            <div class="h-100 banner_bg">
+                <div class="d-flex h-100 align-items-center">
+                    <div class="col-12 main_b_img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <div class="">
+            <div class="main-slide-img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+        </div>
+        <div class="">
+            <div class="main-slide-img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+        </div> -->
+    </div>
+    <div class="container w-100" id="slide-arw-wrap">
+        <div class="main-slide-prev">
+            <img src="/img/banner/dashicons_arrow-right-alt2.png" alt="" style="width:30px;">
+        </div>
+        <div class="main-slide-next">
+            <img src="/img/banner/dashicons_arrow-left-alt2.png" alt="" style="width:30px;">
+        </div>
+    </div>
+</section>
+
+<div class="popular_items_area home-3 section_padding_0_70 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="popular_section_heading mb-50 text-center">
+                    <h5>BEST PRODUCT</h5>
+                    <p class="sub_title">#리닷에서 이번주에 제일 잘 나간 <br class="pc-none" /> 인기상품을 만나보세요!</p>
+
+                    <div class="df-prl-viewtype-btn">
+                    <div class="df-prl-viewtype-btn-grid_1 best_btn_a" data-content="best" data-target="1" data-ppp="1">
+                                <span></span>
+                    </div>
+                    <div style="width:2px;background:#ddd; height : 20px; position:absolute; bottom:5px;"></div>
+
+                    <div class="df-prl-viewtype-btn-grid_3 best_btn_b" style="padding : 2px;" data-content="best" data-target="2" data-ppp="9">
+                                <span style="width:10px; height:10px;"></span>
+                                <span style="width:10px; height:10px;"></span>
+                                <span style="width:10px; height:10px;"></span>
+                                <span style="width:10px; height:10px;"></span>
+                        </div>
+
+                        <div class="df-prl-viewtype-btn-grid_3 best_btn_b selected" data-content="best" data-target="3" data-ppp="9">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                        </div>
+                        <div class="df-prl-viewtype-btn-grid_4 best_btn_b" data-content="best" data-target="4" data-ppp="16">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="best_product_wrap row">
+                    <!-- popular_items_slides owl-carousel -->
+                    <!-- <div class="single_popular_item">
+                        <div class="product_image">
+                            <img class="first_img" src="img/product-img/popular-1.jpg" alt="">
+                            <img class="hover_img" src="img/product-img/popular-1-back.jpg" alt="">
+                            <div class="product_badge badge_red">
+                                <span class="badge-offer ">세일</span>
+                            </div>
+                            <div class="product_wishlist">
+                                <a href="wishlist.php" target="_blank"><i class="fas fa-heart"></i></a>
+                            </div>
+                            <div class="product_add_to_cart">
+                                <a href="#"><i class="fas fa-shopping-cart"></i> 장바구니 담기</a>
+                            </div>
+                        </div>
+                        <div class="product_description">
+                            <h5><a href="#">상품1</a></h5>
+                            <h6>1,000원 <span>2,000원</span></h6>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="welcome_area overflow-hidden position-relative container">
+    <div class="" id="main-top-slide2">
+        <!-- Single Slide -->
+        <!-- <div class="single_slide bg-img bg-overlay" style="background-image: url(img/bg-img/1.jpg);">
+            <div class="h-100 banner_bg">
+                <div class="d-flex h-100 align-items-center">
+                    <div class="col-12 main_b_img" style="background-image: url(img/page/test_img/testbanner_img1.jpg);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single_slide bg-img bg-overlay" style="background-image: url(img/bg-img/1.jpg);">
+            <div class="h-100 banner_bg">
+                <div class="d-flex h-100 align-items-center">
+                    <div class="col-12 main_b_img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <div class="">
+            <div class="main-slide-img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+        </div>
+        <div class="">
+            <div class="main-slide-img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+        </div> -->
+    </div>
+    <div class="container w-100" id="slide-arw-wrap2">
+        <div class="main-slide-prev">
+            <img src="/img/banner/dashicons_arrow-right-alt2.png" alt="" style="width:30px;">
+        </div>
+        <div class="main-slide-next">
+            <img src="/img/banner/dashicons_arrow-left-alt2.png" alt="" style="width:30px;">
+        </div>
+    </div>
+</section>
+
+
+<div class="new_arrival home-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="popular_section_heading mb-50 text-center">
+                    <h5>NEW ARRIVALS</h5>
+                    <p class="sub_title">#처음 뵙겠습니다.</p>
+                    <p class="sub_title" style="margin-top:0;">따끈따끈 신상품을 확인하세요!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-start new_product">
+            <!-- <div class="col-9 col-sm-6 col-md-4 col-lg-3">
+                <div class="single_popular_item">
+                    <div class="product_image">
+                        <img class="first_img" src="img/product-img/new-arrivals-1.jpg" alt="">
+                        <img class="hover_img" src="img/product-img/new-arrivals-1-back.jpg" alt="">
+                        <div class="product_badge badge_brown">
+                            <span>신규</span>
+                        </div>
+                        <div class="product_wishlist">
+                            <a href="wishlist.php" target="_blank"><i class="fas fa-heart"></i></a>
+                        </div>
+                        <div class="product_add_to_cart">
+                            <a href="#"><i class="fas fa-shopping-cart"></i> 장바구니 담기</a>
+                        </div>
+                    </div>
+                    <div class="product_description">
+                        <h5><a href="#">상품명1</a></h5>
+                        <h6>2,000원 <span>3,000원</span></h6>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<section class="welcome_area overflow-hidden position-relative container">
+    <div class="" id="main-top-slide3">
+        <!-- Single Slide -->
+        <!-- <div class="single_slide bg-img bg-overlay" style="background-image: url(img/bg-img/1.jpg);">
+            <div class="h-100 banner_bg">
+                <div class="d-flex h-100 align-items-center">
+                    <div class="col-12 main_b_img" style="background-image: url(img/page/test_img/testbanner_img1.jpg);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single_slide bg-img bg-overlay" style="background-image: url(img/bg-img/1.jpg);">
+            <div class="h-100 banner_bg">
+                <div class="d-flex h-100 align-items-center">
+                    <div class="col-12 main_b_img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <div class="">
+            <div class="main-slide-img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+        </div>
+        <div class="">
+            <div class="main-slide-img" style="background-image: url(img/page/test_img/testbanner_img2.jpg);"></div>
+        </div> -->
+    </div>
+    <div class="container w-100" id="slide-arw-wrap3">
+        <div class="main-slide-prev">
+            <img src="/img/banner/dashicons_arrow-right-alt2.png" alt="" style="width:30px;">
+        </div>
+        <div class="main-slide-next">
+            <img src="/img/banner/dashicons_arrow-left-alt2.png" alt="" style="width:30px;">
+        </div>
+    </div>
+</section>
+
+
+
+<div class="text-center" style="padding-bottom:70px;">
+    <h5 class="font-weight-bold">WEEKLY HASHTAG</h5>
+    <p class="sub_title" style="margin-bottom:25px;">#이번주 인기태그를 확인해보세요!</p>
+    <p class="d-flex align-items-center justify-content-center mb-50" style="flex-wrap:wrap;" id="hashtag-wrap">
+
+    </p>
+
+    <div class="container">
+        <div class="row justify-content-start " id="productlist-Wrap">
+            <!-- <div class="col-9 col-sm-6 col-md-4 col-lg-3">
+                <div class="single_popular_item">
+                    <div class="product_image">
+                        <img class="first_img" src="img/product-img/new-arrivals-1.jpg" alt="">
+                        <img class="hover_img" src="img/product-img/new-arrivals-1-back.jpg" alt="">
+                        <div class="product_badge badge_brown">
+                            <span>신규</span>
+                        </div>
+                        <div class="product_wishlist">
+                            <a href="wishlist.php" target="_blank"><i class="fas fa-heart"></i></a>
+                        </div>
+                        <div class="product_add_to_cart">
+                            <a href="#"><i class="fas fa-shopping-cart"></i> 장바구니 담기</a>
+                        </div>
+                    </div>
+                    <div class="product_description">
+                        <h5><a href="#">상품명1</a></h5>
+                        <h6>2,000원 <span>3,000원</span></h6>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+</div>
+
+<!-- <section id="section2" class="position-relative">
+    <img src="/img/landingpage/drawing.png" alt="" id="drawing">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <p class="bco">LIDOT</p>
+                <p class="bigtitle">ABOUT <span>BUILT UP</span></p>
+            </div>
+            <div class="col-12 col-lg-6 text-right bigtitle-second">
+                <p>TREND STYLE  BRANDING <br> 브랜드의 가치를 높이는 선택</p>
+            </div>
+        </div>
+        <div class="row mt-lg-5 mt-0 pt-5">
+            <div class="col-12 col-lg-4">
+                <div class="section2ImgDiv mb-2 pointer" style="background: url('/img/landingpage/section2firstimg.png');" onclick="location.href='/introduce.php'"></div>
+                <p class="section2ImgText"><span>COMPANY</span> 회사소개</p>
+            </div>
+            <div class="col-12 col-lg-4 pt-lg-5">
+                <div class="section2ImgDiv mb-2 pointer" style="background: url('/img/landingpage/section2secondimg.png');" onclick="location.href='/introduce.php'"></div>
+                <p class="section2ImgText"><span>SHOP</span> 매장확인</p>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="section2ImgDiv mb-2" style="background: url('/img/landingpage/section2thirdimg.png');"></div>
+                <p class="section2ImgText"><span>HISTORY</span> 연혁</p>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<!-- <section id="animateSection">
+    <div id="animationDiv" class="position-relative">
+        <img src="/img/landingpage/shop1.png" alt="" class="animationImg animationImg1">
+        <img src="/img/landingpage/shop2.png" alt="" class="animationImg animationImg2">
+        <img src="/img/landingpage/shop3.png" alt="" class="animationImg animationImg3">
+        <img src="/img/landingpage/shop4.png" alt="" class="animationImg animationImg4">
+        <div class="animationText animationText-B">L</div>
+        <div class="animationText animationText-N">I</div>
+        <div class="animationText animationText-CO">DOT</div>
+    </div>
+</section>
+
+<section class="text-white text-center" id="section3">
+    <p>WE THINK ABOUT THE FUTURE</p>
+    <p>앞서 나가는 기술을 경험하세요 <br> <span class="font-weight-bold">미래를 생각하는 기업 BUILT UP</span></p>
+    <span class="py-2 px-4" onclick="goShop();">샵 이동하기</span>
+</section> -->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="popular_section_heading text-center">
+                    <h5>BEST REVIEW</h5>
+                    <p class="sub_title">#후기로 증명된 제품. 이제 믿고 구매하세요!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="bestReview-wrap">
+            <div class="bestReview-wrapper row pt-4 pt-lg-5 text-center">
+
+            </div>
+
+            <link rel="stylesheet" type="text/css"
+                href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js">
+            </script>
+
+            <!-- <div class="col-9 col-sm-6 col-md-4 col-lg-3">
+                <div class="single_popular_item">
+                    <div class="product_image">
+                        <img class="first_img" src="img/product-img/new-arrivals-1.jpg" alt="">
+                        <img class="hover_img" src="img/product-img/new-arrivals-1-back.jpg" alt="">
+                        <div class="product_badge badge_brown">
+                            <span>신규</span>
+                        </div>
+                        <div class="product_wishlist">
+                            <a href="wishlist.php" target="_blank"><i class="fas fa-heart"></i></a>
+                        </div>
+                        <div class="product_add_to_cart">
+                            <a href="#"><i class="fas fa-shopping-cart"></i> 장바구니 담기</a>
+                        </div>
+                    </div>
+                    <div class="product_description">
+                        <h5><a href="#">상품명1</a></h5>
+                        <h6>2,000원 <span>3,000원</span></h6>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</section>
+
+
+<section id="section5" style="background: #F7F7F7;">
+    <div class="container text-center">
+        <div class="popular_section_heading text-center">
+            <h5>PROJECT</h5>
+            <p class="sub_title">#리닷에서 진행한 다양한 프로젝트를 만나보세요!</p>
+        </div>
+        <div class="row pt-4 pt-lg-5" id="project_section">
+            <!-- <div class="col-12 col-lg-4 px-lg-4">
+                <div class="section5Imgdiv mb-lg-5 mb-3 comingsoon" style="background: url('/img/landingpage/section5img3.png');">
+                    <div class="sesection5numCircle">3.</div>
+                </div>
+                <p class="sesection5ImgText pt-4 mb-lg-0 mb-5"><span>사무실 With B&CO</span> <br> 편안한공간을 연출해 보았습니다.</p>
+            </div> -->
+        </div>
+        <div class="d-flex mt-5" id="project_section_arrow">
+
+        </div>
+    </div>
+</section>
+
+
+<section id="section7">
+
+</section>
+
+<!-- <section id="section6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12 px-0 px-md-5">
+                <div id="section6Left">
+                    <p><span class="letterspace">무심한듯</span>  <br> 빈티지 하게</p>
+                    <p>일상에 스며드는 빈티지 홈 가드닝</p>
+                    <p>내 작은 공간 소중한 공간에서 푸르게 빛나는 나만의 홈 가드닝</p>
+                    <span class="py-2 px-3" onclick="Ready();">다양한 스타일 보기</span>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12 px-md-5">
+                <div id="section6Right" class="py-5">
+                    <p class="bco">LIDOT</p>
+                    <div>NOTICE <span onclick="Ready();">MORE +</span></div>
+                    <div>
+                        <p><span class="notice" onclick="Ready();">저렴한 가격으로 고퀄리티 디자인을 만나보세요.</span> <span>2021-10-10 18:41:38</span> </p>
+                        <p><span class="notice" onclick="Ready();">개인정보처리방침 및 사이트이용 내용 변경안내</span> <span>2021-10-10 18:41:38</span> </p>
+                        <p><span class="notice" onclick="Ready();">사이트 이용관련 안내</span> <span>2021-10-10 18:41:38</span> </p>
+                        <p><span class="notice" onclick="Ready();">공지사항 0926</span> <span>2021-10-10 18:41:38</span> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<!-- <section id="section6">
+    <div class=" text-center">
+        <img class="w-100 h_250 last_banner" src="/img/landingpage/bottom_banner.jpg" alt="">
+    </div>
+
+    <div class=" text-center mt-3">
+        <img class="w-100 h_250 last_banner2" src="/img/landingpage/bottom_banner.jpg" alt="">
+    </div>
+</section>  -->
+
+
+
+<script type="text/javascript">
+var list_count = 3;
+
+$(function() {
+    console.log('ㅡㅡ index READY');
+
+    if ($(window).width() < 780) {
+        $('.mainbanner_slide').remove()
+        MainSlideMLoad()
+    } else {
+        $('.mainbanner_slide_m').remove()
+        MainSlideLoad()
+    }
+
+    if (user_info) {
+        cartNum()
+        wishNum()
+    }
+
+
+    //loadInsta()
+    loadInsta2()
+
+    loadProject()
+
+    loadBestProduct();
+    // LoadHashtag();
+
+    MainOneSlideLoad()
+    // MainTwoSlideLoad()
+
+    fadeInOutLoad()
+
+
+
+    // if ($(window).width() > 769) {
+    //     $(".shopslick .slick-active").eq(1).css({
+    //         "box-shadow": "0px 4px 14px 1px rgba(0, 0, 0, 0.16)"
+    //     })
+    //     $(".shopslick2 .slick-active").eq(1).css({
+    //         "box-shadow": "0px 4px 14px 1px rgba(0, 0, 0, 0.16)"
+    //     })
+    //     $(document).on("click", ".slickarrow1", function() {
+    //         $(".shopslick .slick-active").css({
+    //             "box-shadow": "none"
+    //         })
+    //         $(".shopslick .slick-active").eq(1).css({
+    //             "box-shadow": "0px 4px 14px 1px rgba(0, 0, 0, 0.16)"
+    //         })
+    //     })
+    //     $(document).on("click", ".slickarrow2", function() {
+    //         $(".shopslick2 .slick-active").css({
+    //             "box-shadow": "none"
+    //         })
+    //         $(".shopslick2 .slick-active").eq(1).css({
+    //             "box-shadow": "0px 4px 14px 1px rgba(0, 0, 0, 0.16)"
+    //         })
+    //     })
+
+
+    //     $(document).on("click", ".shopslick .slick-dots li", function() {
+    //         $(".shopslick .slick-active").css({
+    //             "box-shadow": "none"
+    //         })
+    //         $(".shopslick .slick-active").eq(1).css({
+    //             "box-shadow": "0px 4px 14px 1px rgba(0, 0, 0, 0.16)"
+    //         })
+    //     })
+    //     $(document).on("click", ".shopslick2 .slick-dots li", function() {
+    //         $(".shopslick2 .slick-active").css({
+    //             "box-shadow": "none"
+    //         })
+    //         $(".shopslick2 .slick-active").eq(1).css({
+    //             "box-shadow": "0px 4px 14px 1px rgba(0, 0, 0, 0.16)"
+    //         })
+    //     })
+    // }
+});
+//
+// if($(window).width() > 769){
+//     $(window).scroll(function(){
+//         if($("#animateSection").offset().top-300 < $(window).scrollTop()){
+//             $(".animationImg").removeClass("nosec")
+//             $(".animationText").removeClass("nosec")
+//             $(".animationImg").addClass("on")
+//             $(".animationText").addClass("on")
+//         }else{
+//             $(".animationImg").removeClass("on")
+//             $(".animationText").removeClass("on")
+//             $(".animationImg").addClass("nosec")
+//             $(".animationText").addClass("nosec")
+//         }
+//     })
+// }else{
+//     $(window).scroll(function(){
+//         if($("#animateSection").offset().top-700 < $(window).scrollTop()){
+//             $(".animationImg").removeClass("nosec")
+//             $(".animationText").removeClass("nosec")
+//             $(".animationImg").addClass("on")
+//             $(".animationText").addClass("on")
+//         }else{
+//             $(".animationImg").removeClass("on")
+//             $(".animationText").removeClass("on")
+//             $(".animationImg").addClass("nosec")
+//             $(".animationText").addClass("nosec")
+//         }
+//     })
+// }
+
+function loadBestProduct() {
+    $.ajax({
+        type: "POST",
+        url: SERVER_AP + '/product/allCateProduct',
+        cache: false,
+        success: function(data) {
+            console.log('여깅타?');
+
+            // 인기상품
+            $('.best_product_wrap').html('');
+            $.each(data[1], function(i, v) {
+                var h_img;
+                if (v.p_hover == null) {
+                    h_img = '/img/common/hover_bg.png';
+                } else {
+                    h_img = v.p_hover;
+                }
+
+                var sticker
+                if (v.p_sticker) {
+                    sticker = v.p_sticker
+                } else {
+                    sticker = ''
+                }
+
+                ////////////// 사업자회원시 도매가 가격 적용 ////////////////////
+                if (v.p_wholesale && user_info.u_type == '사업자회원') {
+                    v.p_price = v.p_wholesale
+                }
+                ////////////// 사업자회원시 도매가 가격 적용 END ////////////////////
+
+                var pmark
+                // if(v.p_mark){
+                //     pmark = JSON.parse(v.p_mark);
+                // }else{
+                //     pmark = '';
+                // }
+                if (v.pm_seq) {
+                    pmark = marktemImg(v.pm_seq);
+                }
+
+                // v.p_name.length > 25 && (v.p_name = v.p_name.substr(0,25)+'...')
+
+                var disprice = -(((v.p_price * 1 - v.p_consume_price * 1) / v.p_price) * 100);
+
+                var mainimgArr = JSON.parse(v.p_image);
+
+                // var bestStr = `<div class="single_popular_item pointer col-md-3 col-6" onclick="location.href='/product_detail.php?p_seq=`+v.p_seq+`'">
+                //     <div class="product_image">
+                //         <div class="first_img" style="width:100%; max-height: 330px; height:22.5vw; background:url('`+mainimgArr[0]+`') no-repeat center; background-size:cover;"></div>
+                //         <div class="hover_img" style="width:100%; max-height: 330px; height:22.5vw; background:url('`+h_img+`') no-repeat center; background-size:cover;" ></div>
+                //
+                //             <img src="${pmark}" alt="" style="width:50px; position:absolute; top:10px; left:0;"/>
+                //
+                //         <div class="product_wishlist product_wishlist`+v.p_seq+`">
+                //             <img class="" src="`+sticker+`" alt="" style="width:50px; height:50px;">
+                //         </div>
+                //
+                //     </div>
+                //     <div class="product_description text-left">
+                //         <h5 class="${v.p_seq}"><a href="/product_detail.php?p_seq=`+v.p_seq+`">`+v.p_name+`</a></h5>
+                //         <h6><span class="disprice">${comma(v.p_consume_price)}원</span></h6>
+                //         <h6><span class="text-danger mt-1" style="font-size:110%;">${Math.floor(disprice)}%</span> `+comma(v.p_price)+`원</h6>
+                //     </div>
+                // </div>`;
+
+
+                var checkBookData = checkBook(v.p_seq);
+
+                var onclickVal
+                var colorYellow
+                if (user_info) {
+                    if (checkBookData) {
+                        onclickVal = `deleteWist(${v.p_seq})`;
+                        colorYellow = 'color:#d31c0c';
+                    } else {
+                        onclickVal = `Wishlist(${v.p_seq})`;
+                    }
+                }
+                var markNone
+                if (!pmark) {
+                    markNone = 'd-none';
+                }
+
+                //var delprice = LoadDel(v.dt_seq);
+                let proTextStr = ``
+                if ($(window).width() > 768) {
+                    proTextStr = `
+                                        <div class=" d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="font-weight-bold">
+                                                    ${comma(v.p_price)}원
+                                                </span>
+                                                <span class="ml-2" style="text-decoration: line-through; color:#ccc;">
+                                                    ${comma(v.p_consume_price)}원
+                                                </span>
+                                            </div>
+                                            <span class="text-danger ml-2 p-1" style="font-size:13px; border:1px solid red;">${Math.floor(disprice)}%</span>
+                                        </div>`
+                } else {
+                    proTextStr = `<div class=" d-flex justify-content- align-items-center">
+                                            <span class="font-weight-bold">${comma(v.p_price)}원</span>
+                                            <span class="text-danger ml-2" style="font-size:13px;">${Math.floor(disprice)}%</span>
+                                        </div>`
+                }
+
+
+
+                var str = `<div class="col-md-4 col-6 pointer mb-md-5 mb-3">\
+                                    <div class="productWrap fs-14 position-relative">\
+                                        <div  onclick="location.href='/product_detail.php?p_seq=` + v.p_seq +
+                    `'" class="productWrap-img position-relative" style="background:url('` +
+                    mainimgArr[0] + `'); width:100%; padding-bottom:100%;">\
+                                            <img class="${markNone} pmark" src="${pmark}" alt="" style="width:50px; position:absolute; top:10px; left:0; z-index:10;"/>\
+                                        </div>\
+                                        <div class="hoverimage pointer" style="background:url('` + h_img +
+                    `'); width:100%; padding-bottom:100%; position:absolute; top:0; left:0;" onclick="location.href='/product_detail.php?p_seq=` +
+                    v.p_seq + `'"></div>
+                                        <div class=" font-weight-bold productWrap-titleWrap ">${v.p_name}</div>\
+                                        <div class="d-flex justify-content-between">
+                                            <div class="mt-2 onetext">${v.p_onetext || ''}</div>\
+                                            <div class="like_wrap">
+                                                <div class="pointer mt-2 text-secondary" onclick = ${onclickVal}>\
+                                                    <i class="fa-solid fa-heart" style="${colorYellow}"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="py-2">\
+                                            ${proTextStr}
+                                        </div>\
+                                    </div>\
+                                </div>`;
+
+                if (i < 8) {
+                    $('.best_product_wrap').append(str);
+                }
+
+            })
+
+            $(".productWrap-img").css({
+                "height": $(".productWrap-img").width()
+            });
+        },
+        beforeSend: function() {
+            // Loading()
+        },
+        complete: function() {
+            //$("#div_ajax_load_image").remove();
+        },
+        error: function(request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" +
+                "error:" + error);
+        },
+    });
+}
+
+//
+// function LoadHashtag(){
+//     $.ajax({
+//         url: SERVER_AP+"/main/hashtag-list-main",
+//         type: "post",
+//         cache: false,
+//         data:{table:"hashtag"},
+//         success: function(data){
+//             $("#hashtag-wrap").html('');
+//             if(data.length == 0){
+//                 var nstr = `<div class='py-5 text-center'>금주의 해쉬태그가 없습니다.</div>`;
+//                 $("#hashtag-wrap").append(nstr);
+//             }else{
+//                 $.each(data,function(i,v){
+//                     var str = `<div class="position-relative px-3 py-1 mx-1 my-2 border hashtag pointer" onclick="brClickMain('${v.h_name}')">
+//                                 <span class="">#${v.h_name}</span>
+//                             </div>`;
+//                     $("#hashtag-wrap").append(str);
+//
+//
+//                     loadHash(v.h_name);
+//
+//                 })
+//             }
+//         },
+//         error: function (request, status, error){
+//             console.log(error);
+//         }
+//     });
+// }
+
+function brClickMain(h_name) {
+    location.href = '/store.php?sk=' + h_name;
+}
+
+
+////////탑 슬라이드
+function MainSlideLoad() {
+    $.ajax({
+        url: SERVER_AP + "/main/mainbanner-slide-main",
+        type: "post",
+        cache: false,
+        async: false,
+        success: function(data) {
+            $(".mainbanner_slide").html('')
+
+            let dataArr = shuffle(data)
+            $.each(dataArr, function(i, v) {
+
+                var str =
+                    `<img src="${v.b_img}" alt="" style="width: 100%;" id="banner-pc-${v.b_seq}">`;
+                $(".mainbanner_slide").append(str)
+
+                if (v.b_link) {
+                    $("#banner-pc-" + v.b_seq).attr('onclick', `bannerLink(\'${v.b_link}\')`)
+                    $("#banner-pc-" + v.b_seq).addClass("pointer")
+                }
+            })
+
+            $('.mainbanner_slide').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                draggable: true,
+                autoplay: 3000,
+                fade: true,
+                dots: true,
+                arrows: false,
+            });
+        },
+        error: function(request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+
+    return array;
+}
+
+function bannerLink(b_link) {
+    location.href = b_link
+}
+
+function MainSlideMLoad() {
+    $.ajax({
+        url: SERVER_AP + "/main/mainbanner-slide-m-main",
+        type: "post",
+        cache: false,
+        data: {},
+        success: function(data) {
+            $(".mainbanner_slide_m").html('')
+            $.each(data, function(i, v) {
+
+                var str =
+                    `<img src="${v.b_img}" alt="" style="width: 100%;" id="banner-m-${v.b_seq}">`;
+                $(".mainbanner_slide_m").append(str)
+
+                if (v.b_link) {
+                    $("#banner-m-" + v.b_seq).attr('onclick', `bannerLink(\'${v.b_link}\')`)
+                    $("#banner-m-" + v.b_seq).addClass("pointer")
+                }
+            })
+
+            $('.mainbanner_slide_m').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                draggable: true,
+                autoplay: 3000,
+                fade: true,
+            });
+        },
+        error: function(request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+
+var chkBlean = false;
+var listNum = 3;
+var contentInfo = "";
+
+var aaBlean = true;
+
+$(document).on("click", ".df-prl-viewtype-btn > div", function() {
+
+    list_count = $(this).attr("data-target");
+
+    var pppCount = $(this).attr('data-ppp');
+
+    contentInfo = $(this).attr('data-content');
+
+
+    if(contentInfo == 'brand'){
+
+        chkBlean = false;
+
+        if(list_count != 1){
+            $(".brand_btn_b").removeClass("selected");
+            $(this).addClass("selected");
+
+            $('.shopslick').slick('unslick');
+            $('.shopslick').html('');
+
+            listNum = list_count;
+        }
+
+        if(pppCount == 1){
+
+            if($('.brand_btn_a').hasClass("selected")){
+
+                $(".brand_btn_a").removeClass("selected");
+                $('.shopslick').slick('unslick');
+                $('.shopslick').html('');
+
+                chkBlean = false;
+
+            }else{
+
+                $('.shopslick').slick('unslick');
+                $('.shopslick').html('');
+                $('.brand_btn_a').addClass("selected");
+
+                chkBlean = true;
+            }
+
+        }else{
+
+            if($('.brand_btn_a').hasClass("selected")){
+                chkBlean = true;
+            }
+
+        }
+
+
+
+          MainOneSlideLoad();
+
+    }else if(contentInfo == 'best'){
+
+        if(list_count != 1){
+            $(".best_btn_b").removeClass("selected");
+            $(this).addClass("selected");
+        }
+
+        if(pppCount == 1){
+
+            if($('.best_btn_a').hasClass("selected")){
+                $(".best_btn_a").removeClass("selected");
+                chkBlean = false;
+
+            }else{
+                $('.best_btn_a').addClass("selected");
+                chkBlean = true;
+            }
+
+        }
+
+        loadProduct();
+
+    }
+});
+
+
+/* BRAND INFO */
+function MainOneSlideLoad() {
+    $.ajax({
+        url: SERVER_AP + "/main/mainbanner-slide-main-one",
+        type: "post",
+        cache: false,
+        data: {},
+        success: function(data) {
+
+//             $.each(data, function(i, v) {
+//                 var mt = ``;
+//                 if (v.b_dateyn == 'Y') {
+//                     mt = `<p class="${mt}">${v.b_date}</p>`
+//                 }
+
+// //                <div class="section4ImgDiv" style="background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url('${v.b_img}');">
+
+//                 var str = `<div class="mx-3 pointer" id="banner-one-${v.b_seq}" onclick="location.href='/store.php?sk=${v.b_link}'">
+//                                     <div class="section4ImgDiv selectedGradient" style="background:url('${v.b_img}')">
+//                                         <div class="section4ImgText text-center p-3 pb-0"><p class="mb-0">${v.b_name}</p>${mt}</div>
+//                                     </div>
+//                                 </div>`
+//                 $(".shopslick").append(str);
+
+//                 // if(v.b_link){
+//                 //     $("#banner-one-"+v.b_seq).attr('onclick',`bannerLink(\'${v.b_link}\')`)
+//                 //     $("#banner-one-"+v.b_seq).addClass("pointer")
+//                 // }
+//             })
+
+
+            console.log("chkBlean : ", chkBlean);
+
+            if(chkBlean == true){
+
+
+             $.each(data, function(i, v) {
+                    var mt = ``;
+                    if (v.b_dateyn == 'Y') {
+                        mt = `<p class="${mt}">${v.b_date}</p>`
+                    }
+
+    //                <div class="section4ImgDiv" style="background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url('${v.b_img}');">
+
+                    var str = `<div class="mx-3 pointer position-relative" id="banner-one-${v.b_seq}" onclick="location.href='/store.php?sk=${v.b_link}'">
+                                        <div class="section4ImgDiv selectedGradient" style="background: url('${v.b_img}');">
+                                            <div class="section4ImgText text-center p-3 pb-0"><p class="mb-0">${v.b_name}</p>${mt}
+                                            </div>
+                                        </div>
+                                    </div>`
+                    $(".shopslick").append(str);
+
+                    // if(v.b_link){
+                    //     $("#banner-one-"+v.b_seq).attr('onclick',`bannerLink(\'${v.b_link}\')`)
+                    //     $("#banner-one-"+v.b_seq).addClass("pointer")
+                    // }
+                })
+
+            }else{
+                $.each(data, function(i, v) {
+                    var mt = ``;
+                if (v.b_dateyn == 'Y') {
+                    mt = `<p class="${mt}">${v.b_date}</p>`
+                }
+
+//                <div class="section4ImgDiv" style="background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url('${v.b_img}');">
+
+                var str = `<div class="mx-3 pointer" id="banner-one-${v.b_seq}" onclick="location.href='/store.php?sk=${v.b_link}'">
+                                    <div class="section4ImgDiv" style="background:url('${v.b_img}')">
+                                        <div class="section4ImgText text-center p-3 pb-0"><p class="mb-0">${v.b_name}</p>${mt}</div>
+                                    </div>
+                                </div>`
+                $(".shopslick").append(str);
+
+                // if(v.b_link){
+                //     $("#banner-one-"+v.b_seq).attr('onclick',`bannerLink(\'${v.b_link}\')`)
+                //     $("#banner-one-"+v.b_seq).addClass("pointer")
+                // }
+                });
+            }
+
+            console.log(Number(listNum));
+            if(Number(listNum) == 4){
+                $('.shopslick .slick-list').addClass('h-300');
+            }else{
+                $('.shopslick .slick-list').removeClass('h-300');
+            }
+
+            $('.shopslick').slick({
+                slidesToShow: Number(listNum),
+                slidesToScroll: 1,
+                // autoplay : 3000,
+                dots: false,
+                arrows: false,
+                draggable: false,
+                nextArrow: $('#slick-next'),
+                prevArrow: $('#slick-prev'),
+                responsive: [ // 반응형 웹 구현 옵션
+                    {
+                        breakpoint: 769, //화면 사이즈 960px
+                        settings: {
+                            //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+                            slidesToShow: 1
+                        }
+                    },
+                ]
+            });
+
+            /* 슬릭 휠 */
+            $('.shopslick').on('wheel', function(e) {
+                e.preventDefault();
+
+                if (e.originalEvent.deltaY < 0) {
+                    $(this).slick('slickPrev');
+                } else {
+                    $(this).slick('slickNext');
+                }
+            });
+        },
+        error: function(request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+
+function MainTwoSlideLoad() {
+    $.ajax({
+        url: SERVER_AP + "/main/mainbanner-slide-main-two",
+        type: "post",
+        cache: false,
+        data: {},
+        success: function(data) {
+            $.each(data, function(i, v) {
+                var mt = ``;
+                if (v.b_dateyn == 'Y') {
+                    mt = `<p class="${mt}">${v.b_date}</p>`
+                }
+                var str = `<div class="mx-3 pointer" id="banner-two-${v.b_seq}" onclick="location.href='/store.php?sk=${v.b_link}'">
+                                    <div class="section4ImgDiv" style="background: url('${v.b_img}');"></div>
+                                    <div class="section4ImgText text-center p-3"><p>${v.b_name}</p>${mt}</div>
+                                </div>`
+                $(".shopslick2").append(str)
+
+                // if(v.b_link){
+                //     $("#banner-two-"+v.b_seq).attr('onclick',`bannerLink(\'${v.b_link}\')`)
+                //     $("#banner-two-"+v.b_seq).addClass("pointer")
+                // }
+            })
+
+            $('.shopslick2').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: true,
+                draggable: false,
+                nextArrow: $('#slick-next2'),
+                prevArrow: $('#slick-prev2'),
+                responsive: [ // 반응형 웹 구현 옵션
+                    {
+                        breakpoint: 769, //화면 사이즈 960px
+                        settings: {
+                            //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+                            slidesToShow: 1
+                        }
+                    },
+                ]
+            });
+        },
+        error: function(request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+// function loadInsta(){
+//     $.ajax({
+//         url: "https://graph.instagram.com/17841454122546397/media?fields=id,media_type,media_url,permalink,thumbnail_url,username,caption&access_token=IGQVJWbnFpZAGNLRmNSZAUhIdGgyTjRnQlZAmRkNJeTVueVdyR3VmWnZAyWktmNnZAsamsycDY0ak1QaV9NMmRtN014cmw2U1dORUxzU2ZATWS1RenBKbE1QaGxzZAEp1aF9aR29OSWMtd1AtX29Gd0xKaTB1eAZDZD",
+//         type: "get",
+//         cache: false,
+//         data:{},
+//         success: function(data){
+//             //console.log("data >>",data);
+//             if(data.length != 0){
+//                 let str =`<div class="container text-center">
+//                                 <div class="popular_section_heading mb-50 text-center">
+//                                     <h5><i class="fa-brands fa-instagram"></i> INSTAGRAM</h5>
+//                                     <p class="pointer sub_title" onclick="window.open('https://www.instagram.com/design_lidot/')">@design_lidot</p>
+//                                 </div>
+//                                 <div class="row mt-4" id="instaWrap"></div>
+//                             </div>`;
+//                 $("#section7").append(str)
+//
+//                 $.each(data.data,function(i,v){
+//                     let col = `<div class="col-6 col-md-3 mb-4">
+//                                     <div class="instacol" style="background:url('${v.media_url}')"></div>
+//                                 </div>`;
+//                     $("#instaWrap").append(col)
+//                 })
+//             }
+//         },
+//         error: function (request, status, error){
+//             console.log(error);
+//         }
+//     });
+// }
+
+function loadInsta2() {
+    var winwidth = $(window).width()
+    var obj = new Object();
+    obj.i_type = winwidth > 768 ? 'PC' : 'M'
+    $.ajax({
+        url: SERVER_AP + "/admin/common/condition",
+        type: "post",
+        cache: false,
+        data: {
+            table: 'insta',
+            common: obj,
+        },
+        success: function(data) {
+            $("#instaWrap").html('');
+            if (data.length == 0) {
+                let str = `<div class="mx-auto">
+                                    <p>진행중인 프로젝트가 없습니다.</p>
+                                </div>`;
+                $("#project_section").append(str);
+            } else {
+                let str = `<div class="container text-center">
+                                    <div class="popular_section_heading mb-50 text-center">
+                                        <h5><i class="fa-brands fa-instagram"></i> INSTAGRAM</h5>
+                                        <p class="pointer sub_title" onclick="window.open('https://www.instagram.com/design_lidot/')">@design_lidot</p>
+                                    </div>
+                                    <div class="row mt-4" id="instaWrap"></div>
+                                </div>`;
+                $("#section7").append(str)
+
+                $.each(data, function(i, v) {
+                    // let col = `<div class="col-6 col-md-3 mb-4">
+                    //                 <div class="instacol" style="background:url('${v.i_img}')"></div>
+                    //             </div>`;
+                    let col = `<img src="${v.i_img}" alt="">`;
+                    $("#instaWrap").append(col)
+                })
+            }
+        },
+        error: function(request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+
+function loadProject() {
+    var winwidth = $(window).width()
+    $.ajax({
+        url: SERVER_AP + "/admin/common/all",
+        type: "post",
+        cache: false,
+        data: {
+            table: 'project',
+        },
+        success: function(data) {
+            $("#project_section").html('');
+            if (data.length == 0) {
+                let str = `<div class="mx-auto">
+                                    <p>진행중인 프로젝트가 없습니다.</p>
+                                </div>`;
+                $("#project_section").append(str);
+            } else {
+                if (data.length > 3) {
+                    let astr =
+                        `<span class="text-secondary ml-auto pointer" onclick="location.href='project_list.php'">더보기 ></span>`
+                    $("#project_section_arrow").append(astr);
+                }
+                $.each(data, function(i, v) {
+                    if (i < 3) {
+                        let img = winwidth > 768 ? v.p_img : v.p_img_m
+
+                        // let str = `
+                        //         <div class="mx-3 pointer" id="banner-one-${v.b_seq}" onclick="location.href='/store.php?sk=${v.b_link}'">
+                        //             <div class="section4ImgDiv" style="background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url('${v.b_img}');">
+                        //                 <div class="section4ImgText text-center p-3 pb-0"><p class="mb-0">${v.b_name}</p>${mt}</div>
+                        //             </div>
+                        //         </div>
+                        // `
+
+                        let str = `
+                                <div class="pointer col-12 pro_img_${v.p_seq} col-lg-4 ${v.p_comming_soon == 'Y' ? 'comingsoon' : 'pointer'}" >
+                                    <div class="section4ImgDiv" style="background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url('${img}');">
+                                        <div class="section4ImgText text-center p-3 pb-0">
+                                            <p class="mb-3 text-left" style="font-size:14px">${v.p_title}</p>
+                                            <div class="text-left text_2_line text-white">${v.p_text}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                               `;
+                        $("#project_section").append(str);
+
+                        if (v.p_comming_soon != 'Y') {
+                            $(`.pro_img_${v.p_seq}`).attr('onclick',
+                                `location.href="/project_detail.php?p_seq=${v.p_seq}"`)
+                        }
+                    }
+                })
+            }
+        },
+        error: function(request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function fadeInOutLoad() {
+    $.ajax({
+        url: SERVER_AP + "/main/mainbanner-fade",
+        type: "post",
+        cache: false,
+        data: {},
+        success: function(data) {
+            $(".animationImg1").attr('src', data[0].b_img)
+            $(".animationImg2").attr('src', data[1].b_img)
+            $(".animationImg3").attr('src', data[2].b_img)
+            $(".animationImg4").attr('src', data[3].b_img)
+        },
+        error: function(request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+
+function ProClick(p_seq) {
+    location.href = '/product_detail.php?p_seq=' + p_seq;
+}
+</script>
+<script src="/js/pages/shop_main/shop_main.js"></script>
+<script src="/js/pages/shop_main/shop_main_bestreview.js"></script>
+<script src="/js/pages/shop_main/shop_main_banner.js"></script>
+<!-- <script src="/js/pages/shop_main/shop_main_hashtag.js"></script> -->
+
+<? include_once $_SERVER["DOCUMENT_ROOT"].'/shop_footer.php'; ?>

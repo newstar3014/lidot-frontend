@@ -1,0 +1,545 @@
+table td {
+  border: 1px solid #ebecef;
+}
+
+table th {
+  background-color: #fff;
+  border: 1px solid #ebecef;
+}
+
+#contact table th {
+  /* width: 20%; */
+  border: 1px solid #ebecef;
+}
+
+.menu-box {
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pro-thumnail {
+  width: 50px;
+  height: 50px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.table-wrap {
+  overflow-x: scroll;
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.table-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.my_page_intro {
+  color: #fff;
+  font-size: 20px;
+  padding: 0px 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.m-w-1002 {
+  min-width: 200px;
+  background: #f9f9f9;
+}
+
+.fs-15 {
+  font-size: 15px;
+}
+
+.fs-25 {
+  font-size: 25px;
+}
+
+.min-50 {
+  min-width: 50px;
+}
+
+.dots {
+  /* width: 200px; */
+
+  /* 특정 단위로 텍스트를 자르기 위한 구문 */
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mypage_menu_head {
+  background: #f9f9f9;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 0px;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+.mypage_menu_box {
+  flex: 1;
+  text-align: center;
+}
+
+.mypage_menu_list div {
+  padding: 15px 0px;
+}
+
+.pro_info_m_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  font-size: 11px;
+}
+
+.pro_name_elipsis {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: -webkit-box; */
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.table_order,
+.table_order td,
+.table_order th {
+  font-size: 12px;
+}
+
+.m-w-100 {
+  width: 100px;
+}
+
+.more-credit-table td {
+  vertical-align: top !important;
+}
+
+#f_td {
+  width: 15%;
+}
+
+.m-none {
+  display: none;
+}
+
+.one_height_line {
+  width: 0.5px;
+  height: 80px;
+  background: #c4c4c4;
+}
+
+.daybtn {
+  width: 20%;
+}
+
+.cart_quantity,
+.wish_quantity,
+.coupon_quantity {
+  background-color: #0f99f3;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 10px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 20px;
+  font-weight: 700;
+  display: inline-block;
+  position: relative;
+  top: -2px;
+}
+
+.btn-sm {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+}
+
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.pro-thumnail {
+  width: 50px;
+  height: 50px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.review_img {
+  width: 150px;
+  height: 100px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.reviewimgClose {
+  position: absolute;
+  top: 5px;
+  right: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  background-color: #bbb;
+  box-shadow: 0 0 3px #888;
+  padding: 3px 3px;
+  border-radius: 2px;
+  transition: all 0.4s;
+}
+
+.reviewimgMore {
+  position: absolute;
+  top: 5px;
+  right: 28px;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  background-color: #bbb;
+  box-shadow: 0 0 3px #888;
+  padding: 3px 3px;
+  border-radius: 2px;
+  transition: all 0.4s;
+}
+
+.reviewimgChange {
+  position: absolute;
+  top: 5px;
+  right: 27px;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  background-color: #bbb;
+  box-shadow: 0 0 3px #888;
+  padding: 3px 3px;
+  border-radius: 2px;
+  transition: all 0.4s;
+}
+
+.reviewimgMore:hover,
+.reviewimgClose:hover,
+.reviewimgChange:hover {
+  opacity: 0.7;
+}
+
+.modal-dialog-centered {
+  justify-content: center;
+}
+
+.ask-close-Btn {
+  position: absolute;
+  right: 10px;
+}
+
+.breadcrumb {
+  float: right;
+  padding-right: 0;
+  margin-right: 0px;
+}
+
+.breadcrumb-item a {
+  color: #999999;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+}
+
+.cancel_more {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+}
+.cnt_wrap {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #747794;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.b_wrap {
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  border: 1px solid #ebecef;
+  cursor: pointer;
+}
+
+.b_wrap.l {
+  border-right: none;
+}
+
+.btn-gray {
+  background: #747794;
+  color: #fff;
+  border-radius: 8px !important;
+  font-weight: normal;
+  height: auto;
+  line-height: 16px;
+}
+
+.nodata_wrap {
+  /* padding: */
+  border: 1px solid #ebecef;
+  border-top: 0;
+}
+
+.btn-khaki {
+  background: #747794 !important;
+  color: #fff;
+}
+
+.pr_comments {
+  display: flex;
+  justify-content: center;
+}
+
+.pr_comments p {
+  width: 300px;
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.ell {
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fr_td {
+  width: 200px;
+}
+
+.sub_mypage_menu_div {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: #a4a0a4;
+}
+
+.sub_mypage_menu_div .gray_bar {
+  width: 1px;
+  height: 20px;
+  background: #dcdcdc;
+}
+
+.page-title {
+  border-bottom: 1px solid #ebecef;
+  padding-bottom: 30px;
+}
+.btn-gray {
+  background: #999999;
+  color: #fff;
+}
+
+.bg_f4 {
+  background: #f4f4f4;
+}
+
+.gray_bar {
+  width: 1px;
+  height: 70px;
+  background: #dcdcdc;
+}
+
+.number_text {
+  font-size: 20px;
+}
+.table {
+  color: #606060 !important;
+}
+.fs-11 {
+  font-size: 11px;
+}
+.f-25 {
+  font-size: 25px;
+}
+.td_p_ p {
+  margin-bottom: 0px;
+}
+.day_wrap {
+  gap: 10px;
+}
+.title_wrap_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+}
+.title_wrap_board {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 원하는 줄 수 지정 */
+  -webkit-box-orient: vertical;
+  font-size: 12px !important;
+  overflow: hidden;
+}
+.title_wrap_board * {
+  font-size: 12px !important;
+}
+.title_wrap_board div {
+  font-size: 12px !important;
+}
+.title_wrap_board p {
+  font-size: 12px !important;
+  margin-bottom: 0px;
+}
+.df-cnb-item-subicon {
+  font-size: 16px;
+  color: #555;
+}
+
+.df-cnb-item-subicon:before {
+  font-family: xeicon !important;
+  content: "\e93f";
+  font-style: normal;
+}
+
+.df-slider.swiper-button-prev:after,
+.df-slider.swiper-button-next:after {
+  position: relative;
+  font-family: xeicon !important;
+  letter-spacing: 0;
+  text-transform: none;
+  content: "\e93e";
+  font-variant: initial;
+  line-height: 1;
+}
+.ing_arr {
+  font-size: 60px !important;
+  color: #ebecef;
+}
+
+html [class*="df-lang-"] i {
+  font-size: 39px;
+  display: inline-block;
+  vertical-align: middle;
+  font-style: normal;
+}
+
+[class^="xi-"],
+[class*=" xi-"] {
+  font-family: "xeicon" !important;
+  display: inline-block;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.first_date_div {
+  width: 75%;
+}
+.second_date_div {
+  width: 25%;
+}
+.modal-title {
+  color: #000;
+}
+@media (max-width: 768px) {
+  .m-w-30 {
+    width: 30%;
+  }
+
+  .m-w-100 {
+    width: 70px;
+  }
+
+  #f_td {
+    width: 30%;
+  }
+
+  input[type="date"] {
+    font-size: 12px;
+  }
+
+  .modal-title {
+    font-size: 13px;
+  }
+
+  .m-none {
+    display: block;
+  }
+
+  .top_wrap {
+    font-size: 13px;
+  }
+
+  .b_wrap {
+    width: 50%;
+    justify-content: center;
+  }
+
+  .order_arr {
+    width: 15px;
+  }
+
+  .pr_comments p {
+    max-width: 150px !important;
+  }
+  .wrap_div_my {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .day_wrap {
+    flex-wrap: wrap;
+    font-size: 12px;
+    gap: 5px;
+  }
+  .day_wrap input {
+    width: 20%;
+  }
+  .sub_mypage_menu_div .gray_bar {
+    display: none;
+  }
+  .first_date_div {
+    width: 100%;
+        padding: 10px 0 5px 0;
+  }
+  .second_date_div {
+    width: 100%;
+    border-top: 0 !important;
+  }
+  .ing_arr {
+    font-size: 30px !important;
+    color: #ebecef;
+  }
+  .cancel_more {
+    position: absolute;
+    bottom: 7px;
+    right: 10px;
+  }
+}

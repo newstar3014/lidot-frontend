@@ -1,0 +1,261 @@
+.table-account {
+  font-weight: normal;
+}
+
+.table-account span {
+  font-weight: bold;
+}
+
+.table-account span:last-child {
+  font-size: 18px;
+}
+
+.qcbtn {
+  font-weight: normal;
+  cursor: pointer;
+  margin-left: 10px;
+  width: 70px;
+  display: inline-block;
+}
+
+.delinfobox {
+  background: white;
+  opacity: 0;
+  transition: 0.3s;
+  font-weight: normal !important;
+  font-size: 12px !important;
+  position: absolute;
+  top: 7px;
+  right: 33%;
+}
+
+.fs-11 {
+  font-size: 11px;
+}
+
+.delinfobox.on {
+  opacity: 1;
+}
+
+.border-bold-top {
+  border-top: 2px solid black !important;
+}
+
+.deltem-table td {
+  position: relative;
+}
+
+@media (min-width: 760px) {
+  .fs-md-20 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .mobile {
+    display: none;
+  }
+
+  .qty-text {
+    display: block;
+  }
+
+  .qcbtn {
+    margin-left: 0;
+    display: block;
+    margin-top: 10px;
+  }
+
+  .dots {
+    /* width: 200px; */
+
+    /* 특정 단위로 텍스트를 자르기 위한 구문 */
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* .deltem-table{
+            min-width: 550px;
+        } */
+
+  .deltem-table,
+  .deltem-table td,
+  .deltem-table th {
+    font-size: 12px;
+  }
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.borderOne {
+  border: 1px solid #dee2e6;
+  background-color: #f8f8ff;
+  padding: 30px 0px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.borderOne:nth-child(even) {
+  border-right: 0px !important;
+  border-left: 0px !important;
+}
+
+.borderTwo {
+  border: 1px solid #dee2e6;
+  padding: 30px 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 0px !important;
+  border-bottom: 0px !important;
+}
+
+.borderTwo:nth-child(even) {
+  border-right: 0px !important;
+  border-left: 0px !important;
+}
+
+.f_td {
+  width: 15%;
+}
+
+@media (max-width: 768px) {
+  .f_td {
+    width: 30%;
+  }
+}
+
+.breadcrumb {
+  float: right;
+  padding-right: 0;
+  margin-right: -10px;
+}
+
+.breadcrumb-item a {
+  color: #999999;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+}
+
+.page-title {
+  border-bottom: 1px solid #ebecef;
+  padding-bottom: 30px;
+}
+
+.btn-khaki {
+  background: #747794 !important;
+  color: #fff;
+}
+
+.coupon-detail {
+  padding: 10px;
+}
+
+.coupon-detail li {
+  margin-bottom: 10px;
+}
+
+.coupon-detail li:last-child {
+  margin-bottom: 0;
+}
+
+.pr_comments p {
+  margin-bottom: 0;
+  max-width: 900px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ell {
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fr_td {
+  width: 200px;
+}
+
+#board-search-wrap select {
+  padding: 3px;
+  border-color: #ebebeb;
+}
+
+#board-search-wrap #board-sk {
+  padding: 1px;
+  border: 1px solid #ebebeb;
+  outline: none;
+}
+
+.btn-search {
+  background: #84868b;
+  color: white;
+  padding: 5px 20px;
+  border-radius: 3px;
+}
+
+.nodata_wrap {
+  /* padding: */
+  border: 1px solid #ebecef;
+  border-top: 0;
+}
+
+.give_info,
+.use_info {
+  border: 1px solid #ebecef;
+}
+
+.give_info .l {
+  border-left: 1px solid #ebecef;
+}
+
+.give_info .l .bt,
+.use_info .bt {
+  border-bottom: 1px solid #ebecef;
+}
+
+.cart-table .table-bordered td,
+.cart-table .table-bordered th {
+  background: #fff;
+}
+
+.btn-gray {
+  background: #999999;
+  color: #fff;
+}
+
+.bg_f4 {
+  background: #f4f4f4;
+}
+
+.gray_bar {
+  width: 1px;
+  height: 70px;
+  background: #dcdcdc;
+}
+
+.number_text {
+  font-size: 20px;
+}
+
+.fs-11 {
+  font-size: 11px;
+}
+
+.table td,
+.table th {
+  font-weight: 100;
+}

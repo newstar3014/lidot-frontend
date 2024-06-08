@@ -1,0 +1,44 @@
+.table td{
+    border-top: 1px solid #efefef !important;
+}
+.table thead th{
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.commu_inner td{
+    text-align: center;
+}
+.commu_inner .board-title{
+    text-align: left;
+}
+.cate_td{
+    width: 10%;
+}
+.name_td{
+    width: 10%;
+}
+.date_td{
+    width: 10%;
+}
+.view_td{
+    width: 10%;
+}
+
+.border_b{
+    border-bottom: 1px solid #f1f1f1;
+}
+a{
+    color: #555;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+@media (max-width:768px) {
+    table{
+        font-size: 12px;
+    }
+    .dnone{
+        display: none;
+    }
+}

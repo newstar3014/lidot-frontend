@@ -1,0 +1,15 @@
+.b_footer {
+    background-color: #ebecef;
+}
+
+.b_footer p {
+    font-size: 12px;
+    color: #000;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.re_logo {
+    width: 50px;
+}

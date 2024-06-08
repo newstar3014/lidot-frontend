@@ -1,0 +1,25 @@
+.point_wrap {
+  border: 3px solid #e7e7e7;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.point_wrap .one_div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+.tab_wrap div {
+  padding: 0px 10px;
+}
+.tab_wrap {
+  min-width: 475px;
+  font-size: 11px;
+}
+@media (max-width: 769px) {
+  .tab_wrap {
+    min-width: auto;
+    font-size: 11px;
+  }
+}

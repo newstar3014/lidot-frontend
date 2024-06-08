@@ -1,0 +1,43 @@
+.footer_area.white-footer .single_footer_area .subscribtion_form .family_site{
+    border: 1px solid #d6e6fb;
+    color: #070a57;
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.badge_primary{
+    background-color: #0f99f3 !important;
+}
+.single_popular_item .badge_primary > span{
+    background-color: #0f99f3 !important;
+}
+.single_popular_item .badge_primary > span:before{
+    border-color: #0f99f3 transparent #0f99f3 #0f99f3 !important;
+}
+.badge_red{
+    background-color: #ff0000 !important;
+}
+.single_popular_item .badge_red > span{
+    background-color: #ff0000 !important;
+}
+.single_popular_item .badge_red > span:before{
+    border-color: #ff0000 transparent #ff0000 #ff0000 !important;
+}
+.badge_orange{
+    background-color: #f7a305 !important;
+}
+.single_popular_item .badge_orange > span{
+    background-color: #f7a305 !important;
+}
+.single_popular_item .badge_orange > span:before{
+    border-color: #f7a305 transparent #f7a305 #f7a305 !important;
+}
+.badge_brown{
+    background-color: #8f5100 !important;
+}
+.single_popular_item .badge_brown > span{
+    background-color: #8f5100 !important;
+}
+.single_popular_item .badge_brown > span:before{
+    border-color: #8f5100 transparent #8f5100 #8f5100 !important;
+}

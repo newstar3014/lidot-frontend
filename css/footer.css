@@ -1,0 +1,27 @@
+    footer{
+        font-size: 14px;
+    }
+    .footer_top_box span{
+        cursor: pointer;
+        color: #666;
+    }
+    .footer_top_box span:hover{
+        color: black;
+    }
+    footer p{
+        margin-bottom: 8px;
+    }
+    .breadcumb_area{
+        z-index: 0 !important;
+    }
+    .wishlist-table{
+        z-index: 0 !important;
+    }
+    .breadcumb_area{
+        margin-bottom: 50px;
+    }
+    @media (max-width: 769px){
+        #paged-wrap{
+            margin-bottom: 50px;
+        }
+    }
