@@ -1,0 +1,453 @@
+<? include_once $_SERVER["DOCUMENT_ROOT"].'/_header.php'; ?>
+
+<style>
+    .hide-detail{
+        display: none;
+    }
+</style>
+
+<div class="container preview d-none">
+    <div class="alert alert-danger mb-0 mt-3" role="alert">
+        <i class="bi bi-eye"></i> 관리자 미리보기 화면입니다
+    </div>
+</div>
+
+<!-- breadcrumb -->
+<div class="tf-breadcrumb">
+    <div class="container">
+        <div class="tf-breadcrumb-wrap d-flex justify-content-between flex-wrap align-items-center">
+            <div id="product-detail-breadcrumb" class="tf-breadcrumb-list"></div>
+        </div>
+    </div>
+</div>
+<!-- /breadcrumb -->
+<!-- default -->
+<section class="flat-spacing-4 pt_0 pb-5">
+    <div class="tf-main-product section-image-zoom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="tf-product-media-wrap sticky-top">
+                        <div class="thumbs-slider">
+                            <div dir="ltr" class="swiper tf-product-media-thumbs other-image-zoom" data-direction="vertical">
+                                <div id="product-swiper1" class="swiper-wrapper stagger-wrap"></div>
+                            </div>
+                            <div dir="ltr" class="swiper tf-product-media-main" id="gallery-swiper-started">
+                                <div id="product-swiper2" class="swiper-wrapper"></div>
+                                <div class="swiper-button-next button-style-arrow thumbs-next"></div>
+                                <div class="swiper-button-prev button-style-arrow thumbs-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="tf-product-info-wrap position-relative">
+                        <div class="tf-zoom-main"></div>
+                        <div id="product-detail-info" class="tf-product-info-list other-image-zoom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /default -->
+<!-- accordion -->
+<section class="flat-spacing-12 pt_0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="widget-tabs style-two-col">
+                    <ul class="widget-menu-tab">
+                        <li class="item-title active">
+                            <span class="inner">DETAIL</span>
+                        </li>
+                        <li class="item-title">
+                            <span class="inner">SPECS</span>
+                        </li>
+                        <li class="item-title">
+                            <span class="inner">REVIEW</span>
+                        </li>
+                        <li class="item-title">
+                            <span class="inner">Q&A</span>
+                        </li>
+                        <li class="item-title">
+                            <span class="inner">TERMS</span>
+                        </li>
+                    </ul>
+                    <div class="widget-content-tab">
+                        <div id="product-detail-contents" class="widget-content-inner active"></div>
+                        <div class="widget-content-inner">
+                            <table class="tf-pr-attrs">
+                                <tbody>
+                                    <tr>
+                                        <th>상품번호</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>상품상태</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>품명</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>KC 인증 필 유무</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>색상</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>구성품</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>주요소재</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>제조자/수입자</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>제조국</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>크기</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>배송/설치비용</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>품질보증기준</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <th>A/S 책임자 전화번호</th>
+                                        <td>상세페이지 참조</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="widget-content-inner">
+                            <div class="tab-reviews write-cancel-review-wrap">
+                                <div class="tab-reviews-heading">
+                                    <div class="top">
+                                        <div class="text-center">
+                                            <h1 class="review-score-h1 number fw-4">4.8점</h1>
+                                            <div class="list-star">
+                                                <i class="icon icon-star"></i>
+                                                <i class="icon icon-star"></i>
+                                                <i class="icon icon-star"></i>
+                                                <i class="icon icon-star"></i>
+                                                <i class="icon icon-star"></i>
+                                            </div>
+                                            <p>(5점 만점)</p>
+                                        </div>
+                                        <div class="rating-score">
+                                            <div class="item">
+                                                <div class="number-1 text-caption-1">5</div>
+                                                <i class="icon icon-star"></i>
+                                                <div class="line-bg">
+                                                    <div style="width: 94.67%;"></div>
+                                                </div>
+                                                <div class="number-2 text-caption-1">59</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="number-1 text-caption-1">4</div>
+                                                <i class="icon icon-star"></i>
+                                                <div class="line-bg">
+                                                    <div style="width: 60%;"></div>
+                                                </div>
+                                                <div class="number-2 text-caption-1">46</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="number-1 text-caption-1">3</div>
+                                                <i class="icon icon-star"></i>
+                                                <div class="line-bg">
+                                                    <div style="width: 0%;"></div>
+                                                </div>
+                                                <div class="number-2 text-caption-1">0</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="number-1 text-caption-1">2</div>
+                                                <i class="icon icon-star"></i>
+                                                <div class="line-bg">
+                                                    <div style="width: 0%;"></div>
+                                                </div>
+                                                <div class="number-2 text-caption-1">0</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="number-1 text-caption-1">1</div>
+                                                <i class="icon icon-star"></i>
+                                                <div class="line-bg">
+                                                    <div style="width: 0%;"></div>
+                                                </div>
+                                                <div class="number-2 text-caption-1">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="reply-comment cancel-review-wrap">
+                                    <div class="d-flex mb_24 gap-20 align-items-center justify-content-between flex-wrap">
+                                        <h5 class="">구매자 리뷰 2개</h5>
+                                    </div>
+                                    <div class="reply-comment-wrap">
+                                        <div class="reply-comment-item">
+                                            <div class="user">
+                                                <div>
+                                                    <h6>
+                                                        <a href="#" class="link"><i class="bi bi-person-circle"></i> ljh2****</a>
+                                                    </h6>
+                                                    <div class="day text_black-2">2025-02-27</div>
+                                                </div>
+                                            </div>
+                                            <div class="reply-comment-img-wrap">
+                                                <div style="background-image:url('https://lidot-s3.s3.ap-northeast-2.amazonaws.com/images/2023-03-23%2012%3A19%3A41product_review/20230323121949TFAC7100B%EC%83%81%EC%84%B8%EC%83%B7.jpg')"></div>
+                                                <div style="background-image:url('https://lidot-s3.s3.ap-northeast-2.amazonaws.com/images/review/20231004174547TFAC7100B1.jpg')"></div>
+                                            </div>
+                                            <p class="text_black-2">혼자 자가설치했어요. 설명서 보고 하니깐 별로 어렵지 않네요. 설치해놓으니깐 저희집 욕실과 찰떡이네요!! 너무 맘에 들어요!! 세면수전과 샤워수전도 니켈로 바꾸고 싶어요. 질문이 많았는데 친절한 상담 감사합니다.</p>
+                                        </div>
+                                        <div class="reply-comment-item type-reply">
+                                            <div class="user">
+                                                <div class="image">
+                                                    <img src="/img/symbol.png" alt="">
+                                                </div>
+                                                <div>
+                                                    <h6>
+                                                        <a href="#" class="link">디자인리닷</a>
+                                                    </h6>
+                                                    <div class="day text_black-2">2025-02-27</div>
+                                                </div>
+                                            </div>
+                                            <p class="text_black-2">고객님 욕실이 환해지셨네요!! 너무 잘 어울립니다. 한달뒤 사용후기 또 남겨주세요!!!</p>
+                                        </div>
+                                        <div class="reply-comment-item">
+                                            <div class="user">
+                                                <div>
+                                                    <h6>
+                                                        <a href="#" class="link"><i class="bi bi-person-circle"></i> abcd****</a>
+                                                    </h6>
+                                                    <div class="day text_black-2">2025-02-24</div>
+                                                </div>
+                                            </div>
+                                            <div class="reply-comment-img-wrap">
+                                                <div style="background-image:url('https://lidot-s3.s3.ap-northeast-2.amazonaws.com/images/2023-04-11%2016%3A14%3A36product_review/20230411161436%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C10.jpg')"></div>
+                                            </div>
+                                            <p class="text_black-2">타공사이즈 구애없이 자가설치했네요. 디자인도 깔끔하고 무엇보다 초록불이 있어서 환풍기가 켜져있는지 확인할수 있어서 좋습니다.잘 쓸께요!!!!</p>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="widget-content-inner">
+                            <table class="tf-pr-attrs">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>문의내용</th>
+                                        <th>등록일</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>오늘 주문하면 상품 받기까지 얼마나 걸리나요?</td>
+                                        <td>2025-02-11</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>설치는 어떻게 해야하는지 궁금합니다</td>
+                                        <td>2025-01-28</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="widget-content-inner">
+                            <div class="tf-page-privacy-policy">
+                                <div class="title">상품결제정보</div>
+                                <p>
+                                    무통장 입금은 상품 구매 대금은 PC뱅킹, 인터넷뱅킹, 텔레뱅킹 혹은 가까운 은행에서 직접 입금하시면 됩니다.<br>
+                                    주문시 입력한 입금자명과 실제입금자의 성명이 반드시 일치하여야 하며, 7일 이내로 입금을 하셔야 하며 입금되지 않은 주문은 자동취소 됩니다.
+                                </p>
+                                <div class="title">배송정보</div>
+                                <p>배송 방법 : 택배<br>
+                                    배송 지역 : 전국지역<br>
+                                    배송 비용 : 3,000원<br>
+                                    배송 기간 : 2일 ~ 7일<br>
+                                    배송 안내 :<br>
+                                    - 배송비: 기본배송료(상품별로 상이)는 3,000원 부터 입니다. (도서,산간,오지 일부지역은 배송비가 추가될 수 있습니다) 50,000원 이상 구매 시 무료배송입니다.<br>
+                                    - 일반 배송은 입금 확인 후 2~7일 이내(주말, 공휴일 제외) 배송되나, 해외 직수입 제품은 국내 보유 재고 부족 시 배송 기간이 다소 지연 될 수 있습니다.<br>
+                                    - 주문 물량이 폭주할 경우 다소 배송기간이 지연될 수 있습니다.<br>
+                                    (박스도 제품의 일부이므로 박스를 훼손하거나 손상이 있는 경우 반품이 불가하오니 신중히 구매해주시기 바랍니다)
+                                </p>
+                                <div class="title">교환 및 반품정보</div>
+                                <p>
+                                교환 / 반품 불가 한 경우<br>
+                                - 구매 후, 포장을 개봉하였거나 포장이 훼손되어 상품가치가 상실된 경우<br>
+                                - 고객님의 책임 있는 사유로 상품 등이 멸실 또는 훼손된 경우<br>
+                                - 고객님의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우<br>
+                                - 시간의 경과에 의하여 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우<br>
+                                - 복제가 가능한 상품 등의 포장을 훼손한 경우<br>
+                                (자세한 내용은 고객만족센터 1:1 E-MAIL상담을 이용해 주시기 바랍니다.)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /accordion -->
+<!-- product -->
+<section class="flat-spacing-1 pt_0">
+    <div class="container">
+        <div class="flat-title">
+            <span class="title">이런 상품들은 어떠세요?</span>
+        </div>
+        <div class="hover-sw-nav hover-sw-2">
+            <div dir="ltr" class="swiper tf-sw-product-relate wrap-sw-over" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="15" data-pagination="2" data-pagination-md="3" data-pagination-lg="3">
+                <div id="product-relate-wrap" class="swiper-wrapper"></div>
+            </div>
+            <div class="nav-sw nav-next-slider nav-next-product box-icon w_46 round"><span class="icon icon-arrow-left"></span></div>
+            <div class="nav-sw nav-prev-slider nav-prev-product box-icon w_46 round"><span class="icon icon-arrow-right"></span></div>
+        </div>
+    </div>
+</section>
+<!-- /product -->
+
+
+
+<script>
+
+    var seq = '<? echo $_GET["seq"]; ?>';
+    if(!seq) wrongPage();
+    var preview = '<? echo $_GET["preview"]; ?>';
+
+    $(function() {
+        console.log('ㅡ PAGE READY');
+
+        if(preview == 'Y') $('.preview').removeClass('d-none');
+
+        dataLoad();
+
+        $('#product-swiper2').on('click', 'a', function(e) {
+            e.preventDefault(); // 기본 동작(팝업)을 막기
+        });
+    });
+
+    function dataLoad(){
+        ajaxCall('/product/list', { ppp: 1, page:1, seq}, function(data) {
+            let v = data.rows[0];
+            console.log(v);
+            setBreadcrumb(v.category);
+            setProductSlider(v.img);
+
+            $('#product-detail-info').html(makeProductInfoStr(v, 'detail'));
+            $('#product-detail-contents').html(v.contents);
+
+            relateLoad();
+        });
+    }
+
+    function setProductSlider(img){
+        let imgArray = JSON.parse(img);
+            
+        $.each(imgArray, function(ii, vv){
+            let str = `
+                <div class="swiper-slide stagger-item">
+                    <div class="item">
+                        <img class="lazyload" data-src="${vv}" src="${vv}" alt="img-product">
+                    </div>
+                </div>
+            `;
+            $('#product-swiper1').append(str);
+            let str2 = `
+                <div class="swiper-slide">
+                    <a href="${vv}" target="_blank" class="item">
+                        <img class="tf-image-zoom lazyload" data-zoom="${vv}" data-src="${vv}" src="${vv}" alt="">
+                    </a>
+                </div>
+            `;
+            $('#product-swiper2').append(str2);
+        });
+    }
+
+    function setBreadcrumb(v){
+        let cateArray = v.reverse();
+        let cateStr = ``;
+        cateArray.forEach((cate, index) => {
+            let isLast = index === cateArray.length - 1; // 마지막 요소인지 확인
+            cateStr += `<a href="/z/product/list?sc=${cate.seq}" class="text">${cate.name}</a>`;
+            if (!isLast) {
+                cateStr += ` <i class="icon icon-arrow-right"></i> `;
+            }
+        });
+        $('#product-detail-breadcrumb').html(cateStr);
+    }
+
+    function relateLoad(){
+        ajaxCall('/product/list', { 
+            ppp: DEFAULT_PPP, page:1, main:'best'
+        }, function(data) {
+            $.each(data.rows, function(i, v){
+                itemDrawSlide(v, 'product-relate-wrap');
+            });
+            setSliderRelate();
+        });
+    }
+
+    function itemDrawSlide(v, target){
+        let itemStr = `<div class="swiper-slide" lazy="true">`;
+        itemStr += makeProductItemStr(v);
+        itemStr += `</div>`;
+        $(`#${target}`).append(itemStr);
+    }
+
+    function setSliderRelate(){
+
+        var preview = $(".tf-sw-product-relate").data("preview");
+        var tablet = $(".tf-sw-product-relate").data("tablet");
+        var mobile = $(".tf-sw-product-relate").data("mobile");
+        var spacingLg = $(".tf-sw-product-relate").data("space-lg");
+        var spacingMd = $(".tf-sw-product-relate").data("space-md");
+        var swiper = new Swiper(".tf-sw-product-relate", {
+            autoplay: {
+                delay: 3000, // 3초마다 자동 슬라이드
+                disableOnInteraction: false, // 사용자가 슬라이드해도 자동 재생 계속
+                pauseOnMouseEnter: true,
+            },
+            slidesPerView: mobile,
+            spaceBetween: spacingMd,
+            speed: 1000,
+            loop: true, // 무한 슬라이드
+            slidesPerGroup: 1,
+            navigation: {
+                clickable: true,
+                nextEl: ".nav-prev-product",
+                prevEl: ".nav-next-product",
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: tablet,
+                    spaceBetween: spacingLg,
+                    slidesPerGroup: 1,
+                },
+                1150: {
+                    slidesPerView: preview,
+                    spaceBetween: spacingLg,
+                    slidesPerGroup: 1,
+                },
+            }
+        });
+
+    }
+</script>
+
+<? include_once $_SERVER["DOCUMENT_ROOT"].'/_footer.php'; ?>
