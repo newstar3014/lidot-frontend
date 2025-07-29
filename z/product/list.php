@@ -67,7 +67,6 @@
 // 전역 변수
 let c_seq = getUrlParam('c_seq') || '';
 let category = []; // depth 순서대로 담김
-let menuData = window.menuData || [];
 let attr2 = '';
 let attr3 = '';
 let attrArr = [];
