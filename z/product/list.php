@@ -408,29 +408,31 @@
 
 
     function isDescendantCategory(parentSeq) {
-        const findParent = (nodeList, targetSeq, parentTarget) => {
-            for (const node of nodeList) {
-                if (node.seq == parentTarget) {
-                    // 내부에서 자식 찾기
-                    return containsChild(node, targetSeq);
-                } else if (node.children?.length) {
-                    const found = findParent(node.children, targetSeq, parentTarget);
+        if (!menuData || !c_seq) return false;
+
+        const containsTarget = (nodes) => {
+            for (const node of nodes) {
+                if (node.seq == parentSeq) {
+                    return containsChild(node, c_seq);
+                }
+                if (node.children?.length) {
+                    const found = containsTarget(node.children);
                     if (found) return true;
                 }
             }
             return false;
         };
 
-        const containsChild = (parentNode, targetSeq) => {
-            if (!parentNode.children) return false;
-            for (const child of parentNode.children) {
-                if (child.seq == targetSeq) return true;
-                if (child.children?.length && containsChild(child, targetSeq)) return true;
+        const containsChild = (node, targetSeq) => {
+            if (node.seq == targetSeq) return true;
+            if (!node.children) return false;
+            for (const child of node.children) {
+                if (containsChild(child, targetSeq)) return true;
             }
             return false;
         };
 
-        return findParent(menuData, c_seq, parentSeq);
+        return containsTarget(menuData);
     }
 
     function goReload(){
