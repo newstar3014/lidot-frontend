@@ -159,14 +159,9 @@
 <script>
 
     $(function() {
-        menuLoad();
+        menuDraw(menuData);
     });
 
-    function menuLoad(){
-        ajaxCall('/category/menu', {}, function(data) {
-            menuDraw(data);
-        });
-    }
 
     function menuDraw(data){
         let str = ``;
