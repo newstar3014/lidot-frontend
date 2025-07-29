@@ -139,19 +139,6 @@ function alerts(type, html, confirmCallback, confirmButtonText = '확인') {
 // SweetAlert2 confirms 함수 (확인 및 취소 버튼)
 function confirms(type, html, confirmCallback, cancelCallback, confirmButtonText = '확인', cancelButtonText = '취소') {
 
-    console.log('컨펌스');
-    
-
-    console.log('confirms 인자 확인:', {
-    type,
-    html,
-    confirmCallback,
-    cancelCallback,
-    confirmButtonText,
-    cancelButtonText
-    });
-    
-
 	Swal.fire({
 		icon: type, // 알림 유형 ('info', 'warning', 'error', 'success', 'question')
 		html: html,   // 다이얼로그 내용
