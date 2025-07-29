@@ -33,7 +33,7 @@ function makeProductItemStr(v, isOption = false){
     let isVideo = false;
     let videoStr = ``;
 
-    if((sc2 == '40' || sc2 == '7') && v?.o_img){
+    if ((isDescendantCategory(40) || isDescendantCategory(7)) && v?.o_img) {
         imgArray = [v.o_img];
     }else{
         imgArray = JSON.parse(v.img);
@@ -1251,4 +1251,34 @@ async function downloadFiles(target_seq, target) {
 
     });
     
+}
+
+
+
+function isDescendantCategory(parentSeq) {
+    if (!menuData || !c_seq) return false;
+
+    const containsTarget = (nodes) => {
+        for (const node of nodes) {
+            if (node.seq == parentSeq) {
+                return containsChild(node, c_seq);
+            }
+            if (node.children?.length) {
+                const found = containsTarget(node.children);
+                if (found) return true;
+            }
+        }
+        return false;
+    };
+
+    const containsChild = (node, targetSeq) => {
+        if (node.seq == targetSeq) return true;
+        if (!node.children) return false;
+        for (const child of node.children) {
+            if (containsChild(child, targetSeq)) return true;
+        }
+        return false;
+    };
+
+    return containsTarget(menuData);
 }
