@@ -279,6 +279,11 @@
             return null;
         };
 
+        console.log('goCate()');
+        
+        console.log(menuData);
+        
+
         const node = findNodeBySeq(menuData, _seq);
         if (!node) return;
 
