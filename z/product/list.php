@@ -63,202 +63,155 @@
 </section>
 
 <script>
-var c_seq = '<?php echo $_GET["c_seq"] ?? ""; ?>';
-var sk = '<?php echo $_GET["sk"] ?? ""; ?>';
-if(sk) insertSearchKeyword(sk);
-var ob = '<?php echo $_GET["ob"] ?? "n"; ?>';
-var page = '<?php echo $_GET["page"] ?? 1; ?>';
-var target = '<?php echo $_GET["target"] ?? ""; ?>';
-let attr2 = '';
-let attr3 = '';
-let attrArr = [];
+// ✅ 전역 변수
 let attrData = [];
+let attrArr = [];
+let c_seq = '';
+let page = 1, sk = '', ob = 'n', target = '';
 
 $(function () {
+    renderCategorySelector(1, 0); // depth 1부터 시작
     goReload();
 });
 
-function goReload() {
-    history.pushState(null, null, `/z/product/list?page=${page}&c_seq=${c_seq}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
-    setPageTitleSub();
-    setSortOrder();
-    setCateWrap();
-    productLoad();
+// ✅ 카테고리 렌더링
+function renderCategorySelector(depth, parentSeq) {
+    const $wrap = $('#category-select-wrap');
+    $wrap.find(`.category-select-box[data-depth>='${depth}']`).remove(); // 하위 제거
 
-    if (attrArr.length > 0) {
-        attrArr.forEach(v => {
-            let attrName = $(`#goAttr3-${v}`).attr('data-attr_name');
-            goDrawLiFn(v, attrName, false);
-        });
-    }
-}
+    const list = getCategoryList(depth, parentSeq);
+    if (list.length === 0) return;
 
-function setCateWrap() {
-    if (!menuData || !c_seq) return;
-
-    const $wrap = $('#category-select-wrap').empty();
-    const path = findPath(menuData, c_seq);
-    if (!path.length) return;
-
-    path.forEach((node, depth) => {
-        const children = node.children || [];
-        if (children.length === 0) return;
-
-        const $depthWrap = $(`<div id="list-cate-depth-${depth}" class="list-cate-wrap"></div>`);
-        children.forEach(child => {
-            const active = (child.seq == c_seq) ? 'active' : '';
-            const html = `<div class="cate-item ${active}" onclick="goCate('${child.seq}')">${child.name}</div>`;
-            $depthWrap.append(html);
-        });
-        $wrap.append($depthWrap);
+    const $select = $('<select>').addClass('form-select category-select-box').attr('data-depth', depth).attr('id', `c_seq_${depth}`);
+    $select.append(`<option value=''>선택</option>`);
+    list.forEach(item => {
+        $select.append(`<option value='${item.seq}' data-cate_name='${item.name}'>${item.name}</option>`);
     });
+
+    $wrap.append($select);
 }
 
-// 특정 seq에 도달할 때까지의 경로를 반환
-function findPath(list, targetSeq, path = []) {
-    for (const item of list) {
-        const newPath = [...path, item];
-        if (item.seq == targetSeq) return newPath;
-        if (item.children?.length) {
-            const found = findPath(item.children, targetSeq, newPath);
-            if (found.length) return found;
-        }
-    }
-    return [];
-}
+// ✅ 카테고리 변경 시
+$(document).on('change', '.category-select-box', function () {
+    const depth = parseInt($(this).data('depth'));
+    const selectedSeq = $(this).val();
 
-function goCate(_seq) {
-    c_seq = _seq;
-    attr2 = '';
-    attr3 = '';
-    attrArr = [];
-    page = 1;
-
-    $('#list-attr3-wrap, #list-attr2-wrap').empty().addClass('d-none');
-    $('#list-attr4-wrap').empty();
-
-    if (['7', '40', '71'].includes(String(c_seq))) {
-        setAttrWrap(c_seq);
-    }
-
+    c_seq = selectedSeq;
+    renderCategorySelector(depth + 1, selectedSeq);
+    setAttrWrap();
     goReload();
+});
+
+// ✅ 카테고리 리스트 필터링
+function getCategoryList(depth, parent) {
+    return menuData.filter(item => item.depth == depth && item.parent == parent);
 }
 
-function setAttrWrap(cate2seq) {
-    let parent2 = { 7: 1, 40: 2, 71: 3 }[cate2seq];
-    const $wrap = $('#list-attr2-wrap').empty().addClass('d-none');
+// ✅ 속성 래핑
+function setAttrWrap() {
+    const showAttr = isDescendantCategory('7') || isDescendantCategory('40') || isDescendantCategory('71');
+    const $wrap = $('#list-attr2-wrap').empty();
+
+    if (!showAttr) return;
 
     ajaxCall('/common/all', { table: 'attribute', ob: 'ORDER BY sort ASC' }, function (data) {
         attrData = data;
-        const depth2Items = data.filter(item => item.parent == parent2);
+        let parent2 = '';
+        if (isDescendantCategory('7')) parent2 = 1;
+        else if (isDescendantCategory('40')) parent2 = 2;
+        else if (isDescendantCategory('71')) parent2 = 3;
+
+        const depth2Items = attrData.filter(item => item.parent == parent2);
         if (depth2Items.length > 0) {
             $wrap.removeClass('d-none');
-            let _name = '';
             depth2Items.forEach(v => {
-                if (v.seq == attr2 && v.name == '색상') _name = v.name;
-                const active = (v.seq == attr2) ? 'active' : '';
-                const html = `<div class="cate-item ${active} attr2-item attr2-item${v.seq}" onclick="goAttr2('${v.seq}', '${v.name}')">${v.name}</div>`;
-                $wrap.append(html);
+                $wrap.append(`<div class="cate-item attr2-item attr2-item${v.seq}" onclick="goAttr2('${v.seq}', '${v.name}')">${v.name}</div>`);
             });
-            if (attr3) goAttr2(attr2, _name);
         }
     });
 }
 
 function goAttr2(_seq, _name) {
-    if (!_seq) {
-        $('.attr2-item').removeClass('active');
-        $('#list-attr3-wrap').html('').addClass('d-none');
-        return false;
-    }
+    const $wrap = $('#list-attr3-wrap').empty();
+    $wrap.removeClass('d-none');
 
-    $('.attr2-item').removeClass('active');
-    $('.attr2-item' + _seq).addClass('active');
-
-    attr2 = _seq;
     const depth3Items = attrData.filter(item => item.parent == _seq);
-    const $wrap = $('#list-attr3-wrap').empty().removeClass('d-none');
     depth3Items.forEach(v => {
-        const active = (v.seq == attr3) ? 'active' : '';
-        let imgStr = (_name == '색상') ? `<img src="${v.img}" style="width:20px;">` : '';
-        const html = `<div class="cate-item goAttr3Click" id="goAttr3-${v.seq}" data-attr_seq="${v.seq}" data-attr_name="${v.name}">${imgStr}${v.name}</div>`;
-        $wrap.append(html);
+        const imgStr = (_name == '색상') ? `<img src='${v.img}' width='20'> ` : '';
+        const itemStr = `<div class="cate-item goAttr3Click" data-attr_seq="${v.seq}" data-attr_name="${v.name}">${imgStr}${v.name}</div>`;
+        $wrap.append(itemStr);
     });
 }
 
 $(document).on('click', '.goAttr3Click', function () {
-    page = 1;
-    let attr_seq = $(this).data('attr_seq');
-    let attr_name = $(this).data('attr_name');
-    if (!$(`#li-${attr_seq}`).length) goDrawLiFn(attr_seq, attr_name, true);
+    const attr_seq = $(this).data('attr_seq');
+    const attr_name = $(this).data('attr_name');
+    if (!attrArr.includes(attr_seq)) {
+        attrArr.push(attr_seq);
+        $('#list-attr4-wrap').append(`<li id="li-${attr_seq}" class="attr-choice-item">${attr_name}<span class="btn-remove" onclick="goRemoveLiFn('${attr_seq}')">X</span></li>`);
+        goReload();
+    }
 });
 
-function goDrawLiFn(attr_seq, attr_name, arrBoolean) {
-    if (arrBoolean) attrArr.push(attr_seq);
-    attr3 = attrArr;
-    $('#list-attr4-wrap').append(`<li id="li-${attr_seq}" class="attr-choice-item">${attr_name}<span class="btn-remove" onclick="goRemoveLiFn('${attr_seq}')">X</span></li>`);
-    goReload();
-}
-
 function goRemoveLiFn(attr_seq) {
-    attrArr = attrArr.filter(seq => seq != attr_seq);
-    attr3 = attrArr;
+    attrArr = attrArr.filter(v => v != attr_seq);
     $(`#li-${attr_seq}`).remove();
     goReload();
 }
 
-function setPageTitleSub() {
-    const $title = $('#product-search-keyword');
-    if (sk) {
-        $title.html(`"${sk}" 검색`);
-    } else if (c_seq) {
-        const node = getSeq('category', c_seq);
-        $title.html(node?.name || '카테고리');
-    } else if (target === 'best') {
-        $title.html('베스트');
-    } else if (target === 'new') {
-        $title.html('신상품');
-    } else {
-        $title.html('전체');
+// ✅ 하위포함 체크
+function isDescendantCategory(targetSeq) {
+    const find = (list) => {
+        for (const item of list) {
+            if (item.seq == targetSeq) return true;
+            if (item.children?.length && find(item.children)) return true;
+        }
+        return false;
+    };
+
+    const node = findNode(menuData, c_seq);
+    if (!node) return false;
+    return find([node]);
+}
+
+function findNode(list, seq) {
+    for (const item of list) {
+        if (item.seq == seq) return item;
+        if (item.children?.length) {
+            const found = findNode(item.children, seq);
+            if (found) return found;
+        }
     }
+    return null;
 }
 
-function setSortOrder() {
-    $('.tf-control-sorting select').val(ob);
-}
-
-$('.tf-control-sorting select').change(function () {
-    ob = $(this).val();
-    page = 1;
-    goReload();
-});
-
+// ✅ 상품 로딩
 function productLoad() {
     $('#gridLayout').empty();
     let url = `/product/list`;
-    if (isDescendantCategory(c_seq, '40') || isDescendantCategory(c_seq, '7')) {
+    if (isDescendantCategory('40') || isDescendantCategory('7')) {
         url = `/product/list-option`;
     }
 
-    ajaxCall(url, { ppp: DEFAULT_PPP, page, c_seq, sk, ob, target, attr2, attr3 }, function (data) {
+    ajaxCall(url, { ppp: 20, page, c_seq, sk, ob, target, attr2: '', attr3: attrArr }, function (data) {
         $('.item-total-count').html(data.totalCount);
         if (data.totalCount === 0) {
             $('.no-data').removeClass('d-none');
         } else {
             $('.no-data').addClass('d-none');
-            $('.tf-shop-control').removeClass('d-none');
-            drawPaging(data.totalCount, data.totalPage);
             data.rows.forEach(v => itemDraw(v));
         }
     });
 }
 
 function itemDraw(v) {
-    if (isDescendantCategory(c_seq, '40') || isDescendantCategory(c_seq, '7')) {
-        $('#gridLayout').append(makeProductItemStr(v, true));
-    } else {
-        $('#gridLayout').append(makeProductItemStr(v));
-    }
+    const special = isDescendantCategory('40') || isDescendantCategory('7');
+    $('#gridLayout').append(makeProductItemStr(v, special));
+}
+
+function goReload() {
+    history.pushState(null, null, `/z/product/list?page=${page}&c_seq=${c_seq}&sk=${sk}&ob=${ob}&target=${target}`);
+    productLoad();
 }
 
 </script>
