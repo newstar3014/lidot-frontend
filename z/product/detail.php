@@ -335,8 +335,6 @@ iframe[src*="youtube.com"] {
 
     function dataLoad(){
         ajaxCall('/product/list', { ppp: 1, page:1, seq}, function(data) {
-            console.log('data : ', data);
-            
             let v = data.rows[0];
             console.log(v);
             setBreadcrumb(v.category);
@@ -447,6 +445,8 @@ iframe[src*="youtube.com"] {
         ajaxCall('/product/list', { 
             ppp: DEFAULT_PPP, page:1, main:'best'
         }, function(data) {
+            console.log('best data : ', data);
+            
             $.each(data.rows, function(i, v){
                 itemDrawSlide(v, 'product-relate-wrap');
             });
