@@ -415,37 +415,56 @@
         goReload();
     });
 
-    function setPageTitleSub(){
-        let page_title_pre = $('#product-search-keyword');
-        if(!sc1 && !sk && !target){
-            page_title_pre.html('전체');
-        }else if(sk){
-            page_title_pre.html(`"${sk}" 검색`);
-        }else if(sc1){
-            let cate = getSeq('category', sc1);
-            page_title_pre.html(cate.name);
-            if(sc2){
-                let cate2 = getSeq('category', sc2);
-                page_title_pre.html(cate2.name);
+    function setPageTitleSub() {
+        const $title = $('#product-search-keyword');
 
-                if(sc2 == 7 || sc2 == 40 || sc2 == 71){
-                    console.log('특성있음');
-                    setAttrWrap(sc2);
-                }else{
-                    console.log('특성없음');
-                    $('#list-attr2-wrap').empty().addClass('d-none');
-                }
+        if (!c_seq && !sk && !target) {
+            $title.html('전체');
+            return;
+        }
 
-                if(sc){
-                    let cate3 = getSeq('category', sc);
-                    page_title_pre.html(cate3.name);
-                }
+        if (sk) {
+            $title.html(`"${sk}" 검색`);
+            return;
+        }
+
+        if (target) {
+            if (target == 'best') {
+                $title.html('베스트');
+            } else if (target == 'new') {
+                $title.html('신상품');
             }
-        }else if(target){
-            if(target == 'best'){
-                page_title_pre.html('베스트');
-            }else if(target == 'new'){
-                page_title_pre.html('신상품');
+            return;
+        }
+
+        if (c_seq) {
+            const current = findCategoryBySeq(c_seq, menuData);
+            if (!current) {
+                $title.html('전체');
+                return;
+            }
+
+            const path = [];
+            let node = current;
+            let depth2Node = null;
+
+            while (node && node.depth >= 2) {
+                path.unshift(node);
+                if (node.depth === 2) {
+                    depth2Node = node; // 특성 조건 확인용
+                }
+                node = findCategoryBySeq(node.parent, menuData);
+            }
+
+            // 제목 표시
+            const titleText = path.map(cat => cat.name).join(' > ');
+            $title.html(titleText);
+
+            // 특성 필터는 depth:2 노드 기준으로 검사
+            if (depth2Node && [7, 40, 71].includes(Number(depth2Node.seq))) {
+                setAttrWrap(depth2Node.seq);
+            } else {
+                $('#list-attr2-wrap').empty().addClass('d-none');
             }
         }
     }
