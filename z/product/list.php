@@ -195,7 +195,7 @@
 
         $('#list-attr4-wrap').append(str);
 //        if(!firstBoolean) goReload();
-
+        page = 1;
         goReload();
     }
 
@@ -204,6 +204,7 @@
         if (index !== -1)  attrArr.splice(index, 1); // 해당 인덱스에서 1개 항목을 삭제
         attr3 = attrArr;
         $(`#li-${attr_seq}`).remove();
+        page = 1;
         goReload();
     }
 
@@ -358,6 +359,7 @@
         }
 
         // 데이터 다시 불러오기
+        page = 1;
         goReload();
     }
 
