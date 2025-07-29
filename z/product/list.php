@@ -477,8 +477,10 @@
             $('.item-total-count').html(data.totalCount);
             if(data.totalCount == 0){
                 $('.no-data').removeClass('d-none');
+                $('#paged-wrap').addClass('d-none');
             }else{
                 $('.no-data').addClass('d-none');
+                $('#paged-wrap').removeClass('d-none');
                 $('.tf-shop-control').removeClass('d-none');
                 drawPaging(data.totalCount, data.totalPage);
                 $.each(data.rows, function(i, v){
