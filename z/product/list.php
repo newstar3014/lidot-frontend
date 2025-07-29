@@ -220,29 +220,42 @@
     //     }        
     // }
 
-    function setCateWrap(){
-        if (!sc1) return;
+    function setCateWrap() {
+        if (!c_seq) return;
+
         ajaxCall('/category/menu', {}, function(data) {
-            
-            const level2 = (data.find(item => item.seq == sc1 && item.show_yn === 'Y') || {}).children || [];
-            menuData = level2;
-            const $wrap2 = $('#list-cate2-wrap').empty();
-            if (level2.length === 0) {
-                $wrap2.addClass('d-none');
+            // 재귀적으로 c_seq에 해당하는 항목을 찾아 하위 children 반환
+            const findChildren = (list, targetSeq) => {
+                for (const item of list) {
+                    if (item.seq == targetSeq) return item.children || [];
+                    if (item.children?.length) {
+                        const found = findChildren(item.children, targetSeq);
+                        if (found) return found;
+                    }
+                }
+                return [];
+            };
+
+            const children = findChildren(data, c_seq); // 선택된 카테고리의 하위 목록
+            const $wrap = $('#list-cate2-wrap').empty();
+
+            if (children.length === 0) {
+                $wrap.addClass('d-none');
             } else {
-                $wrap2.removeClass('d-none');
-                level2.forEach(v => {
-                    const active = (v.seq == sc2) ? 'active' : '';
+                $wrap.removeClass('d-none');
+                children.forEach(v => {
+                    const active = v.seq == c_seq ? 'active' : '';
                     const itemStr = `
                         <div class="cate-item ${active}" onclick="goCate2('${v.seq}')">
                             ${v.name}
                         </div>`;
-                    $wrap2.append(itemStr);
+                    $wrap.append(itemStr);
                 });
             }
         });
     }
 
+    
     function goCate2(_seq){
 
         sc = '';
@@ -310,36 +323,51 @@
         goReload();
     });
 
-    function setPageTitleSub(){
+    function setPageTitleSub() {
         let page_title_pre = $('#product-search-keyword');
-        if(!sc1 && !sk && !target){
-            page_title_pre.html('전체');
-        }else if(sk){
-            page_title_pre.html(`"${sk}" 검색`);
-        }else if(sc1){
-            let cate = getSeq('category', sc1);
-            page_title_pre.html(cate.name);
-            if(sc2){
-                let cate2 = getSeq('category', sc2);
-                page_title_pre.html(cate2.name);
 
-                if(sc2 == 7 || sc2 == 40 || sc2 == 71){
-                    console.log('특성있음');
-                    setAttrWrap(sc2);
-                }else{
-                    console.log('특성없음');
+        if (!c_seq && !sk && !target) {
+            page_title_pre.html('전체');
+            return;
+        }
+
+        // 키워드 검색
+        if (sk) {
+            page_title_pre.html(`"${sk}" 검색`);
+            return;
+        }
+
+        // 카테고리 기반
+        if (c_seq) {
+            const cate = getSeq('category', c_seq);
+            if (cate && cate.name) {
+                page_title_pre.html(cate.name);
+            } else {
+                page_title_pre.html('카테고리');
+            }
+
+            // c_seq가 depth 2일 경우에만 특성 적용
+            if (cate && cate.depth == 2) {
+                if (['7', '40', '71'].includes(String(c_seq))) {
+                    console.log('특성 있음');
+                    setAttrWrap(c_seq);
+                } else {
+                    console.log('특성 없음');
                     $('#list-attr2-wrap').empty().addClass('d-none');
                 }
-
-                if(sc){
-                    let cate3 = getSeq('category', sc);
-                    page_title_pre.html(cate3.name);
-                }
+            } else {
+                // depth 2가 아니면 특성 검사 자체를 하지 않음
+                $('#list-attr2-wrap').empty().addClass('d-none');
             }
-        }else if(target){
-            if(target == 'best'){
+
+            return;
+        }
+
+        // 베스트 / 신상품
+        if (target) {
+            if (target === 'best') {
                 page_title_pre.html('베스트');
-            }else if(target == 'new'){
+            } else if (target === 'new') {
                 page_title_pre.html('신상품');
             }
         }
@@ -384,7 +412,7 @@
     function goReload(){
 
         /* URL세팅(페이지 새로고침 안 됨) */
-        history.pushState(null, null, `/z/product/list?page=${page}&sc1=${sc1}&sc2=${sc2}&sc=${sc}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
+        history.pushState(null, null, `/z/product/list?page=${page}&c_seq=${c_seq}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
 
         setPageTitleSub();
         setSortOrder();
