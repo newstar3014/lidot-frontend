@@ -1277,3 +1277,14 @@ function findNode(list, seq) {
     }
     return null;
 }
+
+function getNodeDepth(list, targetSeq, depth = 1) {
+    for (const item of list) {
+        if (item.seq == targetSeq) return depth;
+        if (item.children?.length) {
+            const found = getNodeDepth(item.children, targetSeq, depth + 1);
+            if (found) return found;
+        }
+    }
+    return null;
+}
