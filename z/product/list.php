@@ -492,14 +492,9 @@
         });
     }
 
-    function itemDraw(v){
-        if(sc2 == '40' || sc2 == '7'){
-            // 타일인 경우, 옵션마다 뿌림
-            $('#gridLayout').append(makeProductItemStr(v, true));
-        }else{
-            $('#gridLayout').append(makeProductItemStr(v));
-        }
-        
+    function itemDraw(v) {
+        const isOption = isOptionCategory(c_seq, attrOptionTargetArr);
+        $('#gridLayout').append(makeProductItemStr(v, isOption));
     }
 
     function goReload(){
