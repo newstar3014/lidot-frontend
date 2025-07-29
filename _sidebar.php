@@ -179,7 +179,7 @@
         `;
 
         $.each(data, function(i, v){
-            let url = `/z/product/list?sc=`;
+            let url = `/z/product/list?c_seq=`;
             strm += `<li class="nav-mb-item">`;
             str += `<li class="menu-item"><a href="${url+v.seq}" class="item-link">${v.name}</a></li>`;
             strm += `<a href="${url+v.seq}" class="mb-menu-link">${v.name}</a>`;
