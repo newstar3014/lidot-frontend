@@ -76,9 +76,6 @@ let ob = getUrlParam('ob') || 'n';
 let target = getUrlParam('target') || '';
 
 $(function () {
-    if (c_seq) {
-        category = getCategoryTrailFromSeq(parseInt(c_seq));
-    }
     renderCategorySelectors();
     setAttrCondition();
     setSortOrder();
@@ -88,17 +85,6 @@ $(function () {
 function getUrlParam(key) {
     const url = new URL(window.location.href);
     return url.searchParams.get(key);
-}
-
-function getCategoryTrailFromSeq(seq, data = menuData, trail = []) {
-    for (const item of data) {
-        if (item.seq == seq) return [...trail, item];
-        if (item.children && item.children.length) {
-            const result = getCategoryTrailFromSeq(seq, item.children, [...trail, item]);
-            if (result.length) return result;
-        }
-    }
-    return [];
 }
 
 function getChildrenByParent(seq, data = menuData) {
