@@ -91,8 +91,6 @@ function makeProductItemStr(v, isOption = false){
 }
 
 function getMyPrice(v){
-    console.log('getMyPrice');
-    console.log(v);
     
     let price_my = v.price_g;
     if(isLogin){
@@ -106,25 +104,12 @@ function getMyPrice(v){
 }
 
 function getMyPriceStr(v, isOption = false){
-    
-    console.log('getMyPriceStr');
-    console.log(v);
-    
-    
 
     let price_my = getMyPrice(v);
-    
-
     let price = price_my;
-    console.log(price);
     
     if(isOption) {
-        console.log('이즈옵션 트루');
-        console.log(v.price_poi);
-        
         price += v.price_poi;
-        console.log(price);
-        
     }
 
     let priceStr = `<span class="price current-price">${comma(price)}원</span>`;
