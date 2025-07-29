@@ -1253,51 +1253,20 @@ async function downloadFiles(target_seq, target) {
     
 }
 
-function isDescendantCategory(currentSeq, targetSeq) {
-    const find = (list) => {
-        for (const item of list) {
-            if (item.seq == targetSeq) return true;
-            if (item.children?.length && find(item.children)) return true;
-        }
-        return false;
-    };
-
-    const targetNode = findNodeBySeq(menuData, currentSeq);
-    if (!targetNode) return false;
-    return find([targetNode]);
-}
-
-// 메뉴 트리에서 특정 seq에 해당하는 노드 찾기
-function findNodeBySeq(list, targetSeq) {
+function isDescendantCategory(targetSeq, parentSeq = null, list = menuData) {
     for (const item of list) {
-        if (item.seq == targetSeq) return item;
+        if (item.seq == targetSeq) {
+            if (!parentSeq) return true;
+            return item.seq == parentSeq;
+        }
         if (item.children?.length) {
-            const found = findNodeBySeq(item.children, targetSeq);
-            if (found) return found;
+            const found = isDescendantCategory(targetSeq, parentSeq, item.children);
+            if (found) {
+                if (!parentSeq) return true;
+                if (item.seq == parentSeq) return true;
+                return found;
+            }
         }
     }
-    return null;
-}
-
-// 특정 seq의 하위 children 목록 가져오기
-function findChildren(list, targetSeq) {
-    for (const item of list) {
-        if (item.seq == targetSeq) return item.children || [];
-        if (item.children?.length) {
-            const found = findChildren(item.children, targetSeq);
-            if (found) return found;
-        }
-    }
-    return [];
-}
-
-function getNodeDepth(list, targetSeq, depth = 1) {
-    for (const item of list) {
-        if (item.seq == targetSeq) return depth;
-        if (item.children?.length) {
-            const found = getNodeDepth(item.children, targetSeq, depth + 1);
-            if (found) return found;
-        }
-    }
-    return null;
+    return false;
 }
