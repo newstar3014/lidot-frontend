@@ -21,7 +21,7 @@
 <section class="flat-spacing-1">
     <div class="container">
 
-        <div id="list-cate-next-wrap"></div>
+        <div id="category-select-wrap"></div>
         <div id="list-attr2-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div id="list-attr3-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div class="mb-3"><ul id="list-attr4-wrap"></div>
@@ -151,9 +151,12 @@
         }
     }
 
+    // HTML에 반드시 아래 div가 존재해야 함:
+    // <div id="category-select-wrap"></div>
+
     function goCate(_seq) {
         // 상태 초기화
-        sc = ''; // 최종 선택된 카테고리 seq
+        sc = '';          // 최종선택된 c_seq는 아래에서 다시 설정됨
         attr2 = ``;
         attr3 = ``;
         attrArr = [];
@@ -163,48 +166,67 @@
         $('#list-attr4-wrap').empty();
         $('#list-attr2-wrap').empty().addClass('d-none');
 
-        // 현재 선택된 카테고리 노드 찾기
-        const node = findNode(menuData, _seq);
+        // 메뉴 트리에서 _seq에 해당하는 항목 찾기
+        const findNodeBySeq = (list, targetSeq) => {
+            for (const item of list) {
+                if (item.seq == targetSeq) return item;
+                if (item.children?.length) {
+                    const found = findNodeBySeq(item.children, targetSeq);
+                    if (found) return found;
+                }
+            }
+            return null;
+        };
+
+        const node = findNodeBySeq(menuData, _seq);
         if (!node) return;
 
+        // 현재 선택된 c_seq 업데이트
         sc = node.seq;
 
-        // depth 계산
-        const depth = getNodeDepth(menuData, node.seq) || 1;
-        const nextDepth = depth + 1;
-
-        // 특성 적용은 depth:2에서만
-        if (depth === 2 && ['7', '40', '71'].includes(String(sc))) {
+        // 특성 표시 처리 (2depth에서만 체크하고 싶다면 depth 조건 추가 가능)
+        if (['7', '40', '71'].includes(String(sc))) {
             setAttrWrap(sc);
         }
 
-        const $wrap = $('#list-cate-next-wrap');
-
-        // 현재 depth보다 큰 기존 depth-box 제거
-        $wrap.find('.depth-box').each(function () {
-            const d = parseInt($(this).attr('data-depth'), 10);
-            if (d >= nextDepth) $(this).remove();
+        // 이전에 그려진 더 깊은 depth 카테고리 영역 삭제
+        const currentDepth = parseInt(node.depth);
+        $(`#category-select-wrap > div`).each(function() {
+            const id = $(this).attr('id');
+            const match = id?.match(/list-cate-depth-(\d+)/);
+            if (match && parseInt(match[1]) > currentDepth) {
+                $(this).remove();
+            }
         });
 
-        // 하위 카테고리 있을 경우 다음 depth 박스 추가
+        // 현재 depth+1에 해당하는 영역 생성 및 렌더링
+        const nextDepth = currentDepth + 1;
+        const $wrapId = `list-cate-depth-${nextDepth}`;
+        let $wrap = $(`#${$wrapId}`);
+
+        if ($wrap.length === 0) {
+            $('#category-select-wrap').append(`<div id="${$wrapId}" class="list-cate-wrap"></div>`);
+            $wrap = $(`#${$wrapId}`);
+        } else {
+            $wrap.empty();
+        }
+
         if (node.children?.length) {
-            const $depthBox = $('<div class="depth-box"></div>').attr('data-depth', nextDepth);
             node.children.forEach(v => {
                 const itemStr = `
                     <div class="cate-item" onclick="goCate('${v.seq}')">
                         ${v.name}
                     </div>`;
-                $depthBox.append(itemStr);
+                $wrap.append(itemStr);
             });
-            $wrap.append($depthBox);
             $wrap.removeClass('d-none');
         } else {
-            // 더 이상 자식이 없다면 다음 박스 없음
-            // 마지막 자식에서 더 깊은 것들만 지우면 되므로 위에서 처리됨
+            $wrap.addClass('d-none');
         }
 
         goReload();
     }
+
 
     function setPageTitleSub() {
         const $title = $('#product-search-keyword');
