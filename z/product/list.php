@@ -348,6 +348,7 @@
 
         // 선택된 카테고리 업데이트
         $('#c_seq').val(current.seq);
+        c_seq = current.seq;
 
         // 속성 필터 조건 처리
         if (current.seq == 7 || current.seq == 40 || current.seq == 71) {
@@ -389,21 +390,6 @@
         $('#c_seq').val(current.seq);
     }
 
-
-
-    function goCate3(_seq){
-
-        console.log('goCate3');
-        
-
-        sc = _seq;
-        page = 1;
-
-        $('.cate3-item').removeClass('active');
-        $('.cate-item'+_seq).addClass('active');
-
-        goReload();
-    }
 
     function setSortOrder(){
         $('.tf-control-sorting select').val(ob);
