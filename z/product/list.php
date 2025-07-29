@@ -64,10 +64,7 @@
 </section>
 
 <script>
-    var sc1 = '<? echo $_GET["sc1"]; ?>';
-    // var sc2 = '<? echo $_GET["sc2"]; ?>';
-    var sc2 = '';
-    var sc = '<? echo $_GET["sc"]; ?>';
+    var c_seq = '<?php echo $_GET["c_seq"]; ?>';
     var sk = '<? echo $_GET["sk"]; ?>';
     if(sk) insertSearchKeyword(sk);
     var ob = '<? echo $_GET["ob"]; ?>';
@@ -357,7 +354,7 @@
 
         ajaxCall(url, { 
             ppp: DEFAULT_PPP,
-            page, sc, c1_seq:sc1, c2_seq:sc2, sk, ob, target, attr2, attr3
+            page, c_seq, sk, ob, target, attr2, attr3
         }, function(data) {
             console.log("CHECK OPTION DATA : ", data);
             $('.item-total-count').html(data.totalCount);
