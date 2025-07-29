@@ -65,7 +65,6 @@
 
 <script>
     var sc1 = '<? echo $_GET["sc1"]; ?>';
-    // var sc2 = '<? echo $_GET["sc2"]; ?>';
     var sc2 = '';
     var sc = '<? echo $_GET["sc"]; ?>';
     var sk = '<? echo $_GET["sk"]; ?>';
@@ -359,7 +358,7 @@
             ppp: DEFAULT_PPP,
             page, sc, c1_seq:sc1, c2_seq:sc2, sk, ob, target, attr2, attr3
         }, function(data) {
-            console.log("CHECK OPTION DATA : ", data);
+            console.log("CHECK DATA : ", data);
             $('.item-total-count').html(data.totalCount);
             if(data.totalCount == 0){
                 $('.no-data').removeClass('d-none');
