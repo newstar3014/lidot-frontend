@@ -74,15 +74,24 @@ $(function () {
     goReload();
 });
 
+
 // ✅ 카테고리 렌더링
 function renderCategorySelector(depth, parentSeq) {
     const $wrap = $('#category-select-wrap');
-    $wrap.find(`.category-select-box[data-depth>='${depth}']`).remove(); // 하위 제거
+
+    // ❌ jQuery는 [data-depth>=] 를 직접 지원하지 않음 → filter로 처리
+    $wrap.find('.category-select-box').filter(function () {
+        return parseInt($(this).attr('data-depth')) >= depth;
+    }).remove();
 
     const list = getCategoryList(depth, parentSeq);
     if (list.length === 0) return;
 
-    const $select = $('<select>').addClass('form-select category-select-box').attr('data-depth', depth).attr('id', `c_seq_${depth}`);
+    const $select = $('<select>')
+        .addClass('form-select category-select-box')
+        .attr('data-depth', depth)
+        .attr('id', `c_seq_${depth}`);
+
     $select.append(`<option value=''>선택</option>`);
     list.forEach(item => {
         $select.append(`<option value='${item.seq}' data-cate_name='${item.name}'>${item.name}</option>`);
@@ -90,6 +99,7 @@ function renderCategorySelector(depth, parentSeq) {
 
     $wrap.append($select);
 }
+
 
 // ✅ 카테고리 변경 시
 $(document).on('change', '.category-select-box', function () {
