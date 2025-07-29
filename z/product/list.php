@@ -82,6 +82,11 @@
 //     let attr3 = ``;
 //    let attrArr = [];
 
+    let menuData;
+    ajaxCall('/category/menu', {}, function(data) {
+        menuData = data;
+    });
+
     $(function() {
         console.log('ㅡ PAGE READY');
         // setPageTitle('상품목록', 'products');
@@ -89,6 +94,8 @@
         // setSortOrder();
         // setCateWrap();
         // productLoad();
+
+
 
         goReload();
 
