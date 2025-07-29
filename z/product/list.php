@@ -370,11 +370,14 @@
     }
 
     function productLoad(){
-
         $('#gridLayout').html(``);
 
         let url = `/product/list`;
-        if(sc2 == '40' || sc2 == '7') url = `/product/list-option`;
+
+        // ✅ c_seq가 40 또는 7의 하위인지 검사
+        if (isDescendantCategory('40') || isDescendantCategory('7')) {
+            url = `/product/list-option`;
+        }
 
         ajaxCall(url, { 
             ppp: DEFAULT_PPP,
@@ -396,13 +399,38 @@
     }
 
     function itemDraw(v){
-        if(sc2 == '40' || sc2 == '7'){
-            // 타일인 경우, 옵션마다 뿌림
+        if (isDescendantCategory('40') || isDescendantCategory('7')) {
             $('#gridLayout').append(makeProductItemStr(v, true));
-        }else{
+        } else {
             $('#gridLayout').append(makeProductItemStr(v));
         }
-        
+    }
+
+
+    function isDescendantCategory(parentSeq) {
+        const findParent = (nodeList, targetSeq, parentTarget) => {
+            for (const node of nodeList) {
+                if (node.seq == parentTarget) {
+                    // 내부에서 자식 찾기
+                    return containsChild(node, targetSeq);
+                } else if (node.children?.length) {
+                    const found = findParent(node.children, targetSeq, parentTarget);
+                    if (found) return true;
+                }
+            }
+            return false;
+        };
+
+        const containsChild = (parentNode, targetSeq) => {
+            if (!parentNode.children) return false;
+            for (const child of parentNode.children) {
+                if (child.seq == targetSeq) return true;
+                if (child.children?.length && containsChild(child, targetSeq)) return true;
+            }
+            return false;
+        };
+
+        return findParent(menuData, c_seq, parentSeq);
     }
 
     function goReload(){
