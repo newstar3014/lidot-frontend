@@ -1,5 +1,10 @@
 // 상품, 주문, 결제 등 쇼핑몰 관련 로직들의 공통 코드 모음
 
+// ✅ 속성 필터 사용 대상 (옵션기반 상품 전용)
+const attrOptionTargetArr = [7, 40];
+// ✅ 속성 필터 사용 대상 (일반 상품 포함)
+const attrProductTargetArr = [7, 40, 71];
+
 function insertSearchKeyword(keyword){
     ajaxCall('/common/insert', { table: 'search_keyword', obj: { keyword }}, function(data) {});
 }
