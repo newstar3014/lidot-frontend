@@ -365,7 +365,7 @@ iframe[src*="youtube.com"] {
             setBreadcrumb(v.category);
 
             let text = cfLoad('name', _name);
-            $('#modal-common-body').html(text[0].value);
+            //$('#modal-common-body').html(text[0].value);
 
             if(v.mp4){
                 let mp4Array = JSON.parse(v.mp4);
