@@ -92,10 +92,10 @@
         // setCateWrap();
         // productLoad();
 
-        ajaxCall('/category/menu', {}, function(data) {
-            menuData = data;
-            goReload();
-        });
+        // ajaxCall('/category/menu', {}, function(data) {
+        //     menuData = data;
+        //     goReload();
+        // });
 
     });
 
