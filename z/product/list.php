@@ -84,19 +84,15 @@
 
     let menuData;
 
-    $(function() {
-        console.log('ㅡ PAGE READY');
-        // setPageTitle('상품목록', 'products');
-        // setPageTitleSub();
-        // setSortOrder();
-        // setCateWrap();
-        // productLoad();
-
-        // ajaxCall('/category/menu', {}, function(data) {
-        //     menuData = data;
-        // });
-
-        goReload();
+    $(function () {
+        if (!Array.isArray(menuData) || menuData.length === 0) {
+            ajaxCall('/category/menu', {}, function (data) {
+                menuData = data;
+                goReload(); // menuData 세팅된 후에 1회만 실행
+            });
+        } else {
+            goReload(); // menuData 이미 있으면 바로 실행
+        }
     });
 
     function setAttrWrap(cate2seq){
