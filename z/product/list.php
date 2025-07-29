@@ -489,7 +489,7 @@
     function goReload(){
 
         /* URL세팅(페이지 새로고침 안 됨) */
-        history.pushState(null, null, `/z/product/list?page=${page}&sc1=${sc1}&sc2=${sc2}&sc=${sc}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
+        history.pushState(null, null, `/z/product/list?page=${page}&c_seq=${c_seq}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
 
         setPageTitleSub();
         setSortOrder();
