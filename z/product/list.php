@@ -72,7 +72,7 @@
     var page = '<? echo $_GET["page"]; ?>';
     if(!page) page = 1;
     var target = '<? echo $_GET["target"]; ?>';
-    let menuData, attrData;
+    let attrData;
     // let attr2 = '<? echo $_GET["attr2"]; ?>';
     // let attr3 = '<? echo $_GET["attr3"]; ?>';
     let attr2 = '';
@@ -221,26 +221,23 @@
     // }
 
     function setCateWrap(){
-        if (!sc1) return;
-        ajaxCall('/category/menu', {}, function(data) {
-            
-            const level2 = (data.find(item => item.seq == sc1 && item.show_yn === 'Y') || {}).children || [];
-            menuData = level2;
-            const $wrap2 = $('#list-cate2-wrap').empty();
-            if (level2.length === 0) {
-                $wrap2.addClass('d-none');
-            } else {
-                $wrap2.removeClass('d-none');
-                level2.forEach(v => {
-                    const active = (v.seq == sc2) ? 'active' : '';
-                    const itemStr = `
-                        <div class="cate-item ${active}" onclick="goCate2('${v.seq}')">
-                            ${v.name}
-                        </div>`;
-                    $wrap2.append(itemStr);
-                });
-            }
-        });
+        if (!c_seq) return;
+        const level2 = (data.find(item => item.seq == sc1 && item.show_yn === 'Y') || {}).children || [];
+        menuData = level2;
+        const $wrap2 = $('#list-cate2-wrap').empty();
+        if (level2.length === 0) {
+            $wrap2.addClass('d-none');
+        } else {
+            $wrap2.removeClass('d-none');
+            level2.forEach(v => {
+                const active = (v.seq == sc2) ? 'active' : '';
+                const itemStr = `
+                    <div class="cate-item ${active}" onclick="goCate2('${v.seq}')">
+                        ${v.name}
+                    </div>`;
+                $wrap2.append(itemStr);
+            });
+        }
     }
 
     function goCate2(_seq){
