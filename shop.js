@@ -5,6 +5,24 @@ const attrOptionTargetArr = [7, 40];
 // ✅ 속성 필터 사용 대상 (일반 상품 포함)
 const attrProductTargetArr = [7, 40, 71];
 
+function isOptionCategory(c_seq, targetSeqs = []) {
+    if (!c_seq || !Array.isArray(targetSeqs) || targetSeqs.length === 0) return false;
+
+    const current = findCategoryBySeq(c_seq, menuData);
+    if (!current) return false;
+
+    let node = current;
+    while (node && node.depth >= 2) {
+        if (node.depth === 2 && targetSeqs.includes(Number(node.seq))) {
+            return true;
+        }
+        node = findCategoryBySeq(node.parent, menuData);
+    }
+
+    return false;
+}
+
+
 function insertSearchKeyword(keyword){
     ajaxCall('/common/insert', { table: 'search_keyword', obj: { keyword }}, function(data) {});
 }
