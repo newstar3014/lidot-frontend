@@ -67,6 +67,7 @@
 // 전역 변수
 let c_seq = getUrlParam('c_seq') || '';
 let category = []; // depth 순서대로 담김
+let menuData = window.menuData || [];
 let attr2 = '';
 let attr3 = '';
 let attrArr = [];
@@ -76,6 +77,9 @@ let ob = getUrlParam('ob') || 'n';
 let target = getUrlParam('target') || '';
 
 $(function () {
+    if (c_seq) {
+        category = getCategoryTrailFromSeq(parseInt(c_seq));
+    }
     renderCategorySelectors();
     setAttrCondition();
     setSortOrder();
@@ -87,6 +91,19 @@ function getUrlParam(key) {
     return url.searchParams.get(key);
 }
 
+// menuData 트리에서 특정 seq의 조상 카테고리 트레일을 배열로 반환
+function getCategoryTrailFromSeq(seq, data = menuData, trail = []) {
+    for (const item of data) {
+        if (item.seq == seq) return [...trail, item];
+        if (item.children && item.children.length) {
+            const result = getCategoryTrailFromSeq(seq, item.children, [...trail, item]);
+            if (result.length) return result;
+        }
+    }
+    return [];
+}
+
+// menuData 트리 구조에서 특정 부모 seq의 자식들 반환
 function getChildrenByParent(seq, data = menuData) {
     for (const item of data) {
         if (item.seq == seq) return item.children || [];
@@ -98,12 +115,14 @@ function getChildrenByParent(seq, data = menuData) {
     return [];
 }
 
+// 주어진 카테고리 seq 기준으로 옵션 상품 여부 판별 (depth:2가 7 또는 40인지)
 function isOptionCategoryBySeq(seq) {
     const trail = getCategoryTrailFromSeq(seq);
     const depth2 = trail.find(c => c.depth === 2);
     return [7, 40].includes(depth2?.seq);
 }
 
+// 현재 선택된 c_seq 기준 옵션 상품 여부 판단
 function isOptionCategory() {
     return isOptionCategoryBySeq(c_seq);
 }
