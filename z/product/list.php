@@ -22,7 +22,7 @@
     <div class="container">
 
         <!-- 카테고리 리스트 전체 감싸는 영역 -->
-        <div id="list-cate-wrap" class="pb-4 mb-4 border-bottom"></div>
+        <div id="list-cate-wrap"></div>
 
         <!-- 최종 선택된 카테고리 seq 저장용 -->
         <input type="hidden" id="c_seq" value="">
