@@ -82,10 +82,7 @@
 //     let attr3 = ``;
 //    let attrArr = [];
 
-    // let menuData;
-    // ajaxCall('/category/menu', {}, function(data) {
-    //     menuData = data;
-    // });
+    let menuData;
 
     $(function() {
         console.log('ㅡ PAGE READY');
@@ -95,9 +92,10 @@
         // setCateWrap();
         // productLoad();
 
-
-
-        goReload();
+        ajaxCall('/category/menu', {}, function(data) {
+            menuData = data;
+            goReload();
+        });
 
     });
 
