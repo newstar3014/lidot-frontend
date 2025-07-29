@@ -94,9 +94,9 @@
 
         // ajaxCall('/category/menu', {}, function(data) {
         //     menuData = data;
-        //     goReload();
         // });
 
+        goReload();
     });
 
     function setAttrWrap(cate2seq){
