@@ -331,8 +331,18 @@
         if (!current) return;
 
         const depth = current.depth;
+        page = 1;
 
-        // 하위 뎁스 이상은 모두 제거
+        // ✅ depth:2일 경우, 속성 관련 모두 초기화
+        if (depth === 2) {
+            attr2 = '';
+            attr3 = '';
+            attrArr = [];
+            $('#list-attr3-wrap').empty().addClass('d-none');
+            $('#list-attr4-wrap').empty();
+        }
+
+        // 기존 wrap 정리
         $(`#list-cate-wrap .list-cate-wrap`).each(function () {
             const d = parseInt($(this).data('depth'), 10);
             if (d > depth) $(this).remove();
@@ -342,7 +352,7 @@
         const siblings = (findCategoryBySeq(current.parent, menuData) || {}).children || [];
         renderCategoryWrap(depth, siblings, current.seq);
 
-        // 자식이 있다면 다음 뎁스 추가
+        // 자식 있으면 다음 depth 그리기
         if (current.children && current.children.length > 0) {
             renderCategoryWrap(depth + 1, current.children, null);
         }
@@ -351,15 +361,13 @@
         $('#c_seq').val(current.seq);
         c_seq = current.seq;
 
-        // 속성 필터 조건 처리
-        if (current.seq == 7 || current.seq == 40 || current.seq == 71) {
+        // 속성 필터 처리 (depth:2 노드 기준으로 isOptionCategory 처리해도 됨)
+        if (isOptionCategory(c_seq, attrProductTargetArr)) {
             setAttrWrap(current.seq);
         } else {
             $('#list-attr2-wrap').empty().addClass('d-none');
         }
 
-        // 데이터 다시 불러오기
-        page = 1;
         goReload();
     }
 
