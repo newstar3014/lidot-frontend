@@ -417,18 +417,9 @@
         setCateWrap();
         productLoad();
 
-        // if(firstBoolean && attrArr.length > 0){
-
-        //     for(let i = 0; i < attrArr.length; i++){
-        //         let v = attrArr[i];
-        //         let attrName = $(`#goAttr3-${v}`).attr('data-attr_name');
-        //         goDrawLiFn(v, attrName, false);
-        //     }
-
-        //     productLoad();
-
-        //     firstBoolean = false;
-        // }
+        if (c_seq) {
+            goCate(c_seq); // 최초 URL에서 진입한 카테고리도 goCate 실행
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
