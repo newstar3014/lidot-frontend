@@ -1253,16 +1253,27 @@ async function downloadFiles(target_seq, target) {
     
 }
 
-    function isDescendantCategory(targetSeq) {
-        const find = (list) => {
-            for (const item of list) {
-                if (item.seq == targetSeq) return true;
-                if (item.children?.length && find(item.children)) return true;
-            }
-            return false;
-        };
+function isDescendantCategory(targetSeq) {
+    const find = (list) => {
+        for (const item of list) {
+            if (item.seq == targetSeq) return true;
+            if (item.children?.length && find(item.children)) return true;
+        }
+        return false;
+    };
 
-        const targetNode = findNode(menuData, c_seq);
-        if (!targetNode) return false;
-        return find([targetNode]);
+    const targetNode = findNode(menuData, c_seq);
+    if (!targetNode) return false;
+    return find([targetNode]);
+}
+
+function findNode(list, seq) {
+    for (const item of list) {
+        if (item.seq == seq) return item;
+        if (item.children?.length) {
+            const found = findNode(item.children, seq);
+            if (found) return found;
+        }
     }
+    return null;
+}
