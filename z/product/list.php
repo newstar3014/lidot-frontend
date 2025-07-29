@@ -82,10 +82,10 @@
 //     let attr3 = ``;
 //    let attrArr = [];
 
-    let menuData;
-    ajaxCall('/category/menu', {}, function(data) {
-        menuData = data;
-    });
+    // let menuData;
+    // ajaxCall('/category/menu', {}, function(data) {
+    //     menuData = data;
+    // });
 
     $(function() {
         console.log('ㅡ PAGE READY');
