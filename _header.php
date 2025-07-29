@@ -181,4 +181,4 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 </script>
 <script type="text/javascript" src="/header.js?ver=1.1"></script>
-<script type="text/javascript" src="/shop.js?ver=1.7"></script>
+<script type="text/javascript" src="/shop.js?ver=1.8"></script>
