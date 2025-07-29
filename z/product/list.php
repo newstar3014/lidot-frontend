@@ -403,78 +403,51 @@
 
     function setPageTitleSub() {
         const $title = $('#product-search-keyword');
-        console.log('[setPageTitleSub] 실행됨');
+        if ($title.length === 0) return;
 
-        // DOM 요소 확인
-        if ($title.length === 0) {
-            console.warn('[setPageTitleSub] #product-search-keyword 요소 없음');
-            return;
-        }
-
-        // 전체 조건
         if (!c_seq && !sk && !target) {
-            console.log('[setPageTitleSub] 조건 없음 → 전체');
             $title.html('전체');
             return;
         }
 
-        // 검색어 조건
         if (sk) {
-            console.log('[setPageTitleSub] 검색어 조건 →', sk);
             $title.html(`"${sk}" 검색`);
             return;
         }
 
-        // 타겟 조건
         if (target) {
             const targetMap = {
                 best: '베스트',
                 new: '신상품',
             };
-            console.log('[setPageTitleSub] 타겟 조건 →', target);
             $title.html(targetMap[target] || '전체');
             return;
         }
 
-        // c_seq 존재 시
-        console.log('[setPageTitleSub] c_seq 존재 →', c_seq);
-
         const current = findCategoryBySeq(c_seq, menuData);
         if (!current) {
-            console.warn('[setPageTitleSub] findCategoryBySeq 실패 → 전체');
             $title.html('전체');
             return;
         }
 
-        console.log('[setPageTitleSub] current:', current);
-
-        // 경로 추출
         const path = [];
         let node = current;
-        while (node && node.depth >= 2) {
+        while (node && node.depth >= 1) {
             path.unshift(node);
             node = findCategoryBySeq(node.parent, menuData);
         }
 
-        console.log('[setPageTitleSub] path:', path);
-
         const titleText = path.map(cat => cat.name).join(' > ');
-        console.log('[setPageTitleSub] 최종 titleText:', titleText);
-
         $title.html(titleText);
 
-        // depth:2 특성 필터 검사
         const depth2Node = path.find(cat => cat.depth === 2);
-        console.log('[setPageTitleSub] depth2Node:', depth2Node);
-
         if (depth2Node && attrProductTargetArr.includes(Number(depth2Node.seq))) {
-            console.log('[setPageTitleSub] 특성 필터 적용:', depth2Node.seq);
             setAttrWrap(depth2Node.seq);
         } else {
-            console.log('[setPageTitleSub] 특성 필터 제거');
             $('#list-attr2-wrap').empty().addClass('d-none');
         }
     }
+
 
 
     function productLoad(){
