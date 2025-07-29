@@ -21,8 +21,7 @@
 <section class="flat-spacing-1">
     <div class="container">
 
-        <div id="list-cate2-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
-        <div id="list-cate3-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
+        <div id="list-cate-next-wrap"></div>
         <div id="list-attr2-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div id="list-attr3-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div class="mb-3"><ul id="list-attr4-wrap"></div>
@@ -246,7 +245,7 @@
                 children.forEach(v => {
                     const active = v.seq == c_seq ? 'active' : '';
                     const itemStr = `
-                        <div class="cate-item ${active}" onclick="goCate2('${v.seq}')">
+                        <div class="cate-item ${active}" onclick="goCate('${v.seq}')">
                             ${v.name}
                         </div>`;
                     $wrap.append(itemStr);
@@ -255,63 +254,60 @@
         });
     }
 
-    
-    function goCate2(_seq){
 
-        sc = '';
-        sc2 = _seq;
-        page = 1;
+    function goCate(_seq) {
+        // 상태 초기화
+        sc = '';          // 최종선택된 c_seq는 아래에서 다시 설정됨
         attr2 = ``;
         attr3 = ``;
         attrArr = [];
-        $('#list-attr3-wrap').empty().addClass('d-none');
-        $('#list-attr4-wrap').empty();
-        // if(attrArr.length > 0){
-        //     attr3 = attrArr;
-        // }else{
-        //     attr3 = ``;
-        // }
-
-        const level3 = (menuData.find(item => item.seq == sc2 && item.show_yn === 'Y') || {}).children || [];
-        const $wrap3 = $('#list-cate3-wrap').empty();
-        if (level3.length === 0) {
-            $wrap3.addClass('d-none');
-        } else {
-            $wrap3.removeClass('d-none');
-            level3.forEach(v => {
-                const active = (v.seq == sc) ? 'active' : '';
-                const itemStr = `
-                    <div class="cate-item ${active} cate3-item cate-item${v.seq}" onclick="goCate3('${v.seq}')">
-                        ${v.name}
-                    </div>`;
-                $wrap3.append(itemStr);
-            });
-        }
-
-        if(sc2 == 7 || sc2 == 40 || sc2 == 71){
-            setAttrWrap(sc2);
-        }else{
-            $('#list-attr2-wrap').empty().addClass('d-none');
-        }
-
-
- 
-        goReload();
-    }
-
-    function goCate3(_seq){
-
-        console.log('goCate3');
-        
-
-        sc = _seq;
         page = 1;
 
-        $('.cate3-item').removeClass('active');
-        $('.cate-item'+_seq).addClass('active');
+        $('#list-attr3-wrap').empty().addClass('d-none');
+        $('#list-attr4-wrap').empty();
+        $('#list-attr2-wrap').empty().addClass('d-none');
+
+        // 메뉴 트리에서 _seq에 해당하는 항목 찾기
+        const findNodeBySeq = (list, targetSeq) => {
+            for (const item of list) {
+                if (item.seq == targetSeq) return item;
+                if (item.children?.length) {
+                    const found = findNodeBySeq(item.children, targetSeq);
+                    if (found) return found;
+                }
+            }
+            return null;
+        };
+
+        const node = findNodeBySeq(menuData, _seq);
+        if (!node) return;
+
+        // 현재 선택된 c_seq 업데이트
+        sc = node.seq;
+
+        // 특성 표시 처리 (2depth에서만 체크하고 싶다면 depth 조건 추가 가능)
+        if (['7', '40', '71'].includes(String(sc))) {
+            setAttrWrap(sc);
+        }
+
+        // 하위 카테고리가 있으면 렌더링
+        const $nextWrap = $('#list-cate-next-wrap').empty(); // 예시용, 다음 카테고리 wrap
+        if (node.children?.length) {
+            node.children.forEach(v => {
+                const itemStr = `
+                    <div class="cate-item" onclick="goCate('${v.seq}')">
+                        ${v.name}
+                    </div>`;
+                $nextWrap.append(itemStr);
+            });
+            $nextWrap.removeClass('d-none');
+        } else {
+            $nextWrap.addClass('d-none');
+        }
 
         goReload();
     }
+
 
     function setSortOrder(){
         $('.tf-control-sorting select').val(ob);
