@@ -158,15 +158,12 @@
 
 <script>
 
-    let menuData;
-
     $(function() {
         menuLoad();
     });
 
     function menuLoad(){
         ajaxCall('/category/menu', {}, function(data) {
-            menuData = data;
             menuDraw(data);
         });
     }
