@@ -256,16 +256,7 @@
 
 
 
-    function findNode(list, seq) {
-        for (const item of list) {
-            if (item.seq == seq) return item;
-            if (item.children?.length) {
-                const found = findNode(item.children, seq);
-                if (found) return found;
-            }
-        }
-        return null;
-    }
+
 </script>
 
 
