@@ -247,7 +247,7 @@
     }
 
     function itemDraw(v) {
-        if (isDescendantCategory('40') || isDescendantCategory('7')) {
+        if (isDescendantCategory(c_seq, '40') || isDescendantCategory(c_seq, '7')) {
             $('#gridLayout').append(makeProductItemStr(v, true));
         } else {
             $('#gridLayout').append(makeProductItemStr(v));
