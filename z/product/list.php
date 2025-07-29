@@ -124,41 +124,51 @@
     }
 
 
+    // 최초 진입 시 c_seq 기준으로 단계별 카테고리 렌더링
     function setCateWrap() {
         if (!c_seq || !menuData) return;
 
-        const findChildren = (list, targetSeq) => {
+        // 경로를 역추적하여 depth 별로 단계 생성
+        const buildPathToNode = (list, targetSeq, path = []) => {
             for (const item of list) {
-                if (item.seq == targetSeq) return item.children || [];
+                const newPath = [...path, item];
+                if (item.seq == targetSeq) return newPath;
                 if (item.children?.length) {
-                    const found = findChildren(item.children, targetSeq);
+                    const found = buildPathToNode(item.children, targetSeq, newPath);
                     if (found) return found;
                 }
             }
-            return [];
+            return null;
         };
 
-        const children = findChildren(menuData, c_seq);
+        const path = buildPathToNode(menuData, c_seq);
+        if (!path) return;
 
-        if (children.length === 0) {
-            $wrap.addClass('d-none');
-        } else {
-            $wrap.removeClass('d-none');
-            children.forEach(v => {
-                const active = v.seq == c_seq ? 'active' : '';
-                $wrap.append(`<div class="cate-item ${active}" onclick="goCate('${v.seq}')">${v.name}</div>`);
+        // 초기화
+        $('#category-select-wrap').empty();
+
+        for (let depth = 0; depth < path.length; depth++) {
+            const currentNode = path[depth];
+            const children = currentNode.children || [];
+
+            const wrapId = `list-cate-depth-${depth + 1}`;
+            const $wrap = $(`<div id="${wrapId}" class="list-cate-wrap"></div>`);
+
+            children.forEach(child => {
+                const active = child.seq == c_seq ? 'active' : '';
+                $wrap.append(`<div class="cate-item ${active}" onclick="goCate('${child.seq}')">${child.name}</div>`);
             });
+
+            $('#category-select-wrap').append($wrap);
         }
     }
 
-    // HTML에 반드시 아래 div가 존재해야 함:
-    // <div id="category-select-wrap"></div>
-
+// 클릭 시 하위 카테고리 렌더링
     function goCate(_seq) {
         // 상태 초기화
-        sc = '';          // 최종선택된 c_seq는 아래에서 다시 설정됨
-        attr2 = ``;
-        attr3 = ``;
+        sc = '';
+        attr2 = '';
+        attr3 = '';
         attrArr = [];
         page = 1;
 
@@ -166,32 +176,18 @@
         $('#list-attr4-wrap').empty();
         $('#list-attr2-wrap').empty().addClass('d-none');
 
-        // 메뉴 트리에서 _seq에 해당하는 항목 찾기
-        const findNodeBySeq = (list, targetSeq) => {
-            for (const item of list) {
-                if (item.seq == targetSeq) return item;
-                if (item.children?.length) {
-                    const found = findNodeBySeq(item.children, targetSeq);
-                    if (found) return found;
-                }
-            }
-            return null;
-        };
-
         const node = findNodeBySeq(menuData, _seq);
         if (!node) return;
 
-        // 현재 선택된 c_seq 업데이트
         sc = node.seq;
 
-        // 특성 표시 처리 (2depth에서만 체크하고 싶다면 depth 조건 추가 가능)
         if (['7', '40', '71'].includes(String(sc))) {
             setAttrWrap(sc);
         }
 
-        // 이전에 그려진 더 깊은 depth 카테고리 영역 삭제
+        // 기존 더 깊은 depth 제거
         const currentDepth = parseInt(node.depth);
-        $(`#category-select-wrap > div`).each(function() {
+        $(`#category-select-wrap > div`).each(function () {
             const id = $(this).attr('id');
             const match = id?.match(/list-cate-depth-(\d+)/);
             if (match && parseInt(match[1]) > currentDepth) {
@@ -199,24 +195,20 @@
             }
         });
 
-        // 현재 depth+1에 해당하는 영역 생성 및 렌더링
+        // 다음 depth 영역 생성 및 렌더링
         const nextDepth = currentDepth + 1;
-        const $wrapId = `list-cate-depth-${nextDepth}`;
-        let $wrap = $(`#${$wrapId}`);
-
+        const wrapId = `list-cate-depth-${nextDepth}`;
+        let $wrap = $(`#${wrapId}`);
         if ($wrap.length === 0) {
-            $('#category-select-wrap').append(`<div id="${$wrapId}" class="list-cate-wrap"></div>`);
-            $wrap = $(`#${$wrapId}`);
+            $('#category-select-wrap').append(`<div id="${wrapId}" class="list-cate-wrap"></div>`);
+            $wrap = $(`#${wrapId}`);
         } else {
             $wrap.empty();
         }
 
         if (node.children?.length) {
             node.children.forEach(v => {
-                const itemStr = `
-                    <div class="cate-item" onclick="goCate('${v.seq}')">
-                        ${v.name}
-                    </div>`;
+                const itemStr = `<div class="cate-item" onclick="goCate('${v.seq}')">${v.name}</div>`;
                 $wrap.append(itemStr);
             });
             $wrap.removeClass('d-none');
@@ -226,6 +218,7 @@
 
         goReload();
     }
+
 
 
     function setPageTitleSub() {
