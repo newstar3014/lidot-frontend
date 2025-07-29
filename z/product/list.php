@@ -225,48 +225,36 @@
     // }
 
     function setCateWrap() {
-        if (!c_seq) return;
+        if (!c_seq || !Array.isArray(menuData) || menuData.length === 0) return;
 
-        // menuData가 이미 세팅되어 있다면 ajax 재호출 생략
-        if (Array.isArray(menuData) && menuData.length > 0) {
-        }else{
-            // menuData가 없을 때만 ajax 호출
-            ajaxCall('/category/menu', {}, function(data) {
-                menuData = data;
+        // 재귀적으로 c_seq에 해당하는 항목을 찾아 하위 children 반환
+        const findChildren = (list, targetSeq) => {
+            for (const item of list) {
+                if (item.seq == targetSeq) return item.children || [];
+                if (item.children?.length) {
+                    const found = findChildren(item.children, targetSeq);
+                    if (found) return found;
+                }
+            }
+            return [];
+        };
+
+        const children = findChildren(menuData, c_seq); // 선택된 카테고리의 하위 목록
+        const $wrap = $('#list-cate2-wrap').empty();
+
+        if (children.length === 0) {
+            $wrap.addClass('d-none');
+        } else {
+            $wrap.removeClass('d-none');
+            children.forEach(v => {
+                const active = v.seq == c_seq ? 'active' : '';
+                const itemStr = `
+                    <div class="cate-item ${active}" onclick="goCate('${v.seq}')">
+                        ${v.name}
+                    </div>`;
+                $wrap.append(itemStr);
             });
         }
-
-
-        ajaxCall('/category/menu', {}, function(data) {
-            // 재귀적으로 c_seq에 해당하는 항목을 찾아 하위 children 반환
-            const findChildren = (list, targetSeq) => {
-                for (const item of list) {
-                    if (item.seq == targetSeq) return item.children || [];
-                    if (item.children?.length) {
-                        const found = findChildren(item.children, targetSeq);
-                        if (found) return found;
-                    }
-                }
-                return [];
-            };
-
-            const children = findChildren(data, c_seq); // 선택된 카테고리의 하위 목록
-            const $wrap = $('#list-cate2-wrap').empty();
-
-            if (children.length === 0) {
-                $wrap.addClass('d-none');
-            } else {
-                $wrap.removeClass('d-none');
-                children.forEach(v => {
-                    const active = v.seq == c_seq ? 'active' : '';
-                    const itemStr = `
-                        <div class="cate-item ${active}" onclick="goCate('${v.seq}')">
-                            ${v.name}
-                        </div>`;
-                    $wrap.append(itemStr);
-                });
-            }
-        });
     }
 
 
