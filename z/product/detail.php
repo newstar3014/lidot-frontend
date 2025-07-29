@@ -364,7 +364,7 @@ iframe[src*="youtube.com"] {
             console.log(v);
             setBreadcrumb(v.category);
 
-            let text = cfLoad('name', _name);
+            let text = cfLoad('name', '상품상세');
             
             $('.tf-page-privacy-policy').html(text[0].value);
 
