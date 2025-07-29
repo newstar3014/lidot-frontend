@@ -21,8 +21,12 @@
 <section class="flat-spacing-1">
     <div class="container">
 
-        <div id="list-cate2-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
-        <div id="list-cate3-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
+        <!-- 카테고리 리스트 전체 감싸는 영역 -->
+        <div id="list-cate-wrap" class="pb-4 mb-4 border-bottom"></div>
+
+        <!-- 최종 선택된 카테고리 seq 저장용 -->
+        <input type="hidden" id="c_seq" value="">
+
         <div id="list-attr2-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div id="list-attr3-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div class="mb-3"><ul id="list-attr4-wrap"></div>
@@ -220,68 +224,172 @@
     //     }        
     // }
 
-    function setCateWrap(){
-        if (!c_seq) return;
-        const level2 = (data.find(item => item.seq == sc1 && item.show_yn === 'Y') || {}).children || [];
-        menuData = level2;
-        const $wrap2 = $('#list-cate2-wrap').empty();
-        if (level2.length === 0) {
-            $wrap2.addClass('d-none');
-        } else {
-            $wrap2.removeClass('d-none');
-            level2.forEach(v => {
-                const active = (v.seq == sc2) ? 'active' : '';
-                const itemStr = `
-                    <div class="cate-item ${active}" onclick="goCate2('${v.seq}')">
-                        ${v.name}
-                    </div>`;
-                $wrap2.append(itemStr);
-            });
-        }
-    }
+    // function setCateWrap(){
+    //     if (!c_seq) return;
+    //     const level2 = (data.find(item => item.seq == sc1 && item.show_yn === 'Y') || {}).children || [];
+    //     menuData = level2;
+    //     const $wrap2 = $('#list-cate2-wrap').empty();
+    //     if (level2.length === 0) {
+    //         $wrap2.addClass('d-none');
+    //     } else {
+    //         $wrap2.removeClass('d-none');
+    //         level2.forEach(v => {
+    //             const active = (v.seq == sc2) ? 'active' : '';
+    //             const itemStr = `
+    //                 <div class="cate-item ${active}" onclick="goCate2('${v.seq}')">
+    //                     ${v.name}
+    //                 </div>`;
+    //             $wrap2.append(itemStr);
+    //         });
+    //     }
+    // }
 
-    function goCate2(_seq){
+    // function goCate2(_seq){
 
-        sc = '';
-        sc2 = _seq;
-        page = 1;
-        attr2 = ``;
-        attr3 = ``;
-        attrArr = [];
-        $('#list-attr3-wrap').empty().addClass('d-none');
-        $('#list-attr4-wrap').empty();
-        // if(attrArr.length > 0){
-        //     attr3 = attrArr;
-        // }else{
-        //     attr3 = ``;
-        // }
+    //     sc = '';
+    //     sc2 = _seq;
+    //     page = 1;
+    //     attr2 = ``;
+    //     attr3 = ``;
+    //     attrArr = [];
+    //     $('#list-attr3-wrap').empty().addClass('d-none');
+    //     $('#list-attr4-wrap').empty();
+    //     // if(attrArr.length > 0){
+    //     //     attr3 = attrArr;
+    //     // }else{
+    //     //     attr3 = ``;
+    //     // }
 
-        const level3 = (menuData.find(item => item.seq == sc2 && item.show_yn === 'Y') || {}).children || [];
-        const $wrap3 = $('#list-cate3-wrap').empty();
-        if (level3.length === 0) {
-            $wrap3.addClass('d-none');
-        } else {
-            $wrap3.removeClass('d-none');
-            level3.forEach(v => {
-                const active = (v.seq == sc) ? 'active' : '';
-                const itemStr = `
-                    <div class="cate-item ${active} cate3-item cate-item${v.seq}" onclick="goCate3('${v.seq}')">
-                        ${v.name}
-                    </div>`;
-                $wrap3.append(itemStr);
-            });
-        }
+    //     const level3 = (menuData.find(item => item.seq == sc2 && item.show_yn === 'Y') || {}).children || [];
+    //     const $wrap3 = $('#list-cate3-wrap').empty();
+    //     if (level3.length === 0) {
+    //         $wrap3.addClass('d-none');
+    //     } else {
+    //         $wrap3.removeClass('d-none');
+    //         level3.forEach(v => {
+    //             const active = (v.seq == sc) ? 'active' : '';
+    //             const itemStr = `
+    //                 <div class="cate-item ${active} cate3-item cate-item${v.seq}" onclick="goCate3('${v.seq}')">
+    //                     ${v.name}
+    //                 </div>`;
+    //             $wrap3.append(itemStr);
+    //         });
+    //     }
 
-        if(sc2 == 7 || sc2 == 40 || sc2 == 71){
-            setAttrWrap(sc2);
-        }else{
-            $('#list-attr2-wrap').empty().addClass('d-none');
-        }
+    //     if(sc2 == 7 || sc2 == 40 || sc2 == 71){
+    //         setAttrWrap(sc2);
+    //     }else{
+    //         $('#list-attr2-wrap').empty().addClass('d-none');
+    //     }
 
 
  
+    //     goReload();
+    // }
+
+
+    // ✅ 특정 seq의 카테고리 항목 찾기 (재귀 탐색)
+    function findCategoryBySeq(seq, list) {
+        for (const item of list) {
+            if (item.seq == seq) return item;
+            if (item.children && item.children.length > 0) {
+                const found = findCategoryBySeq(seq, item.children);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
+
+    // ✅ 특정 depth의 카테고리 wrap 렌더링
+    function renderCategoryWrap(depth, list, activeSeq) {
+        const wrapId = `list-cate-depth${depth}`;
+        let $wrap = $(`#${wrapId}`);
+
+        // 없으면 새로 생성
+        if ($wrap.length === 0) {
+            $wrap = $(`<div id="${wrapId}" class="list-cate-wrap mb-3" data-depth="${depth}"></div>`);
+            $('#list-cate-wrap').append($wrap);
+        }
+
+        $wrap.empty();
+
+        list.forEach(item => {
+            const isActive = (item.seq == activeSeq) ? 'active' : '';
+            const itemHtml = `
+                <div class="cate-item ${isActive}" onclick="goCate(${item.seq})" data-depth="${depth}">
+                    ${item.name}
+                </div>
+            `;
+            $wrap.append(itemHtml);
+        });
+    }
+
+    // ✅ 카테고리 클릭 시
+    function goCate(seq) {
+        const current = findCategoryBySeq(seq, menuData);
+        if (!current) return;
+
+        const depth = current.depth;
+
+        // 하위 뎁스 이상은 모두 제거
+        $(`#list-cate-wrap .list-cate-wrap`).each(function () {
+            const d = parseInt($(this).data('depth'), 10);
+            if (d > depth) $(this).remove();
+        });
+
+        // 현재 depth 형제 리스트
+        const siblings = (findCategoryBySeq(current.parent, menuData) || {}).children || [];
+        renderCategoryWrap(depth, siblings, current.seq);
+
+        // 자식이 있다면 다음 뎁스 추가
+        if (current.children && current.children.length > 0) {
+            renderCategoryWrap(depth + 1, current.children, null);
+        }
+
+        // 선택된 카테고리 업데이트
+        $('#c_seq').val(current.seq);
+
+        // 속성 필터 조건 처리
+        if (current.seq == 7 || current.seq == 40 || current.seq == 71) {
+            setAttrWrap(current.seq);
+        } else {
+            $('#list-attr2-wrap').empty().addClass('d-none');
+        }
+
+        // 데이터 다시 불러오기
         goReload();
     }
+
+    // ✅ 초기 진입 시 c_seq 경로 재구성 및 렌더링
+    function initCategoryPath(c_seq) {
+        if (!c_seq) return;
+
+        const current = findCategoryBySeq(c_seq, menuData);
+        if (!current) return;
+
+        const path = [];
+
+        let node = current;
+        while (node && node.depth >= 2) {
+            path.unshift(node); // 상위부터 앞에 넣기
+            node = findCategoryBySeq(node.parent, menuData);
+        }
+
+        $('#list-cate-wrap').empty();
+
+        path.forEach(cat => {
+            const siblings = (findCategoryBySeq(cat.parent, menuData) || {}).children || [];
+            renderCategoryWrap(cat.depth, siblings, cat.seq);
+        });
+
+        if (current.children && current.children.length > 0) {
+            renderCategoryWrap(current.depth + 1, current.children, null);
+        }
+
+        $('#c_seq').val(current.seq);
+    }
+
+
 
     function goCate3(_seq){
 
@@ -385,7 +493,8 @@
 
         setPageTitleSub();
         setSortOrder();
-        setCateWrap();
+        // setCateWrap();
+        initCategoryPath(c_seq);
         productLoad();
 
         // if(firstBoolean && attrArr.length > 0){
