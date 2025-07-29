@@ -63,224 +63,185 @@
 </section>
 
 <script>
-    var c_seq = '<?php echo $_GET["c_seq"] ?? ''; ?>';
-    var sk = '<?php echo $_GET["sk"] ?? ''; ?>';
-    if(sk) insertSearchKeyword(sk);
-    var ob = '<?php echo $_GET["ob"] ?? ''; ?>' || 'n';
-    var page = '<?php echo $_GET["page"] ?? 1; ?>';
-    var target = '<?php echo $_GET["target"] ?? ''; ?>';
+let sc = '<?php echo $_GET["sc"] ?? ""; ?>';
+let sk = '<?php echo $_GET["sk"] ?? ""; ?>';
+let ob = '<?php echo $_GET["ob"] ?? "n"; ?>';
+let page = '<?php echo $_GET["page"] ?? 1; ?>';
+let target = '<?php echo $_GET["target"] ?? ""; ?>';
+let attr2 = '';
+let attr3 = '';
+let attrArr = [];
 
-    let attr2 = '';
-    let attr3 = '';
-    let attrArr = [];
+$(function () {
+    goReload();
+});
 
-    $(function () {
-        goReload();
+function goReload() {
+    history.pushState(null, null, `/z/product/list?page=${page}&sc=${sc}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
+    setPageTitleSub();
+    setSortOrder();
+    productLoad();
+    if (sc && menuData) renderCategoryPath(sc);
+    else renderCategoryRoot();
+}
+
+function renderCategoryRoot() {
+    const depth1 = menuData.filter(item => item.depth == 1 && item.show_yn === 'Y');
+    const $wrap = $('#category-select-wrap').empty();
+    const $depthWrap = $(`<div id="list-cate-depth-1" class="list-cate-wrap"></div>`);
+    depth1.forEach(v => {
+        $depthWrap.append(`<div class="cate-item" onclick="goCate('${v.seq}')">${v.name}</div>`);
     });
+    $wrap.append($depthWrap);
+}
 
-    function goReload() {
-        history.pushState(null, null, `/z/product/list?page=${page}&c_seq=${c_seq}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
+function goCate(_seq) {
+    sc = _seq;
+    attr2 = '';
+    attr3 = '';
+    attrArr = [];
+    page = 1;
+    renderCategoryPath(_seq);
+    goReload();
+}
 
-        setPageTitleSub();
-        setSortOrder();
-        setCateWrap();
-        productLoad();
-
-        if (c_seq) {
-            goCate(c_seq);
-        }
-    }
-
-
-    function setAttrWrap(cate2seq) {
-        let parent2;
-        if (cate2seq == 7) parent2 = 1;
-        else if (cate2seq == 40) parent2 = 2;
-        else if (cate2seq == 71) parent2 = 3;
-
-        const $wrap = $('#list-attr2-wrap').empty().addClass('d-none');
-
-        ajaxCall('/common/all', { table: 'attribute', ob: 'ORDER BY sort ASC' }, function (data) {
-            attrData = data;
-            const depth2Items = data.filter(item => item.parent == parent2);
-            if (depth2Items.length > 0) {
-                $wrap.removeClass('d-none');
-                let _name = '';
-                $.each(depth2Items, function (i, v) {
-                    if (v.seq == attr2 && v.name == '색상') _name = v.name;
-                    const active = (v.seq == attr2) ? 'active' : '';
-                    const itemStr = `
-                        <div class="cate-item ${active} attr2-item attr2-item${v.seq}" onclick="goAttr2('${v.seq}', '${v.name}')">
-                            ${v.name}
-                        </div>`;
-                    $wrap.append(itemStr);
-                });
-
-                if (attr3) {
-                    goAttr2(attr2, _name);
-                }
-            }
+function renderCategoryPath(seq) {
+    const path = findCategoryPath(menuData, seq);
+    if (!path.length) return;
+    $('#category-select-wrap').empty();
+    path.forEach((node, i) => {
+        const $depthWrap = $(`<div id="list-cate-depth-${i + 1}" class="list-cate-wrap"></div>`);
+        const siblings = findSiblings(menuData, node.seq);
+        siblings.forEach(v => {
+            const active = v.seq == node.seq ? 'active' : '';
+            $depthWrap.append(`<div class="cate-item ${active}" onclick="goCate('${v.seq}')">${v.name}</div>`);
         });
-    }
-
-
-    // 최초 진입 시 c_seq 기준으로 단계별 카테고리 렌더링
-    function setCateWrap() {
-        if (!c_seq || !menuData) return;
-
-        // 경로를 역추적하여 depth 별로 단계 생성
-        const buildPathToNode = (list, targetSeq, path = []) => {
-            for (const item of list) {
-                const newPath = [...path, item];
-                if (item.seq == targetSeq) return newPath;
-                if (item.children?.length) {
-                    const found = buildPathToNode(item.children, targetSeq, newPath);
-                    if (found) return found;
-                }
-            }
-            return null;
-        };
-
-        const path = buildPathToNode(menuData, c_seq);
-        if (!path) return;
-
-        // 초기화
-        $('#category-select-wrap').empty();
-
-        for (let depth = 0; depth < path.length; depth++) {
-            const currentNode = path[depth];
-            const children = currentNode.children || [];
-
-            const wrapId = `list-cate-depth-${depth + 1}`;
-            const $wrap = $(`<div id="${wrapId}" class="list-cate-wrap"></div>`);
-
-            children.forEach(child => {
-                const active = child.seq == c_seq ? 'active' : '';
-                $wrap.append(`<div class="cate-item ${active}" onclick="goCate('${child.seq}')">${child.name}</div>`);
-            });
-
-            $('#category-select-wrap').append($wrap);
-        }
-    }
-
-// 클릭 시 하위 카테고리 렌더링
-    function goCate(_seq) {
-        // 상태 초기화
-        sc = '';
-        attr2 = '';
-        attr3 = '';
-        attrArr = [];
-        page = 1;
-
-        $('#list-attr3-wrap').empty().addClass('d-none');
-        $('#list-attr4-wrap').empty();
-        $('#list-attr2-wrap').empty().addClass('d-none');
-
-        const node = findNodeBySeq(menuData, _seq);
-        if (!node) return;
-
-        sc = node.seq;
-
-        if (['7', '40', '71'].includes(String(sc))) {
-            setAttrWrap(sc);
-        }
-
-        // 기존 더 깊은 depth 제거
-        const currentDepth = parseInt(node.depth);
-        $(`#category-select-wrap > div`).each(function () {
-            const id = $(this).attr('id');
-            const match = id?.match(/list-cate-depth-(\d+)/);
-            if (match && parseInt(match[1]) > currentDepth) {
-                $(this).remove();
-            }
+        $('#category-select-wrap').append($depthWrap);
+    });
+    const lastNode = path[path.length - 1];
+    if (lastNode.children?.length) {
+        const $childWrap = $(`<div id="list-cate-depth-${path.length + 1}" class="list-cate-wrap"></div>`);
+        lastNode.children.forEach(v => {
+            $childWrap.append(`<div class="cate-item" onclick="goCate('${v.seq}')">${v.name}</div>`);
         });
+        $('#category-select-wrap').append($childWrap);
+    }
+    if (["7", "40", "71"].includes(String(sc))) setAttrWrap(sc);
+    else $('#list-attr2-wrap').empty().addClass('d-none');
+}
 
-        // 다음 depth 영역 생성 및 렌더링
-        const nextDepth = currentDepth + 1;
-        const wrapId = `list-cate-depth-${nextDepth}`;
-        let $wrap = $(`#${wrapId}`);
-        if ($wrap.length === 0) {
-            $('#category-select-wrap').append(`<div id="${wrapId}" class="list-cate-wrap"></div>`);
-            $wrap = $(`#${wrapId}`);
-        } else {
-            $wrap.empty();
+function findCategoryPath(list, targetSeq, path = []) {
+    for (const item of list) {
+        const newPath = [...path, item];
+        if (item.seq == targetSeq) return newPath;
+        if (item.children?.length) {
+            const result = findCategoryPath(item.children, targetSeq, newPath);
+            if (result.length) return result;
         }
+    }
+    return [];
+}
 
-        if (node.children?.length) {
-            node.children.forEach(v => {
-                const itemStr = `<div class="cate-item" onclick="goCate('${v.seq}')">${v.name}</div>`;
+function findSiblings(list, targetSeq) {
+    for (const item of list) {
+        if (item.seq == targetSeq) return list;
+        if (item.children?.length) {
+            const found = findSiblings(item.children, targetSeq);
+            if (found) return found;
+        }
+    }
+    return [];
+}
+
+function setAttrWrap(cate2seq) {
+    let parent2 = '';
+    if (cate2seq == 7) parent2 = 1;
+    else if (cate2seq == 40) parent2 = 2;
+    else if (cate2seq == 71) parent2 = 3;
+
+    const $wrap = $('#list-attr2-wrap').empty().addClass('d-none');
+
+    ajaxCall('/common/all', { table: 'attribute', ob: 'ORDER BY sort ASC' }, function (data) {
+        attrData = data;
+        const depth2Items = data.filter(item => item.parent == parent2);
+        if (depth2Items.length > 0) {
+            $wrap.removeClass('d-none');
+            let _name = ``;
+            $.each(depth2Items, function (i, v) {
+                if (v.seq == attr2 && v.name == '색상') _name = v.name;
+                const active = (v.seq == attr2) ? 'active' : '';
+                const itemStr = `<div class="cate-item ${active} attr2-item attr2-item${v.seq}" onclick="goAttr2('${v.seq}', '${v.name}')">${v.name}</div>`;
                 $wrap.append(itemStr);
             });
-            $wrap.removeClass('d-none');
-        } else {
-            $wrap.addClass('d-none');
+            if (attr3) goAttr2(attr2, _name);
         }
-
-        goReload();
-    }
-
-
-
-    function setPageTitleSub() {
-        const $title = $('#product-search-keyword');
-        if (sk) {
-            $title.html(`"${sk}" 검색`);
-        } else if (c_seq) {
-            const node = getSeq('category', c_seq);
-            if (node?.name) $title.html(node.name);
-            else $title.html('카테고리');
-        } else if (target === 'best') {
-            $title.html('베스트');
-        } else if (target === 'new') {
-            $title.html('신상품');
-        } else {
-            $title.html('전체');
-        }
-    }
-
-    function setSortOrder() {
-        $('.tf-control-sorting select').val(ob);
-    }
-
-    $('.tf-control-sorting select').change(function () {
-        ob = $(this).val();
-        page = 1;
-        goReload();
     });
+}
 
-    function productLoad() {
-        $('#gridLayout').empty();
-
-        let url = `/product/list`;
-        if (isDescendantCategory('40') || isDescendantCategory('7')) {
-            url = `/product/list-option`;
-        }
-
-        ajaxCall(url, { ppp: DEFAULT_PPP, page, c_seq, sk, ob, target, attr2, attr3 }, function (data) {
-            $('.item-total-count').html(data.totalCount);
-            if (data.totalCount === 0) {
-                $('.no-data').removeClass('d-none');
-            } else {
-                $('.no-data').addClass('d-none');
-                $('.tf-shop-control').removeClass('d-none');
-                drawPaging(data.totalCount, data.totalPage);
-                data.rows.forEach(v => itemDraw(v));
-            }
-        });
+function goAttr2(_seq, _name) {
+    if (!_seq) {
+        $('.attr2-item').removeClass('active');
+        $('#list-attr3-wrap').html('').addClass('d-none');
+        return false;
     }
+    $('.attr2-item').removeClass('active');
+    $('.attr2-item' + _seq).addClass('active');
+    attr2 = _seq;
+    const depth3Items = attrData.filter(item => item.parent == _seq);
+    const $wrap = $('#list-attr3-wrap').empty().removeClass('d-none');
+    $.each(depth3Items, function (i, v) {
+        const active = (v.seq == attr3) ? 'active' : '';
+        let imgStr = (_name == '색상') ? `<img src="${v.img}" style="width:20px;">` : '';
+        const itemStr = `<div class="cate-item goAttr3Click" id="goAttr3-${v.seq}" data-attr_seq="${v.seq}" data-attr_name="${v.name}">${imgStr}${v.name}</div>`;
+        $wrap.append(itemStr);
+    });
+}
 
-    function itemDraw(v) {
-        if (isDescendantCategory(c_seq, '40') || isDescendantCategory(c_seq, '7')) {
-            $('#gridLayout').append(makeProductItemStr(v, true));
-        } else {
-            $('#gridLayout').append(makeProductItemStr(v));
-        }
-    }
+$(document).on('click', '.goAttr3Click', function () {
+    page = 1;
+    let attr_seq = $(this).attr('data-attr_seq');
+    let attr_name = $(this).attr('data-attr_name');
+    let id = $(`#li-${attr_seq}`).attr('id');
+    if (!id) goDrawLiFn(attr_seq, attr_name, true);
+});
 
+function goDrawLiFn(attr_seq, attr_name, arrBoolean) {
+    if (arrBoolean) attrArr.push(attr_seq);
+    attr3 = attrArr;
+    let str = `<li id="li-${attr_seq}" class="attr-choice-item">${attr_name}<span class="btn-remove" onclick="goRemoveLiFn('${attr_seq}')">X</span></li>`;
+    $('#list-attr4-wrap').append(str);
+    goReload();
+}
 
+function goRemoveLiFn(attr_seq) {
+    let index = attrArr.indexOf(attr_seq.toString());
+    if (index !== -1) attrArr.splice(index, 1);
+    attr3 = attrArr;
+    $(`#li-${attr_seq}`).remove();
+    goReload();
+}
 
+function setPageTitleSub() {
+    const $title = $('#product-search-keyword');
+    if (sk) $title.html(`"${sk}" 검색`);
+    else if (sc) {
+        const node = getSeq('category', sc);
+        if (node?.name) $title.html(node.name);
+        else $title.html('카테고리');
+    } else if (target === 'best') $title.html('베스트');
+    else if (target === 'new') $title.html('신상품');
+    else $title.html('전체');
+}
 
+function setSortOrder() {
+    $('.tf-control-sorting select').val(ob);
+}
+
+$('.tf-control-sorting select').change(function () {
+    ob = $(this).val();
+    page = 1;
+    goReload();
+});
 </script>
-
 
 <? include_once $_SERVER["DOCUMENT_ROOT"].'/_footer.php'; ?>
