@@ -139,7 +139,6 @@
         };
 
         const children = findChildren(menuData, c_seq);
-        const $wrap = $('#list-cate2-wrap').empty();
 
         if (children.length === 0) {
             $wrap.addClass('d-none');
@@ -153,9 +152,10 @@
     }
 
     function goCate(_seq) {
-        sc = '';
-        attr2 = '';
-        attr3 = '';
+        // 상태 초기화
+        sc = ''; // 최종 선택된 카테고리 seq
+        attr2 = ``;
+        attr3 = ``;
         attrArr = [];
         page = 1;
 
@@ -163,35 +163,47 @@
         $('#list-attr4-wrap').empty();
         $('#list-attr2-wrap').empty().addClass('d-none');
 
-        const findNodeBySeq = (list, targetSeq) => {
-            for (const item of list) {
-                if (item.seq == targetSeq) return item;
-                if (item.children?.length) {
-                    const found = findNodeBySeq(item.children, targetSeq);
-                    if (found) return found;
-                }
-            }
-            return null;
-        };
-
-        const node = findNodeBySeq(menuData, _seq);
+        // 현재 선택된 카테고리 노드 찾기
+        const node = findNode(menuData, _seq);
         if (!node) return;
 
         sc = node.seq;
 
-        if (node.depth == 2 && ['7', '40', '71'].includes(String(sc))) {
+        // depth 계산
+        const depth = getNodeDepth(menuData, node.seq) || 1;
+        const nextDepth = depth + 1;
+
+        // 특성 적용은 depth:2에서만
+        if (depth === 2 && ['7', '40', '71'].includes(String(sc))) {
             setAttrWrap(sc);
         }
 
-        const $nextWrap = $('#list-cate-next-wrap').empty();
+        const $wrap = $('#list-cate-next-wrap');
+
+        // 현재 depth보다 큰 기존 depth-box 제거
+        $wrap.find('.depth-box').each(function () {
+            const d = parseInt($(this).attr('data-depth'), 10);
+            if (d >= nextDepth) $(this).remove();
+        });
+
+        // 하위 카테고리 있을 경우 다음 depth 박스 추가
         if (node.children?.length) {
+            const $depthBox = $('<div class="depth-box"></div>').attr('data-depth', nextDepth);
             node.children.forEach(v => {
-                $nextWrap.append(`<div class="cate-item" onclick="goCate('${v.seq}')">${v.name}</div>`);
+                const itemStr = `
+                    <div class="cate-item" onclick="goCate('${v.seq}')">
+                        ${v.name}
+                    </div>`;
+                $depthBox.append(itemStr);
             });
-            $nextWrap.removeClass('d-none');
+            $wrap.append($depthBox);
+            $wrap.removeClass('d-none');
         } else {
-            $nextWrap.addClass('d-none');
+            // 더 이상 자식이 없다면 다음 박스 없음
+            // 마지막 자식에서 더 깊은 것들만 지우면 되므로 위에서 처리됨
         }
+
+        goReload();
     }
 
     function setPageTitleSub() {
