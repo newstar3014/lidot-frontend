@@ -284,7 +284,7 @@ iframe[src*="youtube.com"] {
                             </table>
                         </div>
                         <div class="widget-content-inner">
-                            <!-- <div class="tf-page-privacy-policy">
+                            <div class="tf-page-privacy-policy">
                                 <div class="title">상품결제정보</div>
                                 <p>
                                     무통장 입금은 상품 구매 대금은 PC뱅킹, 인터넷뱅킹, 텔레뱅킹 혹은 가까운 은행에서 직접 입금하시면 됩니다.<br>
@@ -311,7 +311,7 @@ iframe[src*="youtube.com"] {
                                 - 복제가 가능한 상품 등의 포장을 훼손한 경우<br>
                                 (자세한 내용은 고객만족센터 1:1 E-MAIL상담을 이용해 주시기 바랍니다.)
                                 </p>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
