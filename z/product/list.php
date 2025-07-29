@@ -67,7 +67,7 @@
 // 전역 변수
 let c_seq = getUrlParam('c_seq') || '';
 let category = []; // depth 순서대로 담김
-let menuData = window.menuData || [];
+// ✅ 전역 menuData는 서버 사이드에서 window.menuData로 주입됨 (중복 선언 제거)
 let attr2 = '';
 let attr3 = '';
 let attrArr = [];
@@ -77,11 +77,7 @@ let ob = getUrlParam('ob') || 'n';
 let target = getUrlParam('target') || '';
 
 $(function () {
-    if (c_seq) {
-        category = getCategoryTrailFromSeq(parseInt(c_seq));
-    }
-    renderCategorySelectors();
-    setAttrCondition();
+    // category는 서버 응답에서 세팅되며, 렌더링 및 속성조건도 이후 실행됨
     setSortOrder();
     productLoad();
 });
@@ -91,17 +87,7 @@ function getUrlParam(key) {
     return url.searchParams.get(key);
 }
 
-// menuData 트리에서 특정 seq의 조상 카테고리 트레일을 배열로 반환
-function getCategoryTrailFromSeq(seq, data = menuData, trail = []) {
-    for (const item of data) {
-        if (item.seq == seq) return [...trail, item];
-        if (item.children && item.children.length) {
-            const result = getCategoryTrailFromSeq(seq, item.children, [...trail, item]);
-            if (result.length) return result;
-        }
-    }
-    return [];
-}
+// 제거됨: category는 서버 응답에서 내려오므로 클라이언트 구성 함수 불필요
 
 // menuData 트리 구조에서 특정 부모 seq의 자식들 반환
 function getChildrenByParent(seq, data = menuData) {
@@ -303,6 +289,7 @@ function goRemoveLiFn(attr_seq) {
     $(`#li-${attr_seq}`).remove();
     goReload();
 }
+
 
 </script>
 
