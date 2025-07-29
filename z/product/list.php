@@ -73,13 +73,9 @@
     let attr2 = '';
     let attr3 = '';
     let attrArr = [];
-    let menuData;
 
     $(function () {
-        ajaxCall('/category/menu', {}, function (data) {
-            menuData = data;
-            goReload(); // menuData 세팅 후 단 1회만 호출
-        });
+        goReload();
     });
 
     function goReload() {
