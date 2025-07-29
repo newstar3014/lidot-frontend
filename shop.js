@@ -33,7 +33,7 @@ function makeProductItemStr(v, isOption = false){
     let isVideo = false;
     let videoStr = ``;
 
-    if ((isDescendantCategory(40) || isDescendantCategory(7)) && v?.o_img) {
+    if ((isDescendantCategory(v.c_seq, 40) || isDescendantCategory(v.c_seq, 7)) && v?.o_img) {
         imgArray = [v.o_img];
     }else{
         imgArray = JSON.parse(v.img);
