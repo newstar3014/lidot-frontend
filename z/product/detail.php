@@ -366,7 +366,7 @@ iframe[src*="youtube.com"] {
 
             let text = cfLoad('name', '상품상세');
             
-            //$('.tf-page-privacy-policy').html(text[0].value);
+            $('.tf-page-privacy-policy').html(text[0].value);
 
             if(v.mp4){
                 let mp4Array = JSON.parse(v.mp4);
