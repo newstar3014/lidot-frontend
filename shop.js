@@ -1267,15 +1267,28 @@ function isDescendantCategory(currentSeq, targetSeq) {
     return find([targetNode]);
 }
 
-function findNode(list, seq) {
+// 메뉴 트리에서 특정 seq에 해당하는 노드 찾기
+function findNodeBySeq(list, targetSeq) {
     for (const item of list) {
-        if (item.seq == seq) return item;
+        if (item.seq == targetSeq) return item;
         if (item.children?.length) {
-            const found = findNode(item.children, seq);
+            const found = findNodeBySeq(item.children, targetSeq);
             if (found) return found;
         }
     }
     return null;
+}
+
+// 특정 seq의 하위 children 목록 가져오기
+function findChildren(list, targetSeq) {
+    for (const item of list) {
+        if (item.seq == targetSeq) return item.children || [];
+        if (item.children?.length) {
+            const found = findChildren(item.children, targetSeq);
+            if (found) return found;
+        }
+    }
+    return [];
 }
 
 function getNodeDepth(list, targetSeq, depth = 1) {
