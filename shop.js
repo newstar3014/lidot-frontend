@@ -1262,7 +1262,7 @@ function isDescendantCategory(currentSeq, targetSeq) {
         return false;
     };
 
-    const targetNode = findNode(menuData, currentSeq);
+    const targetNode = findNodeBySeq(menuData, currentSeq);
     if (!targetNode) return false;
     return find([targetNode]);
 }
