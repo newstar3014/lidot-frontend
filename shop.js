@@ -1253,7 +1253,7 @@ async function downloadFiles(target_seq, target) {
     
 }
 
-function isDescendantCategory(targetSeq) {
+function isDescendantCategory(currentSeq, targetSeq) {
     const find = (list) => {
         for (const item of list) {
             if (item.seq == targetSeq) return true;
@@ -1262,7 +1262,7 @@ function isDescendantCategory(targetSeq) {
         return false;
     };
 
-    const targetNode = findNode(menuData, c_seq);
+    const targetNode = findNode(menuData, currentSeq);
     if (!targetNode) return false;
     return find([targetNode]);
 }
