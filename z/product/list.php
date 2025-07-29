@@ -307,7 +307,7 @@
 
         // 없으면 새로 생성
         if ($wrap.length === 0) {
-            $wrap = $(`<div id="${wrapId}" class="list-cate-wrap mb-3" data-depth="${depth}"></div>`);
+            $wrap = $(`<div id="${wrapId}" class="list-cate-wrap mb-3 border-bottom" data-depth="${depth}"></div>`);
             $('#list-cate-wrap').append($wrap);
         }
 
