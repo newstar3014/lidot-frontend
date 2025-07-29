@@ -429,43 +429,38 @@
         }
 
         if (target) {
-            if (target == 'best') {
-                $title.html('베스트');
-            } else if (target == 'new') {
-                $title.html('신상품');
-            }
+            const targetMap = {
+                best: '베스트',
+                new: '신상품',
+            };
+            $title.html(targetMap[target] || '전체');
             return;
         }
 
-        if (c_seq) {
-            const current = findCategoryBySeq(c_seq, menuData);
-            if (!current) {
-                $title.html('전체');
-                return;
-            }
+        const current = findCategoryBySeq(c_seq, menuData);
+        if (!current) {
+            $title.html('전체');
+            return;
+        }
 
-            const path = [];
-            let node = current;
-            let depth2Node = null;
+        // ✅ 경로 구성 (depth:2 이상만)
+        const path = [];
+        let node = current;
+        while (node && node.depth >= 2) {
+            path.unshift(node);
+            node = findCategoryBySeq(node.parent, menuData);
+        }
 
-            while (node && node.depth >= 2) {
-                path.unshift(node);
-                if (node.depth === 2) {
-                    depth2Node = node; // 특성 조건 확인용
-                }
-                node = findCategoryBySeq(node.parent, menuData);
-            }
+        // 제목 구성
+        const titleText = path.map(cat => cat.name).join(' > ');
+        $title.html(titleText);
 
-            // 제목 표시
-            const titleText = path.map(cat => cat.name).join(' > ');
-            $title.html(titleText);
-
-            // 특성 필터는 depth:2 노드 기준으로 검사
-            if (depth2Node && [7, 40, 71].includes(Number(depth2Node.seq))) {
-                setAttrWrap(depth2Node.seq);
-            } else {
-                $('#list-attr2-wrap').empty().addClass('d-none');
-            }
+        // ✅ depth:2 노드 추출 및 특성 처리
+        const depth2Node = path.find(cat => cat.depth === 2);
+        if (depth2Node && attrProductTargetArr.includes(Number(depth2Node.seq))) {
+            setAttrWrap(depth2Node.seq);
+        } else {
+            $('#list-attr2-wrap').empty().addClass('d-none');
         }
     }
 
@@ -474,7 +469,9 @@
         $('#gridLayout').html(``);
 
         let url = `/product/list`;
-        if(sc2 == '40' || sc2 == '7') url = `/product/list-option`;
+        if (isOptionCategory(c_seq, attrOptionTargetArr)) {
+            url = `/product/list-option`;
+        }
 
         ajaxCall(url, { 
             ppp: DEFAULT_PPP,
