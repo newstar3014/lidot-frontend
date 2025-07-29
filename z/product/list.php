@@ -71,7 +71,7 @@
     var page = '<? echo $_GET["page"]; ?>';
     if(!page) page = 1;
     var target = '<? echo $_GET["target"]; ?>';
-    let menuData, attrData;
+    let attrData;
     // let attr2 = '<? echo $_GET["attr2"]; ?>';
     // let attr3 = '<? echo $_GET["attr3"]; ?>';
     let attr2 = '';
