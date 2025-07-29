@@ -22,6 +22,75 @@
 }
 
 
+/* 흐린 배경 오버레이 */
+.popup-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    z-index: 999;
+    display: none;
+}
+
+/* 팝업 기본 위치 (정중앙) */
+.popup-layer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none;
+}
+
+/* 팝업 컨테이너 */
+.popup {
+    position: relative;
+    width: 500px;
+    background: #fff;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+}
+
+/* 팝업 이미지 */
+.popup-img {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    /* display: block; */
+}
+
+/* 닫기 버튼 */
+.popup-close {
+    /* position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: none;
+    font-size: 22px;
+    color: #333;
+    cursor: pointer;
+    z-index: 10; */
+}
+
+/* 하단 체크박스 */
+.popup-footer {
+    padding: 8px 20px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    text-align: left;
+}
+
+.popup-footer label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
 
 @media only screen and (min-width: 1150px) {
     .swiper-button-prev{
@@ -52,33 +121,7 @@
 <section class="tf-slideshow slider-effect-fade position-relative">
 
     <div dir="ltr" class="swiper tf-sw-slideshow" data-preview="1" data-tablet="1" data-mobile="1" data-centered="false" data-space="0">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide" lazy="true">
-                <div class="wrap-slider">
-                    <img class="lazyload" data-src="/img/main-bg2.jpg" src="/img/main-bg2.jpg" alt="swm-slideshow">
-                    <div class="box-content">
-                        <div class="container">
-                            <h1 class="fade-item fade-item-1 text-white heading font-libre-baskerville">감성 인테리어</h1>
-                            <p class="fade-item fade-item-2 text-white">리닷이 추천하고 모두가 좋아하는 핫템들<br>인테리어도 이제는 감성을 챙겨보세요</p>
-                            <a href="/z/product/list" class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn rounded-0"><span>보러가기</span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-slide" lazy="true">
-                <div class="wrap-slider">
-                    <img class="lazyload" data-src="/img/main-bg1.jpg" src="/img/main-bg1.jpg" alt="swm-slideshow">
-                    <div class="box-content">
-                        <div class="container">
-                            <h1 class="fade-item fade-item-1 text-white heading font-libre-baskerville">북유럽 기획전</h1>
-                            <p class="fade-item fade-item-2 text-white">품격과 가심비를 다 잡은 화제의 아이템<br>직접 써보면 깜짝 놀라실거에요</p>
-                            <a href="/z/product/list" class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn rounded-0"><span>보러가기</span></a>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="main-slider-wrapper" class="swiper-wrapper"></div>
     </div>
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
@@ -121,48 +164,7 @@
 <!-- 브랜드 -->
 <section class="flat-spacing-4">
     <div class="container-full">
-        <div class="masonry-layout style-2  wow fadeInUp" data-wow-delay="0s">
-            <div class="item-1 collection-item large hover-img">
-                <div class="collection-inner">
-                    <a href="/z/product/list?sk=힘펠" class="collection-image img-style rounded-0">
-                        <img class="lazyload" data-src="/img/brand1.jpg" src="/img/brand1.jpg" alt="collection-img">
-                    </a>
-                    <div class="collection-content">
-                        <a href="/z/product/list?sk=힘펠" class="tf-btn collection-title hover-icon rounded-0 text-14"><span>힘펠</span><i class="icon icon-arrow1-top-left"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item-2 collection-item large hover-img">
-                <div class="collection-inner">
-                    <a href="/z/product/list?sk=폰타나" class="collection-image img-style rounded-0">
-                        <img class="lazyload" data-src="/img/brand2.jpg" src="/img/brand2.jpg" alt="collection-img">
-                    </a>
-                    <div class="collection-content">
-                        <a href="/z/product/list?sk=폰타나" class="tf-btn collection-title hover-icon rounded-0 text-14"><span>폰타나</span><i class="icon icon-arrow1-top-left"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item-3 collection-item large hover-img">
-                <div class="collection-inner">
-                    <a href="/z/product/list?sk=아이녹스" class="collection-image img-style rounded-0">
-                        <img class="lazyload" data-src="/img/brand3.jpg" src="/img/brand3.jpg" alt="collection-img">
-                    </a>
-                    <div class="collection-content">
-                        <a href="/z/product/list?sk=아이녹스" class="tf-btn collection-title hover-icon rounded-0 text-14"><span>아이녹스</span><i class="icon icon-arrow1-top-left"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item-4 collection-item large hover-img">
-                <div class="collection-inner">
-                    <a href="/z/product/list?sk=JCL" class="collection-image img-style rounded-0">
-                        <img class="lazyload" data-src="/img/brand4.jpg" src="/img/brand4.jpg" alt="collection-img">
-                    </a>
-                    <div class="collection-content">
-                        <a href="/z/product/list?sk=JCL" class="tf-btn collection-title hover-icon rounded-0 text-14"><span>JCL Industry</span><i class="icon icon-arrow1-top-left"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="brand-wrapper" class="masonry-layout style-2  wow fadeInUp" data-wow-delay="0s"></div>
     </div>
 </section>
 <!-- /브랜드 -->
@@ -328,61 +330,8 @@
         </div>
         <div class="wrap-carousel wrap-shop-gram">
             <div dir="ltr" class="swiper tf-sw-shop-gallery" data-preview="5" data-tablet="3" data-mobile="2" data-space-lg="7" data-space-md="7">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <a href="javascript:under()">
-                        <div class="gallery-item hover-img wow fadeInUp" data-wow-delay="0s">
-                            <div class="img-style">
-                                <img class="lazyload img-hover" data-src="/img/sns1.jpg" src="/img/sns1.jpg" alt="image-gallery">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="javascript:under()">
-                        <div class="gallery-item hover-img wow fadeInUp" data-wow-delay="0s">
-                            <div class="img-style">
-                                <img class="lazyload img-hover" data-src="/img/sns2.jpg" src="/img/sns2.jpg" alt="image-gallery">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="javascript:under()">
-                        <div class="gallery-item hover-img wow fadeInUp" data-wow-delay="0s">
-                            <div class="img-style">
-                                <img class="lazyload img-hover" data-src="/img/sns3.jpg" src="/img/sns3.jpg" alt="image-gallery">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="javascript:under()">
-                        <div class="gallery-item hover-img wow fadeInUp" data-wow-delay="0s">
-                            <div class="img-style">
-                                <img class="lazyload img-hover" data-src="/img/sns4.jpg" src="/img/sns4.jpg" alt="image-gallery">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="javascript:under()">
-                        <div class="gallery-item hover-img wow fadeInUp" data-wow-delay="0s">
-                            <div class="img-style">
-                                <img class="lazyload img-hover" data-src="/img/sns5.jpg" src="/img/sns5.jpg" alt="image-gallery">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="javascript:under()">
-                        <div class="gallery-item hover-img wow fadeInUp" data-wow-delay="0s">
-                            <div class="img-style">
-                                <img class="lazyload img-hover" data-src="/img/sns6.jpg" src="/img/sns6.jpg" alt="image-gallery">
-                            </div>
-                        </div>
-                    </a>
-                </div>
+            <div id="sns-wrapper" class="swiper-wrapper">
+    
             </div>
             </div>
             <div class="sw-dots sw-pagination-gallery justify-content-center"></div>
@@ -391,10 +340,16 @@
 </section>
 <!-- /Shop Gram -->
 
+<div class="popup-overlay"></div>
 
 
-<script type="text/javascript" src="index.js"></script>
+
+<script type="text/javascript" src="index.js?ver=1"></script>
 <script type="text/javascript">
+    let sc2 = 0;
+    
+    
+    
     $(function() {
         console.log('ㅡ PAGE READY');
         
@@ -405,7 +360,156 @@
         reviewBestLoad();
 
         setSlider();
+        setBrand();
+        setGallery();
+        setPopup();
+
+
+        const today = new Date().toISOString().slice(0, 10);
+        let showCount = 0;
+
+        $('.popup-layer').each(function () {
+            const $popup = $(this);
+            const key = $popup.data('popup');
+
+            if (localStorage.getItem('hide_' + key) !== today) {
+                $popup.css('display', 'flex');
+                showCount++;
+            }
+        });
+
+        if (showCount > 0) {
+            $('.popup-overlay').fadeIn(200);
+        }
+
+        $('.popup-close').on('click', function () {
+            const $popup = $(this).closest('.popup-layer');
+            
+
+            $popup.hide();
+
+            if ($('.popup-layer:visible').length === 0) {
+                $('.popup-overlay').fadeOut(200);
+            }
+        });
+
+        $('.hide-today').on('click', function () {
+            const $popup = $(this).closest('.popup-layer');
+            const key = $(this).data('key');
+
+            localStorage.setItem('hide_' + key, today);
+
+            $popup.hide();
+
+            if ($('.popup-layer:visible').length === 0) {
+                $('.popup-overlay').fadeOut(200);
+            }
+        })
+        
     });
+
+    
+    function setPopup(){
+        ajaxCall('/popup/list', { 
+            ppp: 99, page:1, show_yn:'Y', period_yn:'Y'
+        }, function(data) {
+            console.log('setPopup data : ', data);
+            
+            $.each(data.rows, function(i,v){
+                let imgStr = `<img src="${v.img}" class="popup-img" />`;
+                if(v.link_yn == 'Y'){
+                    imgStr = `<a href="${v.href}" target="${v.target}"><img src="${v.img}" class="popup-img" style="cursor:pointer;" /></a>`;
+                }
+                $('body').append(`<div class="popup-layer" data-popup="popup${v.seq}">
+                    <div class="popup">
+                        ${imgStr}
+                        <div class="d-flex justify-content-between popup-footer">
+                            <label class="hide-today" data-key="popup${v.seq}">오늘 하루 보지 않기</label>
+                            <label class="popup-close">닫기</label>
+                        </div>
+                    </div>
+                </div>`)
+            })
+            
+        });
+    }
+
+    function setGallery(){
+
+         ajaxCall('/banner/sns-list', { 
+            ppp: 99, page:1, show_yn:'Y'
+        }, function(data) {
+            console.log('setGallery data :' ,data);
+            
+            $.each(data.rows, function(i, v){
+
+                let buttonStr = '';
+                let hrefStr = `role="button"`;
+                
+                let targetStr = '';
+                
+                
+                let pointer = '';
+                if(v.link_yn == 'N'){
+                    pointer = 'cursor:auto;';
+                }else{
+                    if(v.href){
+                        hrefStr = `href="${v.href}"`;
+                    }
+                    if(v.target){
+                        targetStr = `target="${v.target}"`;
+                    }
+                }
+
+                $('#sns-wrapper').append(`<div class="swiper-slide">
+                    <a ${hrefStr} ${targetStr}>
+                        <div class="gallery-item hover-img wow fadeInUp" data-wow-delay="0s" style="${pointer}">
+                            <div class="img-style">
+                                <img class="lazyload img-hover" data-src="${v.img}" src="${v.img}" alt="image-gallery" >
+                            </div>
+                        </div>
+                    </a>
+                </div>`)
+            });
+        });
+         
+    }
+
+    function setBrand(){
+        ajaxCall('/banner/list', { 
+            ppp: 4, page:1, show_yn:'Y'
+        }, function(data) {
+            console.log('setBrand data :' ,data);
+            
+            $.each(data.rows, function(i, v){
+
+                let buttonStr = '';
+                let hrefStr = `role="button"`;
+                
+                let targetStr = '';
+                
+                
+                let pointer = '';
+                if(v.link_yn == 'N'){
+                    pointer = 'cursor:auto;';
+                }else{
+                    if(v.href){
+                        hrefStr = `href="${v.href}"`;
+                    }
+                    if(v.target){
+                        targetStr = `target="${v.target}"`;
+                    }
+                }
+                $('#brand-wrapper').append(`<div class="item-${i+1} collection-item large hover-img">
+                    <div class="collection-inner">
+                        <a ${hrefStr} ${targetStr} class="collection-image img-style rounded-0">
+                            <img class="lazyload" data-src="${v.img}" src="${v.img}" alt="collection-img" style="${pointer}">
+                        </a>
+                    </div>
+                </div>`)
+            });
+        });
+    }
 
     function reviewBestLoad(){
         ajaxCall('/review/list', { 
@@ -473,23 +577,33 @@
     }
 
     function projectLoad(){
-        let v = getSeq('project', 1);
-        let str = `
-            <div class="box-content">
-                <div class="container">
-                    <a href="javascript:under()" class="card-box text-md-start text-center rounded-0">
-                        <p class="subheading">LIDOT'S PROJECT</p>
-                        <h3 class="heading">${v.title}</h3>
-                        <p class="text">${v.oneline}</p>
-                        <div class="wow fadeInUp" data-wow-delay="0s">
-                            <button class="tf-btn style-2 btn-fill animate-hover-btn"><span>프로젝트 보기</span></button>
-                        </div>
-                    </a>
+
+        ajaxCall('/common/recent', { 
+            table: 'project'
+        }, function(data) {
+            let str = `
+                <div class="box-content">
+                    <div class="container">
+                        <a href="javascript:goProject()" class="card-box text-md-start text-center rounded-0">
+                            <p class="subheading">LIDOT'S PROJECT</p>
+                            <h3 class="heading">${data.title}</h3>
+                            <p class="text">${data.oneline}</p>
+                            <div class="wow fadeInUp" data-wow-delay="0s">
+                                <button class="tf-btn style-2 btn-fill animate-hover-btn"><span>프로젝트 보기</span></button>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        `;
-        $('#main-project-wrap').css('background-image', `url('${v.img}')`);
-        $('#main-project-wrap').html(str);
+            `;
+            $('#main-project-wrap').css('background-image', `url('${JSON.parse(data.img)[0].url}')`);
+            $('#main-project-wrap').html(str);
+        });
+
+
+    }
+
+    function goProject(){
+        location.href = `/project`;
     }
 
     function productWeeklyLoad(){

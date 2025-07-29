@@ -27,7 +27,7 @@
             </a>
         </div>
         <div class="toolbar-item">
-            <a href="javascript:openLogin()" data-bs-toggle="modal">
+            <a href="javascript:openLogin()">
                 <div class="toolbar-icon">
                     <i class="icon-account"></i>
                 </div>

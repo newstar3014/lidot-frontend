@@ -13,20 +13,62 @@ function goMyOrders(){
 }
 
 
-function makeProductItemStr(v){
-    let imgArray = JSON.parse(v.img);
+function makeProductByOptionStr(v){
+    $.each(v.options, function(ii, vv){
+        console.log(vv);
+        let ov = structuredClone(v);
+        ov.name = ov.name += ` (${vv.name})`;
+        // console.log(ov);
+        $('#gridLayout').append(makeProductItemStr(ov));
+    });
+}
+
+
+function makeProductItemStr(v, isOption = false){
+
+    console.log(v);
+    
+    let imgStr = ``;
+    let imgArray = ``;
+    let isVideo = false;
+    let videoStr = ``;
+
+    if((sc2 == '40' || sc2 == '7') && v?.o_img){
+        imgArray = [v.o_img];
+    }else{
+        imgArray = JSON.parse(v.img);
+        
+        if(!isEmptyValue(v.mp4)){
+            isVideo = true;
+            let mp4Array = JSON.parse(v.mp4);
+            if(mp4Array.length > 0){
+                videoStr = `
+                    <video autoplay muted loop>
+                        <source src="${mp4Array[0]}" type="video/mp4">
+                    </video>
+                `;    
+            }
+        }
+    }
+
     let imgHover = imgArray[1];
     if(!imgHover) imgHover = imgArray[0];
     
-    
-    let priceStr = getMyPriceStr(v);
+    let priceStr = getMyPriceStr(v, isOption);
+
+    imgStr = `<img class="lazyload img-product" data-src="${imgArray[0]}" src="${imgArray[0]}" alt="image-product">
+                    <img class="lazyload img-hover" data-src="${imgHover}" src="${imgHover}" alt="image-product"></img>`;
+
+    if(isVideo) imgStr = videoStr;
+
+    let name = v.name;
+    if(isOption) name += ` ${v.option_name}`;
 
     let itemStr = `
         <div class="card-product style-4 grid">
             <div class="card-product-wrapper">
                 <a href="/z/product/detail?seq=${v.seq}" class="product-img">
-                    <img class="lazyload img-product" data-src="${imgArray[0]}" src="${imgArray[0]}" alt="image-product">
-                    <img class="lazyload img-hover" data-src="${imgHover}" src="${imgHover}" alt="image-product">
+                    ${imgStr}
                 </a>
                 <div class="list-product-btn column-right">
                     <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview bg_white round tf-btn-loading" data-seq="${v.seq}">
@@ -41,7 +83,7 @@ function makeProductItemStr(v){
                 </div>
             </div>
             <div class="card-product-info">
-                <a href="/z/product/detail?seq=${v.seq}" class="title link">${v.name}</a>
+                <a href="/z/product/detail?seq=${v.seq}" class="title link">${name}</a>
                 ${priceStr}
             </div>
         </div>
@@ -51,6 +93,9 @@ function makeProductItemStr(v){
 }
 
 function getMyPrice(v){
+    console.log('getMyPrice');
+    console.log(v);
+    
     let price_my = v.price_g;
     if(isLogin){
         if(my_obj.type == 'N'){
@@ -62,14 +107,35 @@ function getMyPrice(v){
     return price_my;
 }
 
-function getMyPriceStr(v){
+function getMyPriceStr(v, isOption = false){
+    
+    console.log('getMyPriceStr');
+    console.log(v);
+    
+    
+
     let price_my = getMyPrice(v);
-    let priceStr = `<span class="price current-price">${comma(price_my)}원</span>`;
+    
+
+    let price = price_my;
+    console.log(price);
+    
+    if(isOption) {
+        console.log('이즈옵션 트루');
+        console.log(v.price_poi);
+        
+        price += v.price_poi;
+        console.log(price);
+        
+    }
+
+    let priceStr = `<span class="price current-price">${comma(price)}원</span>`;
+
     if(isLogin){
         if(price_my != v.price_g){
             priceStr = `
             <div class="tf-product-info-price">
-                <div class="price-on-sale">${comma(price_my)}원</div>
+                <div class="price-on-sale">${comma(price)}원</div>
                 <div class="compare-at-price">${comma(v.price_g)}원</div>
                 <div class="badges-on-sale"><span>${getPriceSalePercent(price_my, v.price_g)}</span>%</div>
             </div>`;
@@ -113,6 +179,22 @@ function prepareQuickViewModal(seq) {
 
         // 이미지 슬라이드 HTML 생성
         let imgStr = ``;
+
+        if(v.mp4){
+            let mp4Array = JSON.parse(v.mp4);
+            if(mp4Array.length > 0){
+                imgStr = `
+                    <div class="swiper-slide">
+                        <div class="item">
+                            <video autoplay muted loop>
+                                <source src="${mp4Array[0]}" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                `;    
+            }
+        }
+
         $.each(JSON.parse(v.img), function (ii, vv) {
             imgStr += `
                 <div class="swiper-slide">
@@ -210,6 +292,52 @@ function makeProductInfoStr(v, _type){
         tagStr += `</div>`;
     }
 
+    let moreStr = ``;
+    console.log(v.more_product.length);
+    
+    if(v.more_product.length > 0){
+        moreStr = `<div class="more-wrap">
+            <div class="mb-3">추가구성상품</div>`;
+        $.each(v.more_product, function(ii, vv){
+            ajaxCall('/product/list', { ppp: 1, page:1, seq: vv.seq}, function(data) {
+                let vvv = data.rows[0];
+
+                if(vvv.status_type == '판매중'){
+                    let optionStr = ``;
+                    let pointer = `pointer`;
+                    let onclick = `onclick="makeProductInfoChoiceNoOptionStrMore('${_type}', '${getMyPrice(vvv)}', '${vvv.seq}', '${vvv.name}')"`;
+                    if(vvv.option_yn == 'Y'){
+                        pointer = ``;
+                        onclick = ``;
+                        optionStr = `<select class="more-select form-select">
+                            <option value="" selected disabled>옵션 선택</option>`;
+                        $.each(vvv.options, function(iiii, vvvv){
+                            optionStr += `<option value="${vvvv.seq}" data-p_seq="${vvv.seq}" data-seq="${vvvv.seq}" data-myprice="${getMyPrice(vvv)}" data-price="${vvvv.price_o}" data-name="${vvvv.name}" data-type="${_type}">${vvvv.name} (+${comma(vvvv.price_o)}원)</option>`;
+                        });
+                        optionStr += `</select>`;
+                    }
+
+                    moreStr += `
+                        <div class="more-item row ${pointer}" ${onclick}>
+                            <div class="col-2">
+                                <img src="${JSON.parse(vvv.img)[0]}">
+                            </div>
+                            <div class="col-10">
+                                <div>${vvv.name}</div>
+                                <div>${comma(getMyPrice(vvv))}원</div>
+                                ${optionStr}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+            });
+        });
+        moreStr += `</div>`;
+    }
+
+    
+
     let infoStr = `
         <div class="tf-product-info-list product-info-wrap-${_type}">
             <div id="quick_view-title" class="tf-product-info-title"><h5>${v.name}</h5></div>
@@ -224,6 +352,7 @@ function makeProductInfoStr(v, _type){
                 </div>
             </div>
             ${optionStr}
+            ${moreStr}
             <div class="product-info-choice-wrap">
                 ${choiceStr}
             </div>
@@ -242,6 +371,8 @@ function makeProductInfoStr(v, _type){
                     <div class="w-100">
                         <a href="javascript:goCheckoutDirect('${v.seq}')" class="btns-full tf-btn fs-16 fw-6 flex-grow-1 animate-hover-btn"><i class="bi bi-credit-card me-2"></i>바로구매</a>
                     </div>
+                    <a href="#" onclick="downloadFiles('${v.seq}', 'drawing'); return false;" class="tf-btn btn-white justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"><span>도면 다운로드</span></a>
+                    <a href="#" onclick="downloadFiles('${v.seq}', 'document'); return false;" class="tf-btn btn-white justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"><span>인증서 다운로드</span></a>
                 </form>
             </div>
             <div class="hide-detail">
@@ -252,60 +383,201 @@ function makeProductInfoStr(v, _type){
     return infoStr;
 }
 
-function makeProductOptionStr(data, _type, myPrice){
+
+$(document).on('change', '.more-select', function () {
+    const $opt = $(this).find('option:selected');
+    const type = $opt.data('type');
+    const myPrice = $opt.data('myprice');
+    makeProductInfoChoiceStr(type, $opt, myPrice);
+});
+
+
+// 단일옵션일때 옵션그리기 코드
+// function makeProductOptionStr(data, _type, myPrice){
     
+//     let optionStr = `<div class="product-option-wrap">
+//         <div class="font-weight-bold mb-3">옵션 : ${data.options[0].type_name}</div>
+//     `;
+    
+//     $.each(data.options, function(i, v){
+
+//         let imgStr = ``;
+//         if(v.img) imgStr = `<div class="product-option-item-img" style="background-image:url('${v.img}')"></div>`;
+
+//         optionStr += `
+//             <div class="product-option-item product-option-item-${v.seq}" onclick="makeProductInfoChoiceStr('${_type}', this, '${myPrice}')" data-p_seq="${data.seq}" data-price="${v.price_o}" data-seq="${v.seq}" data-name="${v.name}">
+//                 ${imgStr}
+//                 <div class="product-option-item-name">${v.name}</div>
+//                 <div class="product-option-item-price">+${comma(v.price_o)}원</div>
+//             </div>
+//         `;
+//     });
+
+//     optionStr += `</div>`;
+    
+//     return optionStr;
+// }
+
+// 다중옵션으로 변경 후 옵션그리기 코드
+function makeProductOptionStr(data, _type, myPrice) {
     let optionStr = `<div class="product-option-wrap">`;
-    
-    $.each(data.options, function(i, v){
 
-        let imgStr = ``;
-        if(v.img) imgStr = `<div class="product-option-item-img" style="background-image:url('${v.img}')"></div>`;
-
+    $.each(data.option_group, function (i, group) {
         optionStr += `
-            <div class="product-option-item product-option-item-${v.seq}" onclick="makeProductInfoChoiceStr('${_type}', this, '${myPrice}')" data-p_seq="${data.seq}" data-price="${v.price_o}" data-seq="${v.seq}" data-name="${v.name}">
-                ${imgStr}
-                <div class="product-option-item-name">${v.name}</div>
-                <div class="product-option-item-price">+${comma(v.price_o)}원</div>
-            </div>
+            <div class="font-weight-bold my-3">옵션 : ${group.name}</div>
+            <div class="product-option-group" data-group-idx="${i}">
         `;
+
+        $.each(group.items, function (j, item) {
+            if (item.show_yn === 'N') return;
+
+            let imgStr = '';
+            if (item.img) {
+                imgStr = `<div class="product-option-item-img" style="background-image:url('${item.img}')"></div>`;
+            }
+
+            optionStr += `
+                <div class="product-option-item product-option-item-${item.seq}" onclick="makeProductInfoChoiceStr('${_type}', this, '${myPrice}')" data-p_seq="${data.seq}" data-price="${item.price_o}" data-seq="${item.seq}" data-name="${item.name}">
+                    ${imgStr}
+                    <div class="product-option-item-name">${item.name}</div>
+                </div>
+            `;
+            // <div class="product-option-item-price">+${comma(item.price_o)}원</div>
+        });
+
+        optionStr += `</div>`; // .product-option-group 닫기
     });
 
-    optionStr += `</div>`;
-    
+    optionStr += `</div>`; // .product-option-wrap 닫기
     return optionStr;
 }
 
-
 function makeProductInfoChoiceNoOptionStr(_type, myPrice, p_seq, name){
+    
     // 옵션 없는 상품의 경우 상품 기본정보로 한번만 그리는 함수
     let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq);
     return itemStr;
 }
 
-function makeProductInfoChoiceStr(_type, e, myPrice){
-    // 상품상세에서 옵션 선택하면 해당 선택상품 그려주는 함수
-    let productSeq = $(e).attr('data-p_seq');
-    let optionSeq = $(e).attr('data-seq');
-    let target = productSeq;
-    if(optionSeq){
-        target += `-${optionSeq}`;
-    }
-    let optionName = $(e).attr('data-name');
-    let optionPrice = $(e).attr('data-price')*1 + myPrice*1;
-
-    if($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length == 0){
-        let itemStr = makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, true, productSeq, optionSeq);
+function makeProductInfoChoiceNoOptionStrMore(_type, myPrice, p_seq, name){
+    
+    // 추가등록상품 옵션없는경우 클릭
+    if($(`.product-info-wrap-${_type} .product-info-choice-item-${p_seq}`).length == 0){
+        let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq);
         $(`.product-info-wrap-${_type} .product-info-choice-wrap`).append(itemStr);
     }else{
+        productInfoItemCount('plus', _type, p_seq, myPrice);
+    }
+    setProductInfoTotalPrice(_type);
+}
+
+
+
+// 단일옵션이었을때 클릭한 옵션으로 선택상품 그려주는 부분
+// function makeProductInfoChoiceStr(_type, e, myPrice){
+//     // 상품상세에서 옵션 선택하면 해당 선택상품 그려주는 함수
+//     let productSeq = $(e).attr('data-p_seq');
+//     let optionSeq = $(e).attr('data-seq');
+//     let target = productSeq;
+//     if(optionSeq){
+//         target += `-${optionSeq}`;
+//     }
+//     let optionName = $(e).attr('data-name');
+//     let optionPrice = $(e).attr('data-price')*1 + myPrice*1;
+
+//     if($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length == 0){
+//         let itemStr = makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, true, productSeq, optionSeq);
+//         $(`.product-info-wrap-${_type} .product-info-choice-wrap`).append(itemStr);
+//     }else{
+//         productInfoItemCount('plus', _type, target, optionPrice);
+//     }
+
+//     setProductInfoTotalPrice(_type);
+// }
+
+// 다중옵션으로 변경 후 타입그룹별 클릭한 옵션으로 선택상품 그려주는 부분
+function makeProductInfoChoiceStr(_type, e, myPrice) {
+    console.log(_type);
+    
+    const $clicked = $(e);
+    const productSeq = $clicked.attr('data-p_seq');
+
+    // 현재 클릭된 옵션의 그룹 인덱스 찾기
+    const groupIdx = $clicked.closest('.product-option-group').data('group-idx');
+
+    // 🔄 [1] 동일 그룹 내 기존 선택 해제 및 현재 선택 적용
+    $(`.product-option-group[data-group-idx="${groupIdx}"] .product-option-item`)
+        .removeClass('active border-black');
+
+    $clicked.addClass('active border-black');
+
+    // 🔍 [2] 모든 그룹에서 하나씩 선택됐는지 확인
+    const selectedItems = [];
+    const selectedNames = [];
+    const selectedSeqs = [];
+
+    $('.product-option-group').each(function () {
+        const $selected = $(this).find('.product-option-item.active');
+        if ($selected.length === 0) {
+            return false; // 그룹 중 하나라도 선택되지 않으면 중단
+        }
+        selectedItems.push($selected);
+        selectedNames.push($selected.attr('data-name'));
+        selectedSeqs.push($selected.attr('data-seq'));
+    });
+
+    if (selectedItems.length !== $('.product-option-group').length) {
+        return; // 아직 모든 그룹에서 선택되지 않았음
+    }
+
+    // ✅ [3] 모든 옵션 선택 완료 → optionKey 생성
+    const optionKey = selectedNames.join('/');
+    console.log(optionKey);
+    
+
+    let res;
+    ajaxCall('/product/option-match', { p_seq: productSeq, name: optionKey }, function(data) {
+        res = data;
+    });
+    
+    const optionSeq = res.seq;
+    const optionName = res.name;
+    const optionPrice = res.price_o + Number(myPrice);
+    const target = `${productSeq}-${optionSeq}`;
+
+    if ($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length === 0) {
+        const itemStr = makeProductInfoChoiceItemStr(
+            target,
+            optionPrice,
+            optionName,
+            _type,
+            true,
+            productSeq,
+            optionSeq
+        );
+        $(`.product-info-wrap-${_type} .product-info-choice-wrap`).append(itemStr);
+    } else {
         productInfoItemCount('plus', _type, target, optionPrice);
     }
 
     setProductInfoTotalPrice(_type);
+
+    // ♻️ [4] 모든 그룹의 선택 상태 초기화
+    $('.product-option-item').removeClass('active border-black');
 }
 
 function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, isOption, p_seq, po_seq = null){
     
-    let nameStr = isOption ? `<div class="product-info-choice-item-name">${optionName}</div>` : ``;
+    
+    let p_name;
+    ajaxCall('/common/seq', { table: 'product', seq: p_seq }, function(data) {
+        p_name = data.name;
+    });
+    console.log(p_name);
+    
+    let pName = isOption ? `${p_name} (${optionName})` : p_name;
+
+    let nameStr = `<div class="product-info-choice-item-name">${pName}</div>`;
     let removeStr = isOption ? `<div class="product-info-choice-item-remove" onclick="productInfoChoiceItemRemove('${_type}', '${target}')"><i class="bi bi-trash3"></i></div>` : ``;
     let po_seqStr = po_seq ? `data-po_seq="${po_seq}"` : ``;
     
@@ -314,7 +586,7 @@ function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, is
             ${nameStr}
             <div class="product-info-choice-item-count-wrap">
                 <span class="product-info-choice-item-count-minus" onclick="productInfoItemCount('minus', '${_type}', '${target}', '${optionPrice}')"><i class="bi bi-dash"></i></span>
-                <span class="product-info-choice-item-count">1</span>
+                <input type="text" class="product-info-choice-item-count-detail" value="1" data-type="${_type}" data-target="${target}" data-optionprice="${optionPrice}">
                 <span class="product-info-choice-item-count-plus" onclick="productInfoItemCount('plus', '${_type}', '${target}', '${optionPrice}')"><i class="bi bi-plus"></i></span>
             </div>
             <div class="product-info-choice-item-price"><span>${comma(optionPrice)}</span>원</div>
@@ -331,14 +603,35 @@ function productInfoChoiceItemRemove(_type, target) {
     setProductInfoTotalPrice(_type);
 }
 
+
+$(document).on('change', '.product-info-choice-item-count-detail', function () {
+
+    let _type = $(this).attr('data-type');
+    let price = $(this).attr('data-optionprice');
+    let target = $(this).attr('data-target');
+    let count = $(this).val()*1;
+
+    const selectorBase = `.product-info-wrap-${_type} .product-info-choice-item-${target}`;
+    const $item = $(selectorBase);
+    const $priceEl = $item.find('.product-info-choice-item-price span');
+
+    $item.attr('data-count', count);
+    $item.attr('data-price', count*price);
+    $priceEl.text(comma(count * price));
+
+    setProductInfoTotalPrice(_type);
+
+});
+
 function productInfoItemCount(cal, _type, target, price) {
+
     // 상품상세에서 수량 더하기빼기 클릭시 실행
     const selectorBase = `.product-info-wrap-${_type} .product-info-choice-item-${target}`;
     const $item = $(selectorBase);
-    const $countEl = $item.find('.product-info-choice-item-count');
+    const $countEl = $item.find('.product-info-choice-item-count-detail');
     const $priceEl = $item.find('.product-info-choice-item-price span');
 
-    let count = parseInt($countEl.text(), 10) || 1;
+    let count = parseInt($countEl.val(), 10) || 1;
 
     if (cal === 'minus' && count > 1) {
         count--;
@@ -350,7 +643,7 @@ function productInfoItemCount(cal, _type, target, price) {
 
     $item.attr('data-count', count);
     $item.attr('data-price', count*price);
-    $countEl.text(count);
+    $countEl.val(count);
     $priceEl.text(comma(count * price));
 
     setProductInfoTotalPrice(_type);
@@ -496,11 +789,16 @@ function setSideCartTotalPrice(isPage = false){
     }
 
     $(target).each(function(i, v){
-        totalPrice += $(v).attr('data-price')*1;
+        const $checkbox = $(v).find('.cart-check_yn');
+        if ($checkbox.prop('checked')) {
+            totalPrice += parseInt($(v).attr('data-price'), 10) || 0;
+        }
     });
     $('.tf-mini-cart-bottom .tf-totals-total-value span').html(comma(totalPrice));
     $('.tf-page-cart-checkout .tf-cart-totals-discounts.light .total-value .total-price-product').html(comma(totalPrice));
     $('.tf-page-cart-checkout .tf-cart-totals-discounts.light .total-value .total-price-product').attr('data-price', totalPrice);
+
+    if(isPage) setPageCartTotalPrice();
 }
 
 function drawSideCartItem(v){
@@ -509,7 +807,7 @@ function drawSideCartItem(v){
     let myPrice = getMyPrice(v);
     if(v.option_seq){
         myPrice += v.option_price;
-        optionStr = `<div class="meta-variant">${v.option_type}: ${v.option_name}</div>`;
+        optionStr = `<div class="meta-variant">${v.option_name}</div>`;
     }
 
     let checkStr = ``;
@@ -530,7 +828,7 @@ function drawSideCartItem(v){
                 <div class="tf-mini-cart-btns">
                     <div class="wg-quantity small">
                         <span class="product-info-choice-item-count-minus" onclick="cartItemCount('minus', '${v.cart_seq}', '${myPrice}', 'tf-mini-cart-item-')"><i class="bi bi-dash"></i></span>
-                        <span class="product-info-choice-item-count">${v.cart_quantity}</span>
+                        <input type="text" class="product-info-choice-item-count" value="${v.cart_quantity}" data-cart_seq="${v.cart_seq}" data-myprice="${myPrice}" data-target="tf-mini-cart-item-">
                         <span class="product-info-choice-item-count-plus" onclick="cartItemCount('plus', '${v.cart_seq}', '${myPrice}', 'tf-mini-cart-item-')"><i class="bi bi-plus"></i></span>
                     </div>
                     <div class="tf-mini-cart-remove" onclick="cartItemRemove('${v.cart_seq}', 'tf-mini-cart-item-')"><i class="bi bi-trash3"></i></div>
@@ -540,6 +838,8 @@ function drawSideCartItem(v){
     `;
     $('.tf-mini-cart-items').append(itemStr);
 }
+                        // <span class="product-info-choice-item-count">${v.cart_quantity}</span>
+
 
 function cartItemRemove(cart_seq, target, isPage = false){
     ajaxCall('/cart/remove', { seq: cart_seq }, function(data) {
@@ -562,13 +862,42 @@ function cartItemRemove(cart_seq, target, isPage = false){
     });
 }
 
+
+
+$(document).on('change', '.product-info-choice-item-count', function () {
+
+    let cart_seq = $(this).attr('data-cart_seq');
+    let price = $(this).attr('data-myprice');
+    let target = $(this).attr('data-target');
+    let count = $(this).val();
+
+    const selectorBase = `.${target}${cart_seq}`;
+    const $item = $(selectorBase);
+    const $priceEl = $item.find('.price span');
+
+    ajaxCall('/common/update', { table: 'cart', seq: cart_seq, obj: { quantity: count } }, function(data) {
+        
+        $item.attr('data-count', count);
+        $item.attr('data-price', count*price);
+        $priceEl.text(comma(count * price));
+        
+    });
+
+    if (typeof freeship !== 'undefined') {
+        setSideCartTotalPrice(true);
+    }else{
+        setSideCartTotalPrice();
+    }
+});
+
+
 function cartItemCount(cal, cart_seq, price, target, isPage = false){
     const selectorBase = `.${target}${cart_seq}`;
     const $item = $(selectorBase);
     const $countEl = $item.find('.product-info-choice-item-count');
     const $priceEl = $item.find('.price span');
 
-    let count = parseInt($countEl.text(), 10) || 1;
+    let count = parseInt($countEl.val(), 10) || 1;
 
     if (cal === 'minus' && count > 1) {
         count--;
@@ -582,7 +911,7 @@ function cartItemCount(cal, cart_seq, price, target, isPage = false){
         
         $item.attr('data-count', count);
         $item.attr('data-price', count*price);
-        $countEl.text(count);
+        $countEl.val(count);
         $priceEl.text(comma(count * price));
     
         setSideCartTotalPrice(isPage);
@@ -633,6 +962,16 @@ $(document).on('change', '.cart-check_yn', function () {
     let check_yn = 'N';
     if ($(this).prop('checked')) check_yn = 'Y';
     ajaxCall('/common/update', { table: 'cart', seq: cart_seq, obj: { check_yn } }, function(data) {});
+
+    if (typeof freeship !== 'undefined') {
+        console.log('참');
+        setSideCartTotalPrice(true);
+        
+    }else{
+        console.log('거짓');
+        setSideCartTotalPrice();
+        
+    }
 });
 
 
@@ -860,3 +1199,56 @@ function drawModalCartProductImageSliderItem(v){
 }
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 상품사진 모아보기 끝
+
+
+
+
+async function downloadFiles(target_seq, target) {
+    console.log(target_seq);
+    console.log(target);
+    
+    
+    ajaxCall('/product/list', { ppp: 1, page:1, seq: target_seq}, async function(data) {
+        let v = data.rows[0];
+        console.log(v);
+        
+        // 1) data-files 속성값 꺼내기
+        let filesString;
+
+        if(target == 'document') filesString = v.document;
+        else if(target == 'drawing') filesString = v.drawing;
+
+        console.log(filesString);
+        
+
+        // null, undefined, 빈 문자열, "[]" 일 때 바로 종료
+        if (!filesString || filesString === '[]') {
+            alerts('info', '자료 준비중입니다.');
+            return;
+        }
+
+        let files;
+        // 2) JSON 파싱 시도
+        try {
+            files = JSON.parse(filesString);
+        } catch (e) {
+            console.error('data-files JSON 파싱 실패:', e);
+            return;
+        }
+        // 3) 배열이고 요소가 있어야 진행
+        if (!Array.isArray(files) || files.length === 0) {
+            console.warn('다운로드할 파일 배열이 비어있습니다.');
+            return;
+        }
+
+        
+
+        files.forEach(({ url }) => {
+            if (url) {
+            window.open(url, '_blank');
+            }
+        });
+
+    });
+    
+}

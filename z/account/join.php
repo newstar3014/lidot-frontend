@@ -57,20 +57,22 @@
                     </div>
                 </div>
 
-                <h6 class="mb-3"><i class="bi bi-shield-lock"></i> 로그인 정보</h6>
-                <div class="tf-field style-1">
-                    <input class="tf-field-input tf-input" placeholder=" " type="text" id="join-login_id">
-                    <label class="tf-field-label fw-4 text_black-2" for="join-login_id">아이디</label>
-                </div>
-                <div class="form-text mb_15">아이디는 4자이상 20자이내로 영문+숫자 사용가능해요</div>
-                <div class="tf-field style-1">
-                    <input class="tf-field-input tf-input" placeholder=" " type="password" id="join-pwd">
-                    <label class="tf-field-label fw-4 text_black-2" for="join-pwd">비밀번호</label>
-                </div>
-                <div class="form-text mb_15">비밀번호는 8자이상 20자이내로 영문+숫자+특수문자를 조합해주세요</div>
-                <div class="tf-field style-1 mb-4">
-                    <input class="tf-field-input tf-input" placeholder=" " type="password" id="join-pwd2">
-                    <label class="tf-field-label fw-4 text_black-2" for="join-pwd2">비밀번호 확인</label>
+                <div class="d-none login-wrap">
+                    <h6 class="mb-3"><i class="bi bi-shield-lock"></i> 로그인 정보</h6>
+                    <div class="tf-field style-1">
+                        <input class="tf-field-input tf-input" placeholder=" " type="text" id="join-login_id">
+                        <label class="tf-field-label fw-4 text_black-2" for="join-login_id">아이디</label>
+                    </div>
+                    <div class="form-text mb_15">아이디는 4자이상 20자이내로 영문+숫자 사용가능해요</div>
+                    <div class="tf-field style-1">
+                        <input class="tf-field-input tf-input" placeholder=" " type="password" id="join-pwd">
+                        <label class="tf-field-label fw-4 text_black-2" for="join-pwd">비밀번호</label>
+                    </div>
+                    <div class="form-text mb_15">비밀번호는 8자이상 20자이내로 영문+숫자+특수문자를 조합해주세요</div>
+                    <div class="tf-field style-1 mb-4">
+                        <input class="tf-field-input tf-input" placeholder=" " type="password" id="join-pwd2">
+                        <label class="tf-field-label fw-4 text_black-2" for="join-pwd2">비밀번호 확인</label>
+                    </div>
                 </div>
 
                 <h6 class="mb-3"><i class="bi bi-person-vcard"></i> 회원 정보</h6>
@@ -123,6 +125,12 @@
                         쇼핑정보 수신 동의 (SMS, 알림톡, 이메일)
                     </label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="join-agree_all">
+                    <label class="form-check-label" for="join-agree_all">
+                        <b>전체 동의하기</b>
+                    </label>
+                </div>
                 
                 <div class="mt-5 mb_20">
                     <a href="javascript:dataCheck()" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center">회원 등록</a>
@@ -140,9 +148,24 @@
 <script>
 
     var join_social = '<? echo $_GET['social']; ?>';
+    
+    var nickname = '<? echo $_GET['nickname']; ?>';
+    var email = '<? echo $_GET['email']; ?>';
+    var mobile = '<? echo $_GET['mobile']; ?>';
+
+    if(join_social){
+        
+        $('#join-name').val(nickname);
+        $('#join-email').val(email);
+        $('#join-phone').val(mobile);
+    }else{
+        $('.login-wrap').removeClass('d-none');
+    }
+
+
     var join_type = 'N';
     var join_address_postnum, join_bsn_image;
-    var join_login_id = '<? echo $_GET['login_id']; ?>';;
+    var join_login_id = '<? echo $_GET['login_id']; ?>';
 
     $(function() {
         console.log('ㅡ PAGE READY');
@@ -169,6 +192,13 @@
         }).open();
     });
 
+    $('#join-bsn_num').on('change', function() {
+        const digits = this.value.replace(/\D/g, '');
+        if (digits.length === 10) {
+            const formatted = digits.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+            this.value = formatted;
+        }
+    });
 
     $('#join-bsn_image').change(function(){
 
@@ -194,6 +224,12 @@
         $('#modal-common').modal('show');
     }
 
+    $('#join-agree_all').on('change', function() {
+        const checked = $(this).prop('checked');
+        // 자신(#join-agree_all)을 제외한 모든 .form-check-input 타입=checkbox 에 토글
+        $('input.form-check-input[type="checkbox"]').not(this).prop('checked', checked);
+    });
+
     function dataCheck(){
 
         let obj = {
@@ -213,7 +249,7 @@
 
         if(join_social) {
             obj.social = join_social;
-            obj.login_id = join_login_id;
+            obj.social_id = join_login_id;
         }else{
             obj.login_id = $('#join-login_id').val();
             obj.pwd = $('#join-pwd').val();

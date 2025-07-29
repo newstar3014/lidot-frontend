@@ -13,8 +13,8 @@
                 </div>
                 <ul class="mb-info">
                     <li>Address: 수원시 권선구 서수원로 523번길 20-1</li>
-                    <li>Email: <b>lidot.official@gmail.com</b></li>
-                    <li>Phone: <b>031-891-0610</b></li>
+                    <!-- <li>Email: <b>lidot.official@gmail.com</b></li> -->
+                    <!-- <li>Phone: <b>031-891-0610</b></li> -->
                 </ul>
             </div>
         </div>
@@ -157,6 +157,7 @@
 
 
 <script>
+
     $(function() {
         menuLoad();
     });
@@ -183,63 +184,69 @@
         `;
 
         $.each(data, function(i, v){
-            let url = `/z/product/list?sc=`;
+            let url = `/z/product/list?sc1=`;
 
             strm += `<li class="nav-mb-item">`;
 
-            if(v.children.length > 0){
-                str += `
-                    <li class="menu-item position-relative">
-                        <a href="${url+v.seq}" class="item-link">${v.name}<i class="icon icon-arrow-down"></i></a>
-                        <div class="sub-menu submenu-default">
-                        <ul class="menu-list">`;
+            // if(v.children.length > 0){
+            //     str += `
+            //         <li class="menu-item position-relative">
+            //             <a href="${url+v.seq}" class="item-link">${v.name}<i class="icon icon-arrow-down"></i></a>
+            //             <div class="sub-menu submenu-default">
+            //             <ul class="menu-list">`;
                 
-                strm += `<a href="#dropdown-menu-${v.seq}" class="collapsed mb-menu-link current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dropdown-menu-four">
-                    <span>${v.name}</span>
-                    <span class="btn-open-sub"></span>
-                </a>
-                    <div id="dropdown-menu-${v.seq}" class="collapse">
-                        <ul class="sub-nav-menu" id="sub-menu-navigation">`;
+            //     strm += `<a href="#dropdown-menu-${v.seq}" class="collapsed mb-menu-link current" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dropdown-menu-four">
+            //         <span>${v.name}</span>
+            //         <span class="btn-open-sub"></span>
+            //     </a>
+            //         <div id="dropdown-menu-${v.seq}" class="collapse">
+            //             <ul class="sub-nav-menu" id="sub-menu-navigation">`;
                 
-                $.each(v.children, function(ii, vv){
+            //     $.each(v.children, function(ii, vv){
                     
-                    if(vv.children.length > 0){
-                        str += `
-                            <li class="menu-item-2">
-                                <a href="${url+vv.seq}" class="menu-link-text link text_black-2">${vv.name}</a>
-                                <div class="sub-menu submenu-default">
-                                <ul class="menu-list">
-                        `;
+            //         if(vv.children.length > 0){
+            //             str += `
+            //                 <li class="menu-item-2">
+            //                     <a href="${url+vv.seq}" class="menu-link-text link text_black-2">${vv.name}</a>
+            //                     <div class="sub-menu submenu-default">
+            //                     <ul class="menu-list">
+            //             `;
 
-                        strm += `
-                            <li>
-                                <a href="#sub-${vv.seq}" class="sub-nav-link collapsed"  data-bs-toggle="collapse" aria-expanded="true" aria-controls="sub-account">
-                                    <span>${vv.name}</span>
-                                    <span class="btn-open-sub"></span>
-                                </a>
-                                <div id="sub-${vv.seq}" class="collapse">
-                                    <ul class="sub-nav-menu sub-menu-level-2">`;
+            //             strm += `
+            //                 <li>
+            //                     <a href="#sub-${vv.seq}" class="sub-nav-link collapsed"  data-bs-toggle="collapse" aria-expanded="true" aria-controls="sub-account">
+            //                         <span>${vv.name}</span>
+            //                         <span class="btn-open-sub"></span>
+            //                     </a>
+            //                     <div id="sub-${vv.seq}" class="collapse">
+            //                         <ul class="sub-nav-menu sub-menu-level-2">`;
                         
-                        $.each(vv.children, function(iii, vvv){
-                            str += `<li><a href="${url+vvv.seq}" class="menu-link-text link text_black-2">${vvv.name}</a></li>`;
-                            strm += `<li><a href="${url+vvv.seq}" class="sub-nav-link">${vvv.name}</a></li>`;
-                        });
+            //             $.each(vv.children, function(iii, vvv){
+            //                 str += `<li><a href="${url+vvv.seq}" class="menu-link-text link text_black-2">${vvv.name}</a></li>`;
+            //                 strm += `<li><a href="${url+vvv.seq}" class="sub-nav-link">${vvv.name}</a></li>`;
+            //             });
 
-                        str += `</ul></div></li>`;
-                        strm += `</ul></div></li>`;
-                    }else{
-                        str += `<li><a href="${url+vv.seq}" class="menu-link-text link text_black-2">${vv.name}</a></li>`;
-                        strm += `<li><a href="${url+vv.seq}" class="sub-nav-link">${vv.name}</a></li>`;
-                    }
-                });
-                str += `</ul></div>`;
-                strm += `</ul></div>`;
-            }else{
-                str += `<li class="menu-item"><a href="${url+v.seq}" class="item-link">${v.name}</a></li>`;
-                strm += `<a href="${url+v.seq}" class="mb-menu-link">${v.name}</a>`;
-            }
+            //             str += `</ul></div></li>`;
+            //             strm += `</ul></div></li>`;
+            //         }else{
+            //             str += `<li><a href="${url+vv.seq}" class="menu-link-text link text_black-2">${vv.name}</a></li>`;
+            //             strm += `<li><a href="${url+vv.seq}" class="sub-nav-link">${vv.name}</a></li>`;
+            //         }
+            //     });
+            //     str += `</ul></div>`;
+            //     strm += `</ul></div>`;
+            // }else{
+            //     str += `<li class="menu-item"><a href="${url+v.seq}" class="item-link">${v.name}</a></li>`;
+            //     strm += `<a href="${url+v.seq}" class="mb-menu-link">${v.name}</a>`;
+            // }
+            str += `<li class="menu-item"><a href="${url+v.seq}" class="item-link">${v.name}</a></li>`;
+            strm += `<a href="${url+v.seq}" class="mb-menu-link">${v.name}</a>`;
             strm += `</li>`;
         });
+
+        str += `<li class="menu-item"><a href="/z/project" class="item-link">PROJECT</a></li>`;
+        strm += `<a href="/z/project" class="mb-menu-link">PROJECT</a>`;
+        strm += `</li>`;
 
         $('#menu-pc-wrap').html(str);
         $('#wrapper-menu-navigation').html(strm);

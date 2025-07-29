@@ -18,8 +18,8 @@
                                 통신판매번호 : 2019-수원권선-0503호<br>
                                 주소 : 수원시 권선구 서수원로 523번길 20-1<br>
                                 개인정보보고관리책임자 : 김신애<br>
-                                대표메일: <a href="mailto:lidot.official@gmail.com">lidot.official@gmail.com</a><br>
-                                대표전화: <a href="tel:031-891-0610">031-891-0610</a>
+                                <!-- 대표메일: <a href="mailto:lidot.official@gmail.com">lidot.official@gmail.com</a><br> -->
+                                <!-- 대표전화: <a href="tel:031-891-0610">031-891-0610</a> -->
                             </li>
                         </ul>
                     </div>
@@ -33,7 +33,7 @@
                     </div>
                     <ul class="footer-menu-list tf-collapse-content">
                         <li style="line-height:180%;">
-                            문의전화: 031-891-0610<br>
+                            <!-- 문의전화: 031-891-0610<br> -->
                             평일 오전 09:00 ~ 오후 5:00<br>
                             점심 오후 12:00 ~ 오후 1:00<br>
                             토 / 일 / 공휴일 휴무

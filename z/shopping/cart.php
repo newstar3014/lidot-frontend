@@ -54,7 +54,7 @@
                             <span class="total-value"><span class="total-price-product"></span>원</span>
                         </div>
                         <div class="tf-cart-totals-discounts light by-guest-address">
-                            <h3>배송비합계</h3>
+                            <h3>배송비</h3>
                             <span class="total-value"><span class="total-price-delivery"></span></span>
                         </div>
                         <div class="tf-cart-totals-discounts by-guest-address">
@@ -87,6 +87,8 @@
 
     let nowPostnum;
     let guestAddress = localStorage.getItem('guestAddress');
+    let freeship = cfLoad('name', '무료배송기준금액');
+    freeship = freeship[0].value;
 
     $(function() {
         console.log('ㅡ PAGE READY');
@@ -113,8 +115,6 @@
     
 
     function setPageCartList(data){
-        let freeship = cfLoad('name', '무료배송기준금액');
-        freeship = freeship[0].value;
         
         $('#tbody-list').html(``);
         if(data.rows.length == 0){
@@ -148,7 +148,7 @@
         let myPrice = getMyPrice(v);
         if(v.option_seq){
             myPrice += v.option_price;
-            optionStr = `<div class="cart-meta-variant">${v.option_type}: ${v.option_name}</div>`;
+            optionStr = `<div class="cart-meta-variant">${v.option_name}</div>`;
         }
 
         let checkStr = ``;
@@ -174,7 +174,7 @@
                     <div class="cart-quantity">
                         <div class="wg-quantity">
                             <span class="product-info-choice-item-count-minus" onclick="cartItemCount('minus', '${v.cart_seq}', '${myPrice}', 'tf-cart-item-', true)"><i class="bi bi-dash"></i></span>
-                            <span class="product-info-choice-item-count">${v.cart_quantity}</span>
+                            <input type="text" class="product-info-choice-item-count" value="${v.cart_quantity}" data-cart_seq="${v.cart_seq}" data-myprice="${myPrice}" data-target="tf-cart-item-">
                             <span class="product-info-choice-item-count-plus" onclick="cartItemCount('plus', '${v.cart_seq}', '${myPrice}', 'tf-cart-item-', true)"><i class="bi bi-plus"></i></span>
                         </div>
                     </div>
@@ -188,10 +188,20 @@
     }
 
     function setPageCartTotalPrice(){
+        console.log('setPageCartTotalPrice');
+        
         // 상품가격 + 배송비 최종 찍어주기
         let productTotal = $('.tf-page-cart-checkout .tf-cart-totals-discounts.light .total-value .total-price-product').attr('data-price')*1;
         $('.tf-page-cart-checkout .tf-cart-totals-discounts .total-value .total-price').html(comma(productTotal));
-        $('.tf-page-cart-checkout .tf-cart-totals-discounts.light .total-value .total-price-delivery').html('무료');
+
+        console.log(productTotal);
+        
+        if(productTotal >= freeship){
+            $('.tf-page-cart-checkout .tf-cart-totals-discounts.light .total-value .total-price-delivery').html('무료');
+        }else{
+            $('.tf-page-cart-checkout .tf-cart-totals-discounts.light .total-value .total-price-delivery').html('착불');
+        }
+        
     }
 
 

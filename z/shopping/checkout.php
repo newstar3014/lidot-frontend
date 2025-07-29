@@ -120,7 +120,7 @@
         let myPrice = getMyPrice(v);
         if(v.option_seq){
             myPrice += v.option_price;
-            optionStr = `<div class="variant">${v.option_type}: ${v.option_name}</div>`;
+            optionStr = `<div class="variant">${v.option_name}</div>`;
         }
 
         let itemStr = `
@@ -157,7 +157,7 @@
     function goPay(){
         // 최종 결제할때 PG사 띄우는 함수
         // location.href = `/z/shopping/checkend`;
-        alerts('info', '재고로직관련 수정필요로 결제로직 잠시 막아둠');
+        alerts('info', '다중옵션 및 재고로직관련 수정필요로 결제로직 잠시 막아둠');
     }
 </script>
 

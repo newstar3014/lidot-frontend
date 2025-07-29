@@ -3,78 +3,50 @@ import PhotoSwipeLightbox from './photoswipe-lightbox.esm.min.js';
 import PhotoSwipe from './photoswipe.esm.min.js';
 
 if ($(".thumbs-slider").length > 0) {
+
     var direction = $(".tf-product-media-thumbs").data("direction");
+
     var thumbs = new Swiper(".tf-product-media-thumbs", {
-      spaceBetween: 10,
-      slidesPerView: "auto",
-      freeMode: true,
-      direction: "vertical",
-      watchSlidesProgress: true,
-      observer: true,
-      observeParents: true,
-      breakpoints: {
-        0: {
-          direction: "horizontal",
-          slidesPerView: 5,
-        },
-        1150: {
-          direction: "vertical",
-          direction: direction,
-        },
-      },
-      450: {
+        spaceBetween: 10,
+        slidesPerView: "auto",
+        freeMode: true,
         direction: "vertical",
-      },
+        watchSlidesProgress: true,
+        observer: true,
+        observeParents: true,
+        slideToClickedSlide: true,
+        breakpoints: {
+            0: {
+                direction: "horizontal",
+                slidesPerView: 5,
+            },
+            1150: {
+                direction: "vertical",
+                direction: direction,
+            },
+        },
+        450: {
+            direction: "vertical",
+        },
     });
+
     var main = new Swiper(".tf-product-media-main", {
-      spaceBetween: 0,
-      observer: true,
-      observeParents: true,
-      navigation: {
-        nextEl: ".thumbs-next",
-        prevEl: ".thumbs-prev",
-      },
-      thumbs: {
-        swiper: thumbs,
-      },
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        spaceBetween: 0,
+        observer: true,
+        observeParents: true,
+        navigation: {
+            nextEl: ".thumbs-next",
+            prevEl: ".thumbs-prev",
+        },
+        thumbs: {
+            swiper: thumbs,
+        },
     });
-    
-    function updateActiveColorButton(activeIndex) {
-      $(".color-btn").removeClass("active");
-  
-      var currentSlide = $(".tf-product-media-main .swiper-slide").eq(activeIndex);
-      var currentColor = currentSlide.data("color");
-      if (currentColor) {
-        $(".color-btn[data-color='" + currentColor + "']").addClass("active");
-        $('.value-currentColor').text(currentColor);
-        $(".select-currentColor").text(currentColor);
-      }
-    }
-    main.on('slideChange', function () {
-      updateActiveColorButton(this.activeIndex);
-    });
-
-
-    // Function scroll to the correct slide and thumb
-    function scrollToColor(color) {
-      var matchingSlides = $(".tf-product-media-main .swiper-slide").filter(function() {
-        return $(this).data("color") === color;
-      });
-      if (matchingSlides.length > 0) {
-        var firstIndex = matchingSlides.first().index();
-        main.slideTo(firstIndex,1000,false);
-        thumbs.slideTo(firstIndex,1000,false);
-      }
-    }
-    $(".color-btn").on("click", function() {
-      var color = $(this).data("color");
-      
-      $(".color-btn").removeClass("active");
-      $(this).addClass("active");
-
-      scrollToColor(color);
-    });
-    updateActiveColorButton(main.activeIndex);
 }
 
 if ($(".thumbs-slider1").length > 0) {

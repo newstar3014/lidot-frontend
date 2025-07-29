@@ -361,7 +361,18 @@ function formatDate(date, isTime = false) {
 
 // 세자리수 콤마
 function comma(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (num === null || num === undefined || isNaN(num)) return '0';
+    return Number(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// 빈값 검사
+function isEmptyValue(val) {
+    return (
+        val === null ||
+        val === undefined ||
+        (typeof val === 'string' && (val.trim() === '' || val.trim() === '[]')) ||
+        (Array.isArray(val) && val.length === 0)
+    );
 }
 
 
@@ -420,4 +431,29 @@ function getImageSize(url, callback) {
 function formatPhoneNumber(phone) {
     if (!phone) return '';
     return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+}
+
+function renderFindForm(){
+    $('.find-id-wrapper').html(`<form class="find-id-form">
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" placeholder="이름을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="phone">휴대폰 번호</label>
+            <input type="text" id="phone" placeholder="휴대폰 번호를 입력하세요">
+        </div>
+        <div class="form-group" id="auth-wrap" style="display:none;">
+            <label for="auth_code">인증번호</label>
+            <div class="position-relative">
+                <input class="pe-4" type="text" id="auth_code" placeholder="인증번호 6자리 입력">
+                <span id="timer" style="color:red; font-weight: bold; display:none;">03:00</span>
+            </div>
+            
+        </div>
+
+        <button type="button" id="send-auth-btn" class="find-btn" onclick="sendAuth();">인증번호 발송</button>
+        <button type="button" id="check-auth-btn" class="find-btn" style="display:none;" onclick="checkAuth();">인증번호 확인</button>
+    </form>
+    <div class="result" style="margin-top:20px; font-weight: bold;"></div>`);
 }

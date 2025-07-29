@@ -4,6 +4,21 @@
     .hide-detail{
         display: none;
     }
+    .tf-product-media-wrap video {
+        height: 100%;
+        aspect-ratio: auto;
+    }
+    #product-detail-contents{
+        text-align: center;
+    }
+
+iframe[src*="youtube.com"] {
+  width: 100% !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  display: block;       /* inline 요소 간격 제거 */
+  border: 0;            /* 프레임 보더 제거 */
+}
 </style>
 
 <div class="container preview d-none">
@@ -329,6 +344,7 @@
     var seq = '<? echo $_GET["seq"]; ?>';
     if(!seq) wrongPage();
     var preview = '<? echo $_GET["preview"]; ?>';
+    let sc2 = 0;
 
     $(function() {
         console.log('ㅡ PAGE READY');
@@ -347,10 +363,64 @@
             let v = data.rows[0];
             console.log(v);
             setBreadcrumb(v.category);
+
+            if(v.mp4){
+                let mp4Array = JSON.parse(v.mp4);
+                if(mp4Array.length > 0){
+                    let str = `
+                        <div class="swiper-slide stagger-item">
+                            <div class="item">
+                                <video autoplay muted loop>
+                                    <source src="${mp4Array[0]}" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    `;
+                    $('#product-swiper1').append(str);
+                    let str2 = `
+                        <div class="swiper-slide">
+                            <a href="#" target="_blank" class="item">
+                                <video autoplay muted loop>
+                                    <source src="${mp4Array[0]}" type="video/mp4">
+                                </video>
+                            </a>
+                        </div>
+                    `;
+                    $('#product-swiper2').append(str2);
+                }
+            }
+
             setProductSlider(v.img);
 
             $('#product-detail-info').html(makeProductInfoStr(v, 'detail'));
-            $('#product-detail-contents').html(v.contents);
+
+            let brand_img_top = v.brand_img_top;
+            if(brand_img_top){
+                brand_img_top = JSON.parse(brand_img_top);
+                $.each(brand_img_top, function(ii, vv){
+                    $('#product-detail-contents').append(`<img src="${vv.url}" class="mb-5">`);
+                });
+            }
+
+            $.each(v.category, function(ii, vv){
+                let cate_img = vv.img;
+                if(cate_img){
+                    cate_img = JSON.parse(cate_img);
+                    $.each(cate_img, function(iii, vvv){
+                        $('#product-detail-contents').append(`<img src="${vvv}" class="mb-5">`);
+                    });
+                }
+            });
+
+            $('#product-detail-contents').append(v.contents);
+
+            let brand_img_bottom = v.brand_img_bottom;
+            if(brand_img_bottom){
+                brand_img_bottom = JSON.parse(brand_img_bottom);
+                $.each(brand_img_bottom, function(ii, vv){
+                    $('#product-detail-contents').append(`<img src="${vv.url}" class="mt-5">`);
+                });
+            }
 
             relateLoad();
         });

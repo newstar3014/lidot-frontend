@@ -9,7 +9,8 @@ function openLogin(){
     if(isLogin){
         location.href = `/z/mypage`;
     }else{
-        new bootstrap.Modal(document.getElementById('login')).show();
+        $('#login').modal('show');
+        // new bootstrap.Modal(document.getElementById('login')).show();
     }
 }
 
@@ -23,7 +24,8 @@ function goLogin(){
     }
     
     ajaxCall('/user/login', { login_id, pwd, guest_uuid }, function(data) {
-
+        console.log(data);
+        
         if(data.type == 'not_found' || data.type == 'wrong_pw'){
             alerts('warning', '아이디 또는 비밀번호를 다시 확인해주세요.');
         }else if(data.type == 'waiting'){
@@ -57,12 +59,21 @@ function goLogin(){
 function goLoginSocial(social){
 
     console.log("social : ", social);
-    under();
+    //under();
 
     /* naver */
     if(social == 'N'){
 
         console.log("네이버");
+        const clientId = 'V6JXKEE4IOEY75VplN8D';
+        const redirectUri = encodeURIComponent('https://lidot.co.kr/z/account/naver_login_callback.php');
+        const state = Math.random().toString(36).substr(2, 10); // CSRF 방지용 랜덤 문자열
+
+        const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
+
+        // 팝업으로 열기
+        window.open(naverLoginUrl, 'naver_login_popup', 'width=600,height=700');
+        return;
 
         // const naverLogin = new naver.LoginWithNaverId({
         //     clientId: "mGvpKEJoPS5Sd3ZjIsir",
@@ -83,9 +94,90 @@ function goLoginSocial(social){
     if(social == 'K'){
 
         console.log("카카오");
+
+        Kakao.Auth.login({
+            success: function(authObj) {
+                // 로그인 성공 시 액세스 토큰을 통해 사용자 정보 요청
+                console.log('authObj : ', authObj);  // authObj에는 access_token이 포함됨
+
+                // 로그인 후 사용자 정보 요청
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function(res) {
+                        console.log(res); // 사용자 정보 출력
+                        
+                        console.log('고유 id : ', res.id);
+                        console.log('닉네임 : ', res.kakao_account.profile.nickname);
+                        console.log('이메일 : ', res.kakao_account.email);
+                        checkUser(social, res);
+                    },
+                    fail: function(error) {
+                        console.error(error);
+                    }
+                });
+            },
+            fail: function(err) {
+                console.error(err); // 로그인 실패 시 오류 출력
+                alert('로그인 실패: ' + err);
+            }
+        });
         
     }
 }
+
+
+function checkUser(social, user){
+    ajaxCall('/common/list', { 
+        table: 'users', whereField:'social_id', whereValue:user.id
+    }, function(data) {
+        
+        console.log('data : ', data);
+        if(data.length == 0){
+            if(social == 'K'){
+                const qs = `social=${social}&login_id=${user.id}&nickname=${user.kakao_account.profile.nickname}&email=${user.kakao_account.email}`;
+                location.href = `/z/account/join?${qs}`
+            }else{
+                const qs = `social=${social}&login_id=${user.id}&nickname=${user.nickname}&email=${user.email}&mobile=${user.mobile || ''}`;
+                location.href = `/z/account/join?${qs}`;
+            }
+            
+
+            
+        }else{
+            //가입이력있는경우
+            ajaxCall('/user/login', { 
+                login_id: user.id, social
+            }, function(data) {
+                
+                console.log('login data : ', data);
+
+                $.ajax({
+                    type: "POST",
+                    url: '/z/account/login_ok.php',
+                    cache: false,
+                    data: {
+                        obj: JSON.stringify(data[0])
+                    },
+                    success: function(data2) {
+                        const modalEl = document.getElementById('login');
+                        const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                        if (modalInstance) modalInstance.hide();
+                        alerts("success", `${data[0].name}님, 어서오세요!<br>즐거운 쇼핑 되시기 바랍니다.`, () => {
+                            location.reload();
+                        });
+                    },
+                    error: function(request, status, error) {
+                        console.log(error);
+                    },
+                });
+                
+            });
+        }
+        
+    });
+}
+
+
 
 
 
@@ -318,6 +410,8 @@ function setHeaderTopbar(){
                 str += `<div class="announcement-bar-item"><p>${value2}</p></div>`;
             }
         }
+
+
         $(`#header-topbar-item-wrap`).html(str);
         
         $('#header-topbar').removeClass('d-none'); // 닫은 적이 없거나 24시간 경과 시 보이기

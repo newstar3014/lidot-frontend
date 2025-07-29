@@ -1,5 +1,39 @@
 function setSliderMain(){
 
+    ajaxCall('/banner/slider-list', { 
+        ppp: 99999, page:1, show_yn:'Y'
+    }, function(data) {
+        $.each(data.rows, function(i, v){
+
+            let buttonStr = '';
+            if(v.link_yn == 'Y'){
+                let hrefStr = '';
+                let targetStr = '';
+                if(v.href){
+                    hrefStr = v.href;
+                }
+
+                if(v.target){
+                    targetStr = `target="${v.target}"`;
+                }
+
+                buttonStr = `<a href="${hrefStr}" ${targetStr} class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn rounded-0"><span>${v.button}</span></a>`;
+            }
+            $('#main-slider-wrapper').append(`<div class="swiper-slide" lazy="true">
+                <div class="wrap-slider">
+                    <img class="lazyload" data-src="${v.img}" src="${v.img}" alt="swm-slideshow">
+                    <div class="box-content">
+                        <div class="container">
+                            <h1 class="fade-item fade-item-1 text-white heading font-libre-baskerville">${v.title}</h1>
+                            <p class="fade-item fade-item-2 text-white">${v.subtitle}</p>
+                            ${buttonStr}
+                        </div>
+                    </div>
+                </div>
+            </div>`);
+        });
+    });
+
     var preview = $(".tf-sw-slideshow").data("preview");
     var tablet = $(".tf-sw-slideshow").data("tablet");
     var mobile = $(".tf-sw-slideshow").data("mobile");

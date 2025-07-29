@@ -48,14 +48,14 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     <link rel="stylesheet"type="text/css" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet"type="text/css" href="/common.css">
+    <link rel="stylesheet"type="text/css" href="/common.css?ver=1.3">
 
     <!-- Javascript -->
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="text/javascript" src="/common.js?ver=1.1"></script>
+    <script type="text/javascript" src="/common.js?ver=1.2"></script>
 
 </head>
 
@@ -87,11 +87,12 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                         <div class="col-xl-5 tf-md-hidden">
                             <div class="tf-cur">
                                 <div class="tf-languages">
-                                    <select class="image-select center style-default type-languages">
+                                    <select class="image-select center style-default type-languages" id="fastMenu">
                                         <option>빠른메뉴</option>
                                         <option>장바구니</option>
                                         <option>주문조회</option>
                                         <option>메인화면</option>
+                                        <option value="notice">공지사항</option>
                                     </select>
                                 </div>
                             </div>
@@ -133,12 +134,13 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         </header>
         <!-- /Header -->
+         
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" type="text/javascript"></script>
 
-<!-- <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script> -->
 
 <script>
-    
+    Kakao.init('cfb248c5db4045e47574e743c6699b8e');
     const my_ip = '<? echo $ip; ?>';
     var my_obj = { seq : 0 };
     var isLogin = '<? echo $isLogin; ?>';
@@ -154,6 +156,7 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             localStorage.setItem('guest_uuid', guest_uuid);
         }       
     }
+    
     const now_url = '<? echo $now_url; ?>';
 
     $(function() {
@@ -161,7 +164,21 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         setHeaderTopbar();
         setHeaderCartCount();
     });
-    
+
+    $('#fastMenu').change(function(){
+
+        switch ($(this).val()) {
+            case `notice`:
+
+                location.href=`/z/notice/list.php`;
+                
+                break;
+        
+            default:
+                break;
+        }
+    });
+
 </script>
-<script type="text/javascript" src="/header.js"></script>
-<script type="text/javascript" src="/shop.js?ver=1.1"></script>
+<script type="text/javascript" src="/header.js?ver=1.1"></script>
+<script type="text/javascript" src="/shop.js?ver=1.7"></script>

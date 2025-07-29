@@ -9,6 +9,10 @@
     width: 80px;
 }
 
+.tf-btn-small{
+    padding: 10px 15px;
+}
+
 #modal-cart-product-image .swiper-slide{
     text-align: center;
 }
@@ -589,7 +593,79 @@ h5.modal-title{
     transform: translateY(0) !important;
 }
 
+video {
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
 
+
+.btn-white {
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+}
+
+
+
+.cate-item{
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 7px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.cate-item.active{
+    background: black;
+    color: white;
+}
+
+.cate-item:hover{
+    background: #666;
+    color: white;
+}
+
+
+.more-item{
+    border: 1px solid lightgray;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.more-select{
+    display: inline-block;
+    width: auto;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+
+.tf-cart-item .wg-quantity input {
+    height: 15px;
+    font-size: 15px;
+    line-height: 0.8px;
+}
+
+.wg-quantity.small input {
+    height: 21px;
+    font-size: 15px;
+}
+
+input.product-info-choice-item-count-detail{
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
 
 /* 미디어 쿼리 */
 
