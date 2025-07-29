@@ -443,7 +443,7 @@ iframe[src*="youtube.com"] {
 
     function relateLoad(){
         ajaxCall('/product/list', { 
-            ppp: DEFAULT_PPP, page:1, main:'best'
+            ppp: DEFAULT_PPP, page:1, main:'relate'
         }, function(data) {
             console.log('best data : ', data);
             
@@ -459,7 +459,7 @@ iframe[src*="youtube.com"] {
         ajaxCall('/product/list', { 
             ppp: 12,
             page: 1,
-            main: 'best',
+            main: 'relate',
             c_seq: c_seq
         }, function(data) {
             console.log('▶ 추천 상품 테스트 결과');
