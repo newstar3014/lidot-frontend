@@ -25,8 +25,6 @@ function makeProductByOptionStr(v){
 
 
 function makeProductItemStr(v, isOption = false){
-
-    console.log(v);
     
     let imgStr = ``;
     let imgArray = ``;
