@@ -1261,6 +1261,7 @@ async function downloadFiles(target_seq, target) {
             }
             return false;
         };
+
         const targetNode = findNode(menuData, c_seq);
         if (!targetNode) return false;
         return find([targetNode]);
