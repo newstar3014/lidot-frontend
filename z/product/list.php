@@ -103,7 +103,7 @@ function getChildrenByParent(seq, data = menuData) {
 
 // 주어진 카테고리 seq 기준으로 옵션 상품 여부 판별 (depth:2가 7 또는 40인지)
 function isOptionCategoryBySeq(seq) {
-    const trail = getCategoryTrailFromSeq(seq);
+    const trail = category && Array.isArray(category) ? category : [];
     const depth2 = trail.find(c => c.depth === 2);
     return [7, 40].includes(depth2?.seq);
 }
