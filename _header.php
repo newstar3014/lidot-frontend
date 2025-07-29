@@ -159,6 +159,11 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     
     const now_url = '<? echo $now_url; ?>';
 
+    let menuData;
+    ajaxCall('/category/menu', {}, function(data) {
+        menuData = data;
+    });
+
     $(function() {
         console.log('ㅡㅡ HEADER READY');
         setHeaderTopbar();
