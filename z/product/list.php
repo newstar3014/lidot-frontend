@@ -22,6 +22,7 @@
     <div class="container">
 
         <div id="category-select-wrap"></div>
+<input type="hidden" id="c_seq" value="">
         <div id="list-attr2-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div id="list-attr3-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
         <div class="mb-3"><ul id="list-attr4-wrap"></div>
@@ -66,38 +67,74 @@
 // ✅ 전역 변수
 let attrData = [];
 let attrArr = [];
-let c_seq = '';
+let c_seq = '<? echo $_GET["c_seq"]; ?>';
 let page = 1, sk = '', ob = 'n', target = '';
 
 $(function () {
-    renderCategorySelector(1, 0); // depth 1부터 시작
+    renderCategoryTree(); // depth 1부터 시작
     goReload();
 });
 
 
 // ✅ 카테고리 렌더링
-function renderCategorySelector(depth, parentSeq) {
+function renderCategoryTree() {
     const $wrap = $('#category-select-wrap');
+    $wrap.empty();
 
-    // ❌ jQuery는 [data-depth>=] 를 직접 지원하지 않음 → filter로 처리
-    $wrap.find('.category-select-box').filter(function () {
-        return parseInt($(this).attr('data-depth')) >= depth;
-    }).remove();
+    const path = findCategoryPath(menuData, c_seq); // 선택된 c_seq까지의 경로 배열
+    if (!path) return;
 
-    const list = getCategoryList(depth, parentSeq);
-    if (list.length === 0) return;
+    let currentList = menuData;
 
-    const $select = $('<select>')
-        .addClass('form-select category-select-box')
-        .attr('data-depth', depth)
-        .attr('id', `c_seq_${depth}`);
-
-    $select.append(`<option value=''>선택</option>`);
-    list.forEach(item => {
-        $select.append(`<option value='${item.seq}' data-cate_name='${item.name}'>${item.name}</option>`);
+    path.forEach((node, depth) => {
+        const $row = $('<div class="category-row">');
+        currentList.forEach(item => {
+            const active = item.seq == node.seq ? 'active' : '';
+            const $item = $(`
+                <div class="cate-item ${active}" data-seq="${item.seq}" data-depth="${depth + 1}">
+                    ${item.name}
+                </div>
+            `);
+            $item.on('click', function () {
+                $('#c_seq').val(item.seq);
+                renderCategoryTree(item.seq); // 클릭 시 재렌더링
+            });
+            $row.append($item);
+        });
+        $wrap.append($row);
+        currentList = node.children || [];
     });
 
-    $wrap.append($select);
+    // 마지막 자식이면서 children이 있으면, 그 다음 단계도 추가로 렌더링
+    if (currentList.length > 0) {
+        const depth = path.length + 1;
+        const $row = $('<div class="category-row">');
+        currentList.forEach(item => {
+            const $item = $(`
+                <div class="cate-item" data-seq="${item.seq}" data-depth="${depth}">
+                    ${item.name}
+                </div>
+            `);
+            $item.on('click', function () {
+                $('#c_seq').val(item.seq);
+                renderCategoryTree(item.seq);
+            });
+            $row.append($item);
+        });
+        $wrap.append($row);
+    }
+}
+
+function findCategoryPath(list, targetSeq, path = []) {
+    for (const item of list) {
+        const newPath = [...path, item];
+        if (item.seq == targetSeq) return newPath;
+        if (item.children?.length) {
+            const result = findCategoryPath(item.children, targetSeq, newPath);
+            if (result) return result;
+        }
+    }
+    return null;
 }
 
 
