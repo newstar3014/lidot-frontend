@@ -227,6 +227,16 @@
     function setCateWrap() {
         if (!c_seq) return;
 
+        // menuData가 이미 세팅되어 있다면 ajax 재호출 생략
+        if (Array.isArray(menuData) && menuData.length > 0) {
+        }else{
+            // menuData가 없을 때만 ajax 호출
+            ajaxCall('/category/menu', {}, function(data) {
+                menuData = data;
+            });
+        }
+
+
         ajaxCall('/category/menu', {}, function(data) {
             // 재귀적으로 c_seq에 해당하는 항목을 찾아 하위 children 반환
             const findChildren = (list, targetSeq) => {
