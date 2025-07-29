@@ -72,14 +72,10 @@ var target = '<?php echo $_GET["target"] ?? ""; ?>';
 let attr2 = '';
 let attr3 = '';
 let attrArr = [];
-let menuData = [];
 let attrData = [];
 
 $(function () {
-    ajaxCall('/category/menu', {}, function(data) {
-        menuData = data;
-        goReload();
-    });
+    goReload();
 });
 
 function goReload() {
@@ -240,7 +236,7 @@ $('.tf-control-sorting select').change(function () {
 function productLoad() {
     $('#gridLayout').empty();
     let url = `/product/list`;
-    if (isDescendantCategory('40') || isDescendantCategory('7')) {
+    if (isDescendantCategory(c_seq, '40') || isDescendantCategory(c_seq, '7')) {
         url = `/product/list-option`;
     }
 
