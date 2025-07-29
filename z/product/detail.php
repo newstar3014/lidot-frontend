@@ -454,6 +454,24 @@ iframe[src*="youtube.com"] {
         });
     }
 
+    //테스트 케이스용
+    function testRecommend(c_seq) {
+        ajaxCall('/product/list', { 
+            ppp: 12,
+            page: 1,
+            main: 'best',
+            c_seq: c_seq
+        }, function(data) {
+            console.log('▶ 추천 상품 테스트 결과');
+            console.table(data.rows.map(v => ({
+                seq: v.seq,
+                name: v.name,
+                c_seq: v.c_seq,
+                best_yn: v.best_yn
+            })));
+        });
+    }
+
     function itemDrawSlide(v, target){
         let itemStr = `<div class="swiper-slide" lazy="true">`;
         itemStr += makeProductItemStr(v);
