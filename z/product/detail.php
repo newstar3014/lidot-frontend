@@ -429,11 +429,8 @@ iframe[src*="youtube.com"] {
     }
 
     function setBreadcrumb(v){
-        console.log(v);
         if(v){
             let cateArray = v.reverse();
-            console.log(cateArray);
-            
             let cateStr = ``;
             cateArray.forEach((cate, index) => {
                 let isLast = index === cateArray.length - 1; // 마지막 요소인지 확인
