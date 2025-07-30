@@ -296,7 +296,7 @@ function makeProductInfoStr(v, _type){
 
         
 
-        choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, v.name);
+        choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, name);
     }
 
     let tagStr = ``;
