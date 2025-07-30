@@ -76,6 +76,7 @@
     var page = '<? echo $_GET["page"]; ?>';
     if(!page) page = 1;
     var target = '<? echo $_GET["target"]; ?>';
+    var recent = '<? echo $_GET["recent"]; ?>';
     let attrData;
     // let attr2 = '<? echo $_GET["attr2"]; ?>';
     // let attr3 = '<? echo $_GET["attr3"]; ?>';
@@ -471,7 +472,7 @@
 
         ajaxCall(url, { 
             ppp: DEFAULT_PPP,
-            page, c_seq, sk, ob, target, attr2, attr3
+            page, c_seq, sk, ob, target, attr2, attr3, recent
         }, function(data) {
             console.log("CHECK OPTION DATA : ", data);
             $('.item-total-count').html(data.totalCount);
@@ -498,7 +499,7 @@
     function goReload(){
 
         /* URL세팅(페이지 새로고침 안 됨) */
-        history.pushState(null, null, `/z/product/list?page=${page}&c_seq=${c_seq}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}`);
+        history.pushState(null, null, `/z/product/list?page=${page}&c_seq=${c_seq}&sk=${sk}&ob=${ob}&target=${target}&attr2=${attr2}&recent=${recent}`);
 
         setPageTitleSub();
         setSortOrder();
