@@ -27,8 +27,8 @@
         <!-- 최종 선택된 카테고리 seq 저장용 -->
         <input type="hidden" id="c_seq" value="">
 
-        <div id="list-attr2-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
-        <div id="list-attr3-wrap" class="pb-4 mb-4 border-bottom d-none"></div>
+        <div id="list-attr2-wrap" class="pb-2 mb-3 border-bottom d-none"></div>
+        <div id="list-attr3-wrap" class="pb-2 mb-3 border-bottom d-none"></div>
         <div class="mb-3"><ul id="list-attr4-wrap"></div>
 
         <div class="tf-shop-control grid-3 align-items-center pb-4 border-bottom">
