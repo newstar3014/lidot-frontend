@@ -588,7 +588,7 @@ function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, is
     
     let p_name;
     let v;
-    ajaxCall('/common/seq', { table: 'product', seq: p_seq }, function(data) {
+    ajaxCall('/product/list', { seq: p_seq }, function(data) {
         p_name = data.name;
         v = data;
     });
