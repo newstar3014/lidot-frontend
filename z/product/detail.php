@@ -431,7 +431,7 @@ iframe[src*="youtube.com"] {
     function setBreadcrumb(v){
         console.log(v);
         if(v){
-            let cateArray = v;
+            let cateArray = v.reverse();
             console.log(cateArray);
             
             let cateStr = ``;
