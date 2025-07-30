@@ -596,7 +596,7 @@ function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, is
     
     let pName = isOption ? `${p_name} (${optionName})` : p_name;
 
-    console.log(v.options);
+    console.log(v);
     
     
 
