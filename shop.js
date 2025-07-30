@@ -286,17 +286,13 @@ function makeProductInfoStr(v, _type){
         // 옵션 N 일때 처리
         countTotal = `1`;
         let name = v.name;
-        console.log(name);
-        
+
         if(v.options){
             if(v.options.length == 1){
                 myPrice += v.options[0].price_o;
-                name += ` (${v.options[0].name})`;
             }
         }
         priceTotal = myPrice;
-
-        console.log(name);
 
         choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, name);
     }
@@ -597,8 +593,13 @@ function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, is
     let pName = isOption ? `${p_name} (${optionName})` : p_name;
 
     console.log(v);
-    
-    
+    if(v.option_yn == 'N'){
+        if(v.options){
+            if(v.options.length == 1){
+                pName = `${p_name} (${v.options[0].name})`;
+            }
+        }
+    }
 
     let nameStr = `<div class="product-info-choice-item-name">${pName}</div>`;
     let removeStr = isOption ? `<div class="product-info-choice-item-remove" onclick="productInfoChoiceItemRemove('${_type}', '${target}')"><i class="bi bi-trash3"></i></div>` : ``;
