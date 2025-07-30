@@ -325,7 +325,7 @@ function makeProductInfoStr(v, _type){
                     
                     console.log(myPrice);
                     
-                    let onclick = `onclick="makeProductInfoChoiceNoOptionStrMore('${_type}', '${myPrice}', '${vvv.seq}', '${vvv.name}')"`;
+                    let onclick = ``;
                     
                     if(vvv.option_yn == 'Y'){
                         
@@ -343,6 +343,7 @@ function makeProductInfoStr(v, _type){
                                 myPrice += vvv.options[0].price_o;
                             }
                         }
+                        onclick = `onclick="makeProductInfoChoiceNoOptionStrMore('${_type}', '${myPrice}', '${vvv.seq}', '${vvv.name}')"`;
                     }
                     console.log(myPrice);
 
