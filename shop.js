@@ -321,6 +321,8 @@ function makeProductInfoStr(v, _type){
                     let pointer = `pointer`;
                     let myPrice = getMyPrice(vvv);
                     console.log(vvv.name);
+                    console.log(vvv);
+                    
                     console.log(myPrice);
                     
                     let onclick = `onclick="makeProductInfoChoiceNoOptionStrMore('${_type}', '${myPrice}', '${vvv.seq}', '${vvv.name}')"`;
