@@ -430,17 +430,18 @@ iframe[src*="youtube.com"] {
 
     function setBreadcrumb(v){
         console.log(v);
-        
-        let cateArray = v.reverse();
-        let cateStr = ``;
-        cateArray.forEach((cate, index) => {
-            let isLast = index === cateArray.length - 1; // 마지막 요소인지 확인
-            cateStr += `<a href="/z/product/list?sc=${cate.seq}" class="text">${cate.name}</a>`;
-            if (!isLast) {
-                cateStr += ` <i class="icon icon-arrow-right"></i> `;
-            }
-        });
-        $('#product-detail-breadcrumb').html(cateStr);
+        if(v){
+            let cateArray = v.reverse();
+            let cateStr = ``;
+            cateArray.forEach((cate, index) => {
+                let isLast = index === cateArray.length - 1; // 마지막 요소인지 확인
+                cateStr += `<a href="/z/product/list?sc=${cate.seq}" class="text">${cate.name}</a>`;
+                if (!isLast) {
+                    cateStr += ` <i class="icon icon-arrow-right"></i> `;
+                }
+            });
+            $('#product-detail-breadcrumb').html(cateStr);
+        }
     }
 
     function relateLoad(){
