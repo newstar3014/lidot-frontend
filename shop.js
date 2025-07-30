@@ -589,8 +589,8 @@ function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, is
     let p_name;
     let v;
     ajaxCall('/product/list', { seq: p_seq, page:1, ppp:1 }, function(data) {
-        p_name = data.name;
-        v = data;
+        v = data.rows[0];
+        p_name = v.name;
     });
     
     
