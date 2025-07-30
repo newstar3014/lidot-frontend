@@ -285,12 +285,17 @@ function makeProductInfoStr(v, _type){
     }else{
         // 옵션 N 일때 처리
         countTotal = `1`;
+        let name = v.name;
         if(v.options){
             if(v.options.length == 1){
                 myPrice += v.options[0].price_o;
+                name += ` (${v.options[0].name})`;
             }
         }
         priceTotal = myPrice;
+
+        
+
         choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, v.name);
     }
 
