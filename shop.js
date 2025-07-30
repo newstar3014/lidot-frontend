@@ -286,7 +286,7 @@ function makeProductInfoStr(v, _type){
         // 옵션 없을때 처리
         countTotal = `1`;
         priceTotal = myPrice;
-        choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, v.name);
+        choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, v.name, v.options);
     }
 
     let tagStr = ``;
@@ -458,7 +458,10 @@ function makeProductOptionStr(data, _type, myPrice) {
     return optionStr;
 }
 
-function makeProductInfoChoiceNoOptionStr(_type, myPrice, p_seq, name){
+function makeProductInfoChoiceNoOptionStr(_type, myPrice, p_seq, name, options){
+    console.log('makeProductInfoChoiceNoOptionStr');
+    console.log(options);
+    
     
     // 옵션 없는 상품의 경우 상품 기본정보로 한번만 그리는 함수
     let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq);
@@ -479,7 +482,7 @@ function makeProductInfoChoiceNoOptionStrMore(_type, myPrice, p_seq, name){
 
 
 
-// 단일옵션이었을때 클릭한 옵션으로 선택상품 그려주는 부분
+// 단일옵션이었을때 클릭한 옵션으로 선택상품 그려주는 부분, 이제 사용 안함
 // function makeProductInfoChoiceStr(_type, e, myPrice){
 //     // 상품상세에서 옵션 선택하면 해당 선택상품 그려주는 함수
 //     let productSeq = $(e).attr('data-p_seq');
