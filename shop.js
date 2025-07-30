@@ -291,7 +291,7 @@ function makeProductInfoStr(v, _type){
             }
         }
         priceTotal = myPrice;
-        choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, v.name, v.options);
+        choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, v.name);
     }
 
     let tagStr = ``;
@@ -463,9 +463,9 @@ function makeProductOptionStr(data, _type, myPrice) {
     return optionStr;
 }
 
-function makeProductInfoChoiceNoOptionStr(_type, myPrice, p_seq, name, options){
+function makeProductInfoChoiceNoOptionStr(_type, myPrice, p_seq, name){
     // 옵션 없는 상품의 경우 상품 기본정보로 한번만 그리는 함수
-    let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq, options);
+    let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq);
     return itemStr;
 }
 
