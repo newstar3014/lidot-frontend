@@ -513,7 +513,11 @@ function makeProductInfoChoiceNoOptionStrMore(_type, myPrice, p_seq, name){
 // 다중옵션으로 변경 후 타입그룹별 클릭한 옵션으로 선택상품 그려주는 부분
 function makeProductInfoChoiceStr(_type, e, myPrice) {
     console.log(_type);
+    console.log(e);
+    console.log(myPrice);
     
+    
+
     const $clicked = $(e);
     const productSeq = $clicked.attr('data-p_seq');
 
