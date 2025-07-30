@@ -286,6 +286,8 @@ function makeProductInfoStr(v, _type){
         // 옵션 N 일때 처리
         countTotal = `1`;
         let name = v.name;
+        console.log(name);
+        
         if(v.options){
             if(v.options.length == 1){
                 myPrice += v.options[0].price_o;
@@ -294,7 +296,7 @@ function makeProductInfoStr(v, _type){
         }
         priceTotal = myPrice;
 
-        
+        console.log(name);
 
         choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, name);
     }
