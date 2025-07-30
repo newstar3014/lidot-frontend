@@ -340,7 +340,7 @@ function makeProductInfoStr(v, _type){
                     }else{
                         if(vvv.options){
                             if(vvv.options.length == 1){
-                                myPrice += vvv.options.price_o;
+                                myPrice += vvv.options[0].price_o;
                             }
                         }
                     }
