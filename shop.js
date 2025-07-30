@@ -462,7 +462,11 @@ function makeProductInfoChoiceNoOptionStr(_type, myPrice, p_seq, name, options){
     console.log('makeProductInfoChoiceNoOptionStr');
     console.log(options);
     console.log(myPrice);
-    
+    if(options){
+        if(options.length == 1){
+            myPrice += options[0].price_o;
+        }
+    }
     
     // 옵션 없는 상품의 경우 상품 기본정보로 한번만 그리는 함수
     let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq, options);
