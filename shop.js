@@ -536,10 +536,6 @@ function makeProductInfoChoiceNoOptionStrMore(_type, myPrice, p_seq, name){
 
 // 다중옵션으로 변경 후 타입그룹별 클릭한 옵션으로 선택상품 그려주는 부분
 function makeProductInfoChoiceStr(_type, e, myPrice) {
-    console.log('🔍 [makeProductInfoChoiceStr] 진입');
-    console.log('🧩 전달받은 e:', e);
-    console.log('🧩 전달받은 type:', _type);
-    console.log('🧩 전달받은 myPrice:', myPrice);
 
     const $clicked = $(e);
 
@@ -551,11 +547,6 @@ function makeProductInfoChoiceStr(_type, e, myPrice) {
         const price_o = $clicked.data('price');
         const optionPrice = Number(myPrice) + Number(price_o);
         const target = `${productSeq}-${optionSeq}`;
-
-        console.log('🟨 [단일 옵션 - 셀렉트방식] 처리 진입');
-        console.log('🔸 옵션명:', optionName);
-        console.log('🔸 키:', target);
-        console.log('🔸 가격:', optionPrice);
 
         if ($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length === 0) {
             const itemStr = makeProductInfoChoiceItemStr(
@@ -598,16 +589,13 @@ function makeProductInfoChoiceStr(_type, e, myPrice) {
     });
 
     if (!isAllGroupSelected) {
-        console.log('🛑 [다중옵션] 아직 모든 그룹 선택되지 않음');
         return;
     }
 
     const optionKey = selectedNames.join('/');
-    console.log('🟦 [다중옵션] 생성된 키:', optionKey);
 
     ajaxCall('/product/option-match', { p_seq: productSeq, name: optionKey }, function(res) {
         if (!res || !res.seq) {
-            console.warn('❌ 옵션 매칭 실패');
             return;
         }
 
@@ -615,8 +603,6 @@ function makeProductInfoChoiceStr(_type, e, myPrice) {
         const optionName = res.name;
         const optionPrice = res.price_o + Number(myPrice);
         const target = `${productSeq}-${optionSeq}`;
-
-        console.log('✅ 옵션 매칭 완료:', { optionSeq, optionName, optionPrice, target });
 
         if ($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length === 0) {
             const itemStr = makeProductInfoChoiceItemStr(
