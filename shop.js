@@ -587,12 +587,18 @@ function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, is
     
     
     let p_name;
+    let v;
     ajaxCall('/common/seq', { table: 'product', seq: p_seq }, function(data) {
         p_name = data.name;
+        v = data;
     });
-    console.log(p_name);
+    
     
     let pName = isOption ? `${p_name} (${optionName})` : p_name;
+
+    console.log(v.options);
+    
+    
 
     let nameStr = `<div class="product-info-choice-item-name">${pName}</div>`;
     let removeStr = isOption ? `<div class="product-info-choice-item-remove" onclick="productInfoChoiceItemRemove('${_type}', '${target}')"><i class="bi bi-trash3"></i></div>` : ``;
