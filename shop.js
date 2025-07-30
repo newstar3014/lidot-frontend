@@ -420,6 +420,14 @@ $(document).on('change', '.more-select', function () {
     const $opt = $(this).find('option:selected');
     const type = $opt.data('type');
     const myPrice = $opt.data('myprice');
+
+    console.log($opt);
+    console.log(type);
+    console.log(myPrice);
+    
+    
+    
+
     makeProductInfoChoiceStr(type, $opt, myPrice);
 });
 
