@@ -320,9 +320,13 @@ function makeProductInfoStr(v, _type){
                     let optionStr = ``;
                     let pointer = `pointer`;
                     let myPrice = getMyPrice(vvv);
+                    console.log(vvv.name);
+                    console.log(myPrice);
+                    
                     let onclick = `onclick="makeProductInfoChoiceNoOptionStrMore('${_type}', '${myPrice}', '${vvv.seq}', '${vvv.name}')"`;
                     
                     if(vvv.option_yn == 'Y'){
+                        
                         pointer = ``;
                         onclick = ``;
                         optionStr = `<select class="more-select form-select">
@@ -338,6 +342,7 @@ function makeProductInfoStr(v, _type){
                             }
                         }
                     }
+                    console.log(myPrice);
 
                     moreStr += `
                         <div class="more-item row ${pointer}" ${onclick}>
