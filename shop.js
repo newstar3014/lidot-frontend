@@ -494,7 +494,7 @@ function makeProductInfoChoiceNoOptionStrMore(_type, myPrice, p_seq, name){
     
     // 추가등록상품 옵션없는경우 클릭
     if($(`.product-info-wrap-${_type} .product-info-choice-item-${p_seq}`).length == 0){
-        let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq);
+        let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, true, p_seq);
         $(`.product-info-wrap-${_type} .product-info-choice-wrap`).append(itemStr);
     }else{
         productInfoItemCount('plus', _type, p_seq, myPrice);
