@@ -319,16 +319,24 @@ function makeProductInfoStr(v, _type){
                 if(vvv.status_type == '판매중'){
                     let optionStr = ``;
                     let pointer = `pointer`;
-                    let onclick = `onclick="makeProductInfoChoiceNoOptionStrMore('${_type}', '${getMyPrice(vvv)}', '${vvv.seq}', '${vvv.name}')"`;
+                    let myPrice = getMyPrice(vvv);
+                    let onclick = `onclick="makeProductInfoChoiceNoOptionStrMore('${_type}', '${myPrice}', '${vvv.seq}', '${vvv.name}')"`;
+                    
                     if(vvv.option_yn == 'Y'){
                         pointer = ``;
                         onclick = ``;
                         optionStr = `<select class="more-select form-select">
                             <option value="" selected disabled>옵션 선택</option>`;
                         $.each(vvv.options, function(iiii, vvvv){
-                            optionStr += `<option value="${vvvv.seq}" data-p_seq="${vvv.seq}" data-seq="${vvvv.seq}" data-myprice="${getMyPrice(vvv)}" data-price="${vvvv.price_o}" data-name="${vvvv.name}" data-type="${_type}">${vvvv.name} (+${comma(vvvv.price_o)}원)</option>`;
+                            optionStr += `<option value="${vvvv.seq}" data-p_seq="${vvv.seq}" data-seq="${vvvv.seq}" data-myprice="${myPrice}" data-price="${vvvv.price_o}" data-name="${vvvv.name}" data-type="${_type}">${vvvv.name} (+${comma(vvvv.price_o)}원)</option>`;
                         });
                         optionStr += `</select>`;
+                    }else{
+                        if(vvv.options){
+                            if(vvv.options.length == 1){
+                                myPrice += vvv.options.price_o;
+                            }
+                        }
                     }
 
                     moreStr += `
@@ -338,7 +346,7 @@ function makeProductInfoStr(v, _type){
                             </div>
                             <div class="col-10">
                                 <div>${vvv.name}</div>
-                                <div>${comma(getMyPrice(vvv))}원</div>
+                                <div>${comma(myPrice)}원</div>
                                 ${optionStr}
                             </div>
                         </div>
