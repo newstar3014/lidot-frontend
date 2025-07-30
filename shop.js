@@ -278,13 +278,18 @@ function makeProductInfoStr(v, _type){
     let countTotal = ``;
     let choiceStr = ``;
     if(v.option_yn == `Y`){
-        // 옵션 있을때 처리
+        // 옵션 Y 일때 처리
         optionStr = makeProductOptionStr(v, _type, myPrice);
         countTotal = `0`;
         priceTotal = 0;
     }else{
-        // 옵션 없을때 처리
+        // 옵션 N 일때 처리
         countTotal = `1`;
+        if(v.options){
+            if(v.options.length == 1){
+                myPrice += v.options[0].price_o;
+            }
+        }
         priceTotal = myPrice;
         choiceStr = makeProductInfoChoiceNoOptionStr(_type, myPrice, v.seq, v.name, v.options);
     }
@@ -459,15 +464,6 @@ function makeProductOptionStr(data, _type, myPrice) {
 }
 
 function makeProductInfoChoiceNoOptionStr(_type, myPrice, p_seq, name, options){
-    console.log('makeProductInfoChoiceNoOptionStr');
-    console.log(options);
-    console.log(myPrice);
-    if(options){
-        if(options.length == 1){
-            myPrice += options[0].price_o;
-        }
-    }
-    
     // 옵션 없는 상품의 경우 상품 기본정보로 한번만 그리는 함수
     let itemStr = makeProductInfoChoiceItemStr(p_seq, myPrice, name, _type, false, p_seq, options);
     return itemStr;
