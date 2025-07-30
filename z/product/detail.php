@@ -435,7 +435,7 @@ iframe[src*="youtube.com"] {
             let cateStr = ``;
             cateArray.forEach((cate, index) => {
                 let isLast = index === cateArray.length - 1; // 마지막 요소인지 확인
-                cateStr += `<a href="/z/product/list?sc=${cate.seq}" class="text">${cate.name}</a>`;
+                cateStr += `<a href="/z/product/list?c_seq=${cate.seq}" class="text">${cate.name}</a>`;
                 if (!isLast) {
                     cateStr += ` <i class="icon icon-arrow-right"></i> `;
                 }
