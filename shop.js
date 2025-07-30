@@ -399,6 +399,8 @@ function makeProductInfoStr(v, _type){
 
 
 $(document).on('change', '.more-select', function () {
+    console.log('추가구성셀렉트');
+    
     const $opt = $(this).find('option:selected');
     const type = $opt.data('type');
     const myPrice = $opt.data('myprice');
