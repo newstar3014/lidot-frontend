@@ -536,78 +536,108 @@ function makeProductInfoChoiceNoOptionStrMore(_type, myPrice, p_seq, name){
 
 // 다중옵션으로 변경 후 타입그룹별 클릭한 옵션으로 선택상품 그려주는 부분
 function makeProductInfoChoiceStr(_type, e, myPrice) {
-    console.log(_type);
-    console.log(e);
-    console.log(myPrice);
-    
-    
+    console.log('🔍 [makeProductInfoChoiceStr] 진입');
+    console.log('🧩 전달받은 e:', e);
+    console.log('🧩 전달받은 type:', _type);
+    console.log('🧩 전달받은 myPrice:', myPrice);
 
     const $clicked = $(e);
+
+    // ✅ 추가구성상품 셀렉트 방식 처리
+    if ($clicked.is('option')) {
+        const optionSeq = $clicked.data('seq');
+        const productSeq = $clicked.data('p_seq');
+        const optionName = $clicked.data('name');
+        const price_o = $clicked.data('price');
+        const optionPrice = Number(myPrice) + Number(price_o);
+        const target = `${productSeq}-${optionSeq}`;
+
+        console.log('🟨 [단일 옵션 - 셀렉트방식] 처리 진입');
+        console.log('🔸 옵션명:', optionName);
+        console.log('🔸 키:', target);
+        console.log('🔸 가격:', optionPrice);
+
+        if ($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length === 0) {
+            const itemStr = makeProductInfoChoiceItemStr(
+                target,
+                optionPrice,
+                optionName,
+                _type,
+                true,
+                productSeq,
+                optionSeq
+            );
+            $(`.product-info-wrap-${_type} .product-info-choice-wrap`).append(itemStr);
+        } else {
+            productInfoItemCount('plus', _type, target, optionPrice);
+        }
+
+        setProductInfoTotalPrice(_type);
+        return; // ✅ 더 이상 진행 안함
+    }
+
+    // ✅ 기존 다중옵션 방식 (옵션 박스 클릭)
     const productSeq = $clicked.attr('data-p_seq');
 
-    // 현재 클릭된 옵션의 그룹 인덱스 찾기
     const groupIdx = $clicked.closest('.product-option-group').data('group-idx');
-
-    // 🔄 [1] 동일 그룹 내 기존 선택 해제 및 현재 선택 적용
     $(`.product-option-group[data-group-idx="${groupIdx}"] .product-option-item`)
         .removeClass('active border-black');
 
     $clicked.addClass('active border-black');
 
-    // 🔍 [2] 모든 그룹에서 하나씩 선택됐는지 확인
-    const selectedItems = [];
     const selectedNames = [];
-    const selectedSeqs = [];
 
+    let isAllGroupSelected = true;
     $('.product-option-group').each(function () {
         const $selected = $(this).find('.product-option-item.active');
         if ($selected.length === 0) {
-            return false; // 그룹 중 하나라도 선택되지 않으면 중단
+            isAllGroupSelected = false;
+            return false;
         }
-        selectedItems.push($selected);
         selectedNames.push($selected.attr('data-name'));
-        selectedSeqs.push($selected.attr('data-seq'));
     });
 
-    if (selectedItems.length !== $('.product-option-group').length) {
-        return; // 아직 모든 그룹에서 선택되지 않았음
+    if (!isAllGroupSelected) {
+        console.log('🛑 [다중옵션] 아직 모든 그룹 선택되지 않음');
+        return;
     }
 
-    // ✅ [3] 모든 옵션 선택 완료 → optionKey 생성
     const optionKey = selectedNames.join('/');
-    console.log(optionKey);
-    
+    console.log('🟦 [다중옵션] 생성된 키:', optionKey);
 
-    let res;
-    ajaxCall('/product/option-match', { p_seq: productSeq, name: optionKey }, function(data) {
-        res = data;
+    ajaxCall('/product/option-match', { p_seq: productSeq, name: optionKey }, function(res) {
+        if (!res || !res.seq) {
+            console.warn('❌ 옵션 매칭 실패');
+            return;
+        }
+
+        const optionSeq = res.seq;
+        const optionName = res.name;
+        const optionPrice = res.price_o + Number(myPrice);
+        const target = `${productSeq}-${optionSeq}`;
+
+        console.log('✅ 옵션 매칭 완료:', { optionSeq, optionName, optionPrice, target });
+
+        if ($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length === 0) {
+            const itemStr = makeProductInfoChoiceItemStr(
+                target,
+                optionPrice,
+                optionName,
+                _type,
+                true,
+                productSeq,
+                optionSeq
+            );
+            $(`.product-info-wrap-${_type} .product-info-choice-wrap`).append(itemStr);
+        } else {
+            productInfoItemCount('plus', _type, target, optionPrice);
+        }
+
+        setProductInfoTotalPrice(_type);
+        $('.product-option-item').removeClass('active border-black');
     });
-    
-    const optionSeq = res.seq;
-    const optionName = res.name;
-    const optionPrice = res.price_o + Number(myPrice);
-    const target = `${productSeq}-${optionSeq}`;
-
-    if ($(`.product-info-wrap-${_type} .product-info-choice-item-${target}`).length === 0) {
-        const itemStr = makeProductInfoChoiceItemStr(
-            target,
-            optionPrice,
-            optionName,
-            _type,
-            true,
-            productSeq,
-            optionSeq
-        );
-        $(`.product-info-wrap-${_type} .product-info-choice-wrap`).append(itemStr);
-    } else {
-        productInfoItemCount('plus', _type, target, optionPrice);
-    }
-
-    setProductInfoTotalPrice(_type);
-
-    // ♻️ [4] 모든 그룹의 선택 상태 초기화
-    $('.product-option-item').removeClass('active border-black');
 }
+
 
 function makeProductInfoChoiceItemStr(target, optionPrice, optionName, _type, isOption, p_seq, po_seq = null){
     
