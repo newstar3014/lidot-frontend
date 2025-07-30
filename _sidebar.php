@@ -180,15 +180,15 @@
 
         $.each(data, function(i, v){
             let url = `/z/product/list?c_seq=`;
-            strm += `<li class="nav-mb-item">`;
             str += `<li class="menu-item"><a href="${url+v.seq}" class="item-link">${v.name}</a></li>`;
-            strm += `<a href="${url+v.seq}" class="mb-menu-link">${v.name}</a>`;
-            strm += `</li>`;
+            strm += `<li class="nav-mb-item"><a href="${url+v.seq}" class="mb-menu-link">${v.name}</a></li>`;
         });
 
         str += `<li class="menu-item"><a href="/z/project" class="item-link">PROJECT</a></li>`;
-        strm += `<a href="/z/project" class="mb-menu-link">PROJECT</a>`;
-        strm += `</li>`;
+        strm += `<li class="nav-mb-item"><a href="/z/project" class="mb-menu-link">PROJECT</a></li>`;
+
+        str += `<li class="menu-item"><a href="/z/product/list?target=recent" class="item-link">RECENT</a></li>`;
+        strm += `<li class="nav-mb-item"><a href="/z/product/list?target=recent" class="mb-menu-link">RECENT</a></li>`;
 
         $('#menu-pc-wrap').html(str);
         $('#wrapper-menu-navigation').html(strm);
