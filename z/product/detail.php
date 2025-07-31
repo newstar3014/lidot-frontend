@@ -14,6 +14,7 @@
 
     .table-bordered th {
         background: #eee;
+        font-weight: bold;
     }
     .table-bordered td, .table-bordered th {
         border: 1px solid #dee2e6 !important;
