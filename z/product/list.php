@@ -409,6 +409,7 @@
             }else{
                 $('.no-user').removeClass('d-none');
                 $('#paged-wrap').addClass('d-none');
+                return;
             }
         }
 
