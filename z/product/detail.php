@@ -391,7 +391,7 @@ iframe[src*="youtube.com"] {
             const hasSeq40 = v.category.some(item => item.seq === 40);
             let boxStr = ``;
             if (hasSeq40) {
-                if(v.options){
+                if(v.option_group.items){
                     boxStr = `<div class="table-responsive"><table class="table table-bordered my-5"><thead>
                         <tr><th>사이즈</th></tr>
                         <tr><th>파레트당 박스수</th></tr>
@@ -399,7 +399,7 @@ iframe[src*="youtube.com"] {
                         <tr><th>박스당 장수</th></tr>
                         <tr><th>박스당 시공면적</th></tr>
                     </thead><tbody>`;
-                    $.each(v.options, function(ii, vv){
+                    $.each(v.option_group.items, function(ii, vv){
                         boxStr += `<tr>
                             <td>${vv.name}</td>
                             <td>${vv.box_paret}</td>
