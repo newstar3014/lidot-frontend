@@ -265,7 +265,7 @@ iframe[src*="youtube.com"] {
                                 <thead>
                                     <tr>
                                         <th style="width:10%;">No.</th>
-                                        <th>문의내용</th>
+                                        <th style="width:90%;">문의내용</th>
                                     </tr>
                                 </thead>
                                 <tbody>
