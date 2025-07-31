@@ -45,7 +45,7 @@
             console.log('data : ', data);
             $('#title').html(data.title);
             $('#oneline').html(data.oneline);
-            $('#idt').html(data.idt);
+            $('#idt').html(${data.idt.split(' ')[0]});
             $('#img').append(`<img src="${JSON.parse(data.img)[0].url}"
             class="w-100 rounded" style="max-height: 500px; object-fit:cover;">`)
             $('#contents').html(data.contents);
