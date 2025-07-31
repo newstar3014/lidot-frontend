@@ -421,13 +421,16 @@
                 </thead><tbody>`;
 
                 $.each(itemBox, function(ii, vv) {
-                    boxStr += `<tr>
-                        <td>${vv.name}</td>
-                        <td>${vv.box_paret}</td>
-                        <td>${vv.box_kg}</td>
-                        <td>${vv.box_count}</td>
-                        <td>${vv.box_size}</td>
-                    </tr>`;
+                    if(vv.show_yn == 'Y'){
+                        boxStr += `<tr>
+                            <td>${vv.name}</td>
+                            <td>${vv.box_paret}</td>
+                            <td>${vv.box_kg}</td>
+                            <td>${vv.box_count}</td>
+                            <td>${vv.box_size}</td>
+                        </tr>`;
+                    }
+                    
                 });
 
                 boxStr += `</tbody></table></div>`;
