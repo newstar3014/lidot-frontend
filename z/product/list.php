@@ -53,19 +53,19 @@
             </div>
         </div>
 
-        <div class="no-data tf-page-cart text-center mb_180 d-none">
+        <div class="no-data tf-page-cart text-center mb-5 d-none">
             <h5 class="mb_24">조회결과가 없어요</h5>
             <p class="mb_24">다른 조건으로 상품을 확인해보세요!</p>
             <a href="/z/product/list" class="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn">상품 전체목록 보기<i class="icon icon-arrow1-top-left"></i></a>
         </div>
 
-        <div class="no-user tf-page-cart text-center mb_180 d-none">
+        <div class="no-user tf-page-cart text-center mb-5 d-none">
             <h5 class="mb_24">로그인이 필요해요</h5>
             <p class="mb_24">로그인 후 내 주문상품을 확인해보세요!</p>
             <a href="/z/product/list" class="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn">상품 전체목록 보기<i class="icon icon-arrow1-top-left"></i></a>
         </div>
 
-        <div class="no-orders tf-page-cart text-center mb_180 d-none">
+        <div class="no-orders tf-page-cart text-center mb-5 d-none">
             <h5 class="mb_24">주문상품이 없어요</h5>
             <p class="mb_24">상품목록에서 신규로 상품을 주문해보세요!</p>
             <a href="/z/product/list" class="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn">상품 전체목록 보기<i class="icon icon-arrow1-top-left"></i></a>
