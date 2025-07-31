@@ -281,9 +281,7 @@ iframe[src*="youtube.com"] {
                             </table>
                         </div>
                         <div class="widget-content-inner">
-                            <div class="tf-page-privacy-policy">
-                              
-                            </div>
+                            <div class="tf-page-privacy-policy"></div>
                         </div>
                     </div>
                 </div>
