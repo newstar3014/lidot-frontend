@@ -415,7 +415,7 @@
         }, function(data) {
             console.log('setPopup data : ', data);
             
-            $.each(data.rows, function(i,v){
+            $.each(data.rows.reverse(), function(i,v){
                 let imgStr = `<img src="${v.img}" class="popup-img" />`;
                 if(v.link_yn == 'Y'){
                     imgStr = `<a href="${v.href}" target="${v.target}"><img src="${v.img}" class="popup-img" style="cursor:pointer;" /></a>`;
