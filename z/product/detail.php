@@ -390,27 +390,42 @@ iframe[src*="youtube.com"] {
 
             const hasSeq40 = v.category.some(item => item.seq === 40);
             let boxStr = ``;
+            let isBoxOK = false;
+            let itemBox; // ✅ 박스 데이터 저장용
+
             if (hasSeq40) {
-                if(v.option_group.items){
-                    boxStr = `<div class="table-responsive"><table class="table table-bordered my-5"><thead>
-                        <tr><th>사이즈</th></tr>
-                        <tr><th>파레트당 박스수</th></tr>
-                        <tr><th>박스당 키로수</th></tr>
-                        <tr><th>박스당 장수</th></tr>
-                        <tr><th>박스당 시공면적</th></tr>
-                    </thead><tbody>`;
-                    $.each(v.option_group.items, function(ii, vv){
-                        boxStr += `<tr>
-                            <td>${vv.name}</td>
-                            <td>${vv.box_paret}</td>
-                            <td>${vv.box_kg}</td>
-                            <td>${vv.box_count}</td>
-                            <td>${vv.box_size}</td>
-                        </tr>`;
-                    });
-                    boxStr += `</tbody></table></div>`;
-                    $('#product-detail-contents').append(boxStr);
+                if (Array.isArray(option_group) && option_group.length > 0) {
+                    const targetGroup = option_group.find(group => group.attr_seq === 74);
+
+                    if (targetGroup && Array.isArray(targetGroup.items) && targetGroup.items.length > 0) {
+                        isBoxOK = true;
+                        itemBox = targetGroup.items; // ✅ 박스 정보 저장
+                    }
                 }
+                console.log('isBoxOK:', isBoxOK);
+            }
+
+            if (isBoxOK && itemBox) {
+                boxStr = `<div class="table-responsive"><table class="table table-bordered my-5"><thead>
+                    <tr><th>사이즈</th></tr>
+                    <tr><th>파레트당 박스수</th></tr>
+                    <tr><th>박스당 키로수</th></tr>
+                    <tr><th>박스당 장수</th></tr>
+                    <tr><th>박스당 시공면적</th></tr>
+                </thead><tbody>`;
+
+                $.each(itemBox, function(ii, vv) {
+                    boxStr += `<tr>
+                        <td>${vv.name}</td>
+                        <td>${vv.box_paret}</td>
+                        <td>${vv.box_kg}</td>
+                        <td>${vv.box_count}</td>
+                        <td>${vv.box_size}</td>
+                    </tr>`;
+                });
+
+                boxStr += `</tbody></table></div>`;
+                $('#product-detail-contents').append(boxStr);
             }
             
 
