@@ -408,7 +408,7 @@
 
         ajaxCall(url, { 
             ppp: DEFAULT_PPP,
-            page, c_seq, sk, ob, target, attr2, attr3, user_seq
+            page, c_seq, sk, ob, target, attr2, attr3, user_seq:now_user_seq
         }, function(data) {
             console.log("CHECK OPTION DATA : ", data);
             $('.item-total-count').html(data.totalCount);
