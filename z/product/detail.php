@@ -389,10 +389,28 @@ iframe[src*="youtube.com"] {
             $('#product-detail-contents').append(v.contents);
 
             const hasSeq40 = v.category.some(item => item.seq === 40);
+            let boxStr = ``;
             if (hasSeq40) {
-                console.log('seq 40이 존재합니다.');
-            }else{
-                console.log('seq 40이 존재하지 않음');
+                if(v.options){
+                    boxStr = `<div class="table-responsive"><table class="table table-bordered my-5"><thead>
+                        <tr><th>사이즈</th></tr>
+                        <tr><th>파레트당 박스수</th></tr>
+                        <tr><th>박스당 키로수</th></tr>
+                        <tr><th>박스당 장수</th></tr>
+                        <tr><th>박스당 시공면적</th></tr>
+                    </thead><tbody>`;
+                    $.each(v.options, function(ii, vv){
+                        boxStr += `<tr>
+                            <td>${vv.name}</td>
+                            <td>${vv.box_paret}</td>
+                            <td>${vv.box_kg}</td>
+                            <td>${vv.box_count}</td>
+                            <td>${vv.box_size}</td>
+                        </tr>`;
+                    });
+                    boxStr += `</tbody></table></div>`;
+                    $('#product-detail-contents').append(boxStr);
+                }
             }
             
 
