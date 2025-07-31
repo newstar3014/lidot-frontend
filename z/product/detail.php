@@ -12,13 +12,17 @@
         text-align: center;
     }
 
-iframe[src*="youtube.com"] {
-  width: 100% !important;
-  aspect-ratio: 16 / 9;
-  height: auto !important;
-  display: block;       /* inline 요소 간격 제거 */
-  border: 0;            /* 프레임 보더 제거 */
-}
+    .table-bordered td, .table-bordered th {
+        border: 1px solid #dee2e6 !important;
+    }
+
+    iframe[src*="youtube.com"] {
+    width: 100% !important;
+    aspect-ratio: 16 / 9;
+    height: auto !important;
+    display: block;       /* inline 요소 간격 제거 */
+    border: 0;            /* 프레임 보더 제거 */
+    }
 </style>
 
 <div class="container preview d-none">
@@ -406,7 +410,7 @@ iframe[src*="youtube.com"] {
             }
 
             if (isBoxOK && itemBox) {
-                boxStr = `<div class="table-responsive"><table class="table table-bordered my-5" style="border: 1px solid #dee2e6;"><thead>
+                boxStr = `<div class="table-responsive"><table class="table table-bordered my-5"><thead>
                     <tr>
                     <th>사이즈</th><th>파레트당 박스수</th><th>박스당 키로수</th><th>박스당 장수</th><th>박스당 시공면적</th>
                     </tr>
