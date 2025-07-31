@@ -59,6 +59,12 @@
             <a href="/z/product/list" class="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn">상품 전체목록 보기<i class="icon icon-arrow1-top-left"></i></a>
         </div>
 
+        <div class="no-data tf-page-cart text-center mb_180 d-none no-user">
+            <h5 class="mb_24">로그인이 필요해요</h5>
+            <p class="mb_24">로그인 후 내 주문상품을 확인해보세요!</p>
+            <a href="/z/product/list" class="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn">상품 전체목록 보기<i class="icon icon-arrow1-top-left"></i></a>
+        </div>
+
         <div class="wrapper-control-shop">
             <div class="tf-grid-layout wrapper-shop tf-col-4" id="gridLayout"></div>
             <div id="paged-wrap"><nav><ul id="paged-content" class="pagination justify-content-center"></ul></nav></div>
@@ -208,86 +214,6 @@
         page = 1;
         goReload();
     }
-
-    // function goAttr3(_seq, _name){
-
-    //     if(attrArr.length == 0){
-    //         attrArr.push(_seq);
-    //         return testFn(_name);
-    //     }else{
-
-    //         for(let i = 0; i < attrArr.length; i++){
-    //             let v = attrArr[i];
-    //             if(v == _seq) return testFn(``);
-    //         }
-
-    //         attrArr.push(_seq);
-    //         return testFn(_name);
-    //     }        
-    // }
-
-    // function setCateWrap(){
-    //     if (!c_seq) return;
-    //     const level2 = (data.find(item => item.seq == sc1 && item.show_yn === 'Y') || {}).children || [];
-    //     menuData = level2;
-    //     const $wrap2 = $('#list-cate2-wrap').empty();
-    //     if (level2.length === 0) {
-    //         $wrap2.addClass('d-none');
-    //     } else {
-    //         $wrap2.removeClass('d-none');
-    //         level2.forEach(v => {
-    //             const active = (v.seq == sc2) ? 'active' : '';
-    //             const itemStr = `
-    //                 <div class="cate-item ${active}" onclick="goCate2('${v.seq}')">
-    //                     ${v.name}
-    //                 </div>`;
-    //             $wrap2.append(itemStr);
-    //         });
-    //     }
-    // }
-
-    // function goCate2(_seq){
-
-    //     sc = '';
-    //     sc2 = _seq;
-    //     page = 1;
-    //     attr2 = ``;
-    //     attr3 = ``;
-    //     attrArr = [];
-    //     $('#list-attr3-wrap').empty().addClass('d-none');
-    //     $('#list-attr4-wrap').empty();
-    //     // if(attrArr.length > 0){
-    //     //     attr3 = attrArr;
-    //     // }else{
-    //     //     attr3 = ``;
-    //     // }
-
-    //     const level3 = (menuData.find(item => item.seq == sc2 && item.show_yn === 'Y') || {}).children || [];
-    //     const $wrap3 = $('#list-cate3-wrap').empty();
-    //     if (level3.length === 0) {
-    //         $wrap3.addClass('d-none');
-    //     } else {
-    //         $wrap3.removeClass('d-none');
-    //         level3.forEach(v => {
-    //             const active = (v.seq == sc) ? 'active' : '';
-    //             const itemStr = `
-    //                 <div class="cate-item ${active} cate3-item cate-item${v.seq}" onclick="goCate3('${v.seq}')">
-    //                     ${v.name}
-    //                 </div>`;
-    //             $wrap3.append(itemStr);
-    //         });
-    //     }
-
-    //     if(sc2 == 7 || sc2 == 40 || sc2 == 71){
-    //         setAttrWrap(sc2);
-    //     }else{
-    //         $('#list-attr2-wrap').empty().addClass('d-none');
-    //     }
-
-
- 
-    //     goReload();
-    // }
 
 
     // ✅ 특정 seq의 카테고리 항목 찾기 (재귀 탐색)
@@ -470,9 +396,19 @@
             url = `/product/list-option`;
         }
 
+        let now_user_seq = 0;
+        if(recent == 'Y'){
+            if(isLogin){
+                now_user_seq = my_obj.user_seq;
+            }else{
+                $('.no-user').removeClass('d-none');
+                $('#paged-wrap').addClass('d-none');
+            }
+        }
+
         ajaxCall(url, { 
             ppp: DEFAULT_PPP,
-            page, c_seq, sk, ob, target, attr2, attr3, recent
+            page, c_seq, sk, ob, target, attr2, attr3, user_seq
         }, function(data) {
             console.log("CHECK OPTION DATA : ", data);
             $('.item-total-count').html(data.totalCount);
