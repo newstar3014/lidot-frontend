@@ -388,7 +388,12 @@ iframe[src*="youtube.com"] {
 
             $('#product-detail-contents').append(v.contents);
 
-            console.log(v.category);
+            const hasSeq40 = v.category.some(item => item.seq === 40);
+            if (hasSeq40) {
+                console.log('seq 40이 존재합니다.');
+            }else{
+                console.log('seq 40이 존재하지 않음');
+            }
             
 
             let brand_img_bottom = v.brand_img_bottom;
