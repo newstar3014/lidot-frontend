@@ -264,21 +264,18 @@ iframe[src*="youtube.com"] {
                             <table class="tf-pr-attrs">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
+                                        <th style="width:10%;">No.</th>
                                         <th>문의내용</th>
-                                        <th>등록일</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>2</td>
                                         <td>오늘 주문하면 상품 받기까지 얼마나 걸리나요?</td>
-                                        <td>2025-02-11</td>
                                     </tr>
                                     <tr>
                                         <td>1</td>
                                         <td>설치는 어떻게 해야하는지 궁금합니다</td>
-                                        <td>2025-01-28</td>
                                     </tr>
                                 </tbody>
                             </table>
