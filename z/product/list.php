@@ -405,13 +405,21 @@
         let now_user_seq = 0;
         if(recent == 'Y'){
             if(isLogin){
+                console.log('리센트Y, 로긴Y');
+                
                 now_user_seq = my_obj.user_seq;
             }else{
+                console.log('리센트Y, 로긴N');
                 $('.no-user').removeClass('d-none');
                 $('#paged-wrap').addClass('d-none');
                 return;
             }
+        }else{
+            console.log('리센트N');
         }
+
+        console.log('AJX호출직전');
+        
 
         ajaxCall(url, { 
             ppp: DEFAULT_PPP,
