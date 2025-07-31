@@ -394,8 +394,8 @@ iframe[src*="youtube.com"] {
             let itemBox; // ✅ 박스 데이터 저장용
 
             if (hasSeq40) {
-                if (Array.isArray(option_group) && option_group.length > 0) {
-                    const targetGroup = option_group.find(group => group.attr_seq === 74);
+                if (Array.isArray(v.option_group) && v.option_group.length > 0) {
+                    const targetGroup = v.option_group.find(group => group.attr_seq === 74);
 
                     if (targetGroup && Array.isArray(targetGroup.items) && targetGroup.items.length > 0) {
                         isBoxOK = true;
