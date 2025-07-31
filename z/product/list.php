@@ -428,7 +428,11 @@
             console.log("CHECK OPTION DATA : ", data);
             $('.item-total-count').html(data.totalCount);
             if(data.totalCount == 0){
-                $('.no-data').removeClass('d-none');
+                if(recent == 'Y'){
+                    $('.no-orders').removeClass('d-none');
+                }else{
+                    $('.no-data').removeClass('d-none');
+                }
                 $('#paged-wrap').addClass('d-none');
             }else{
                 $('.no-data').addClass('d-none');
