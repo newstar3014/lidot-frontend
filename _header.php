@@ -185,5 +185,5 @@ $now_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     });
 
 </script>
-<script type="text/javascript" src="/header.js?ver=1.1"></script>
-<script type="text/javascript" src="/shop.js?ver=1.9"></script>
+<script type="text/javascript" src="/header.js?ver=1.2"></script>
+<script type="text/javascript" src="/shop.js?ver=2.0"></script>
