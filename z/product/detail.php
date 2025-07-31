@@ -406,7 +406,7 @@ iframe[src*="youtube.com"] {
             }
 
             if (isBoxOK && itemBox) {
-                boxStr = `<div class="table-responsive"><table class="table table-bordered my-5"><thead>
+                boxStr = `<div class="table-responsive"><table class="table table-bordered my-5" style="border: 1px solid #dee2e6;"><thead>
                     <tr>
                     <th>사이즈</th><th>파레트당 박스수</th><th>박스당 키로수</th><th>박스당 장수</th><th>박스당 시공면적</th>
                     </tr>
