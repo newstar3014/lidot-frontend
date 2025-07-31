@@ -388,6 +388,9 @@ iframe[src*="youtube.com"] {
 
             $('#product-detail-contents').append(v.contents);
 
+            console.log(v.category);
+            
+
             let brand_img_bottom = v.brand_img_bottom;
             if(brand_img_bottom){
                 brand_img_bottom = JSON.parse(brand_img_bottom);
